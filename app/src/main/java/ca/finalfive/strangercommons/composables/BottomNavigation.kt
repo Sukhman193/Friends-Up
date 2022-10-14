@@ -1,20 +1,22 @@
 package ca.finalfive.strangercommons.composables
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import ca.finalfive.strangercommons.R
-import ca.finalfive.strangercommons.models.NavigationTab
-import ca.finalfive.strangercommons.navigation.Route
-import ca.finalfive.strangercommons.ui.theme.Purple700
+import ca.finalfive.strangercommons.navigation.BottomNavItem
+import ca.finalfive.strangercommons.ui.theme.BottomNavBackgroundColor
+import ca.finalfive.strangercommons.ui.theme.BottomNavSelectedColor
+
 
 @Composable
 fun BottomNavigation(navController: NavController) {
@@ -28,40 +30,55 @@ fun BottomNavigation(navController: NavController) {
     /**
      * List of the different options for the bottom navigation
      */
-    val navigationTab: List<NavigationTab> = listOf(
-        NavigationTab(name = "Friends", icon = R.drawable.friend_icon, route = Route.FriendsScreen.route),
-        NavigationTab(name = "Chat room", icon = R.drawable.message_icon, route = Route.ChatRoomScreen.route),
-        NavigationTab(name = "Profile", icon = R.drawable.profile_icon, route = Route.ProfileScreen.route)
+    val navigationItems: List<BottomNavItem> = listOf(
+        BottomNavItem.Friends,
+        BottomNavItem.Home,
+        BottomNavItem.Profile
     )
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 5.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly
+    //  https://johncodeos.com/how-to-create-bottom-navigation-bar-with-jetpack-compose/
+    // Bottom navigation
+    BottomNavigation(
+        modifier = Modifier.height(67.dp)
     ) {
-        // Map over the array of the navigation tabs
-        navigationTab.map { nav ->
-            Column(
-                modifier = Modifier
-                    .clickable {
-                        navController.navigate(nav.route)
-                    },
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Icon(
-                    painter = painterResource(id = nav.icon),
-                    contentDescription = nav.name,
-                    tint = if(currentRoute!!.startsWith(nav.route)){
-                        Purple700
-                    } else {
-                        MaterialTheme.colors.onBackground
-                    },
-                    modifier = Modifier.size(35.dp)
-                )
-                Spacer(modifier = Modifier.height(5.dp))
-                Text(text = nav.name)
+        // Iterate over each value of the navigation item
+        navigationItems.forEach { item ->
+            // Check if the current navigation item is selected or not
+            val selected = currentRoute?.startsWith(item.route) ?: false
+            // Background color for the navigation selection
+            val backgroundColor = if(selected) {
+                BottomNavSelectedColor
+            } else {
+                BottomNavBackgroundColor
             }
+            // Bottom navigation items
+            BottomNavigationItem(
+                modifier = Modifier
+                    .background(backgroundColor),
+                // Is the item currently selected
+                selected = selected,
+                icon = {
+                    // Icon of the navigation
+                    Icon(
+                        painter = painterResource(id = item.icon),
+                        contentDescription = item.title,
+                        modifier = Modifier.size(35.dp)
+                    )
+                },
+                // Label text
+                label = { Text(text = item.title) },
+                // foreground color when selected
+                selectedContentColor = Color.White,
+                // always show the label
+                alwaysShowLabel = true,
+                // foreground color when not selected
+                unselectedContentColor = Color.White,
+                // when clicked, navigate to the page selected
+                onClick = {
+                    navController.navigate(item.route)
+                }
+            )
+
         }
     }
 }

@@ -16,7 +16,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val viewModel = MyViewModel()
-        viewModel.getName("Jack")
 
         setContent {
             StrangerCommonsTheme {

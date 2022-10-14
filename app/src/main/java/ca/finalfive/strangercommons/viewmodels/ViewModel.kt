@@ -10,13 +10,4 @@ import kotlinx.coroutines.launch
 // Temporary View Model
 class MyViewModel: ViewModel() {
 
-    var name by mutableStateOf("")
-
-    fun getName(myName: String) {
-        viewModelScope.launch {
-            // Get instance of the movie
-            name = myName
-        }
-    }
-
 }
