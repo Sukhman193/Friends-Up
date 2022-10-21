@@ -85,7 +85,7 @@
 
     <!--  Friends screen  -->
     <!--  Friend's screen title  -->
-    <string name="friends_title">Friends Friends</string>
+    <string name="friends_title">Friends</string>
     <!--  Friend's screen description  -->
     <string name="friends_description">Get in contact with your friends</string>
 
