@@ -26,24 +26,30 @@ val hello_valentina = FontFamily(
 
 // Set of Material typography styles to start with
 val Typography = Typography(
+
+    // h1 will be used with hello_valentina since this font is mostly used with titles
     h1 = TextStyle(
+        fontFamily = hello_valentina,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
+    ),
+    // h2 will be used for comfortaa with font weight Regular labeled as FontWeight.Normal
+    h2 = TextStyle(
         fontFamily = comfortaa,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
     ),
-    h2 = TextStyle(
+    // h3 will be used for comfortaa with font weight Light labeled as FontWeight.Light
+    h3 = TextStyle(
         fontFamily = comfortaa,
         fontWeight = FontWeight.Light,
         fontSize = 16.sp
     ),
-    h3 = TextStyle(
+    // h4 will be used for comfortaa with font weight Bold labeled as FontWeight.Bold
+    h4 = TextStyle(
         fontFamily = comfortaa,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp
-    ),
-    h4 = TextStyle(
-        fontFamily = hello_valentina,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
     )
+
 )
