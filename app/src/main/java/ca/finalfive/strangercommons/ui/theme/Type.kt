@@ -2,9 +2,21 @@ package ca.finalfive.strangercommons.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import ca.finalfive.strangercommons.R
+
+val comfortaa = FontFamily(
+    Font(R.font.comfortaa_regular, weight = FontWeight.Normal),
+    Font(R.font.comfortaa_light, weight = FontWeight.Light),
+    Font(R.font.comfortaa_bold, weight = FontWeight.Bold)
+)
+
+val hello_valentina = FontFamily(
+    Font(R.font.hello_valentina, weight = FontWeight.Normal)
+)
 
 // Set of Material typography styles to start with
 val Typography = Typography(
@@ -12,7 +24,27 @@ val Typography = Typography(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
-    )
+    ),
+    h1 = TextStyle(
+        fontFamily = comfortaa,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
+    ),
+    h2 = TextStyle(
+        fontFamily = comfortaa,
+        fontWeight = FontWeight.Light,
+        fontSize = 16.sp
+    ),
+    h3 = TextStyle(
+        fontFamily = comfortaa,
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp
+    ),
+    h4 = TextStyle(
+        fontFamily = hello_valentina,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
+    ),
     /* Other default text styles to override
     button = TextStyle(
         fontFamily = FontFamily.Default,
