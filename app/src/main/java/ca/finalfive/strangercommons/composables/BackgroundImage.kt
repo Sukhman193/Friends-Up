@@ -8,20 +8,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import ca.finalfive.strangercommons.R
 
-@Preview
 @Composable
+        /**
+         * This component represents the background image
+         * @param showMoon boolean that represents whether the moon is
+         * displayed or not
+         */
 fun BackgroundImage(showMoon: Boolean = true) {
     val image = if (showMoon) {
-        // If showMoon == true...
+        // If moon is being shown
         painterResource(id = R.drawable.backgroundwithmoon)
     } else {
-        // If showMoon == false
+        // If moon isn't being shown
         painterResource(id = R.drawable.background)
     }
 
+    // Display background image that fills the entire screen
     Image(
-        // Display background image here (depending on
-        // whether showMoon is true or false
         painter = image,
         contentDescription = "Background Image",
         modifier = Modifier
