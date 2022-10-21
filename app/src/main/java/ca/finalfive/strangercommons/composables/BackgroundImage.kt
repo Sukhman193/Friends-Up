@@ -12,12 +12,16 @@ import ca.finalfive.strangercommons.R
 @Composable
 fun BackgroundImage(showMoon: Boolean = true) {
     val image = if (showMoon) {
+        // If showMoon == true...
         painterResource(id = R.drawable.backgroundwithmoon)
     } else {
+        // If showMoon == false
         painterResource(id = R.drawable.background)
     }
 
     Image(
+        // Display background image here (depending on
+        // whether showMoon is true or false
         painter = image,
         contentDescription = "Background Image",
         modifier = Modifier

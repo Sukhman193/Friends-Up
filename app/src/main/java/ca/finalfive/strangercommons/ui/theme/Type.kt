@@ -8,23 +8,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import ca.finalfive.strangercommons.R
 
+// Font variable for "Comfortaa"
 val comfortaa = FontFamily(
+    // Normal Font weight
     Font(R.font.comfortaa_regular, weight = FontWeight.Normal),
+    // Light Font weight
     Font(R.font.comfortaa_light, weight = FontWeight.Light),
+    // Bold Font weight
     Font(R.font.comfortaa_bold, weight = FontWeight.Bold)
 )
 
+// Font variable for "Hello Valentina"
 val hello_valentina = FontFamily(
+    // Normal Font weight (Only comes with one font weight)
     Font(R.font.hello_valentina, weight = FontWeight.Normal)
 )
 
 // Set of Material typography styles to start with
 val Typography = Typography(
-    body1 = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
-    ),
     h1 = TextStyle(
         fontFamily = comfortaa,
         fontWeight = FontWeight.Normal,
@@ -44,17 +45,5 @@ val Typography = Typography(
         fontFamily = hello_valentina,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
-    ),
-    /* Other default text styles to override
-    button = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.W500,
-        fontSize = 14.sp
-    ),
-    caption = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
     )
-    */
 )
