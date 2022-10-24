@@ -9,6 +9,7 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import ca.finalfive.strangercommons.navigation.Navigation
 import ca.finalfive.strangercommons.ui.theme.StrangerCommonsTheme
+import ca.finalfive.strangercommons.viewmodels.AuthViewModel
 import ca.finalfive.strangercommons.viewmodels.MyViewModel
 
 class MainActivity : ComponentActivity() {
@@ -16,6 +17,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val viewModel = MyViewModel()
+        val authViewModel = AuthViewModel()
 
         setContent {
             StrangerCommonsTheme {
@@ -24,9 +26,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Navigation(viewModel = viewModel)
+
+                    Navigation(viewModel = viewModel, authViewModel= authViewModel )
                 }
             }
         }
     }
+
 }

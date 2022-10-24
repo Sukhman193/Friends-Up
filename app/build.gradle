@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -48,8 +49,17 @@ android {
 
 dependencies {
 
+    implementation(platform("com.google.firebase:firebase-bom:28.2.0"))
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.android.gms:play-services-auth:19.0.0")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.0")
+
     // Flow Row implementation
     implementation "com.google.accompanist:accompanist-flowlayout:0.20.0"
+    implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
 
     def nav_version = "2.5.2"// Kotlin
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"

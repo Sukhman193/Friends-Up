@@ -1,0 +1,57 @@
+package ca.finalfive.strangercommons.composables
+
+import android.icu.number.Scale
+import android.util.Log
+import android.view.Gravity.FILL
+import android.widget.GridLayout.FILL
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
+import androidx.compose.material.Button
+import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import ca.finalfive.strangercommons.R
+import ca.finalfive.strangercommons.viewmodels.AuthViewModel
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+
+@Composable
+fun AuthPage(authViewModel: AuthViewModel){
+
+    val context = LocalContext.current
+    val token = stringResource(R.string.default_web_client_id)
+    val scope = rememberCoroutineScope()
+
+    val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
+        val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
+
+        try {
+            val account = task.getResult(ApiException::class.java)!!
+            val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
+            scope.launch {
+                val authResult = Firebase.auth.signInWithCredential(credential).await()
+                Log.d("SUCCESS",authResult.toString())
+            }
+        } catch (e: ApiException) {
+            Log.w("TAG", "Google sign in failed", e)
+        }
+    }
+
+    Button(onClick = {
+        authViewModel.signIn(token,context,launcher)
+        Log.d("AUTH -------------> ", authViewModel.user?.displayName.toString())
+
+    }) {
+
+    }
+
+
+}
