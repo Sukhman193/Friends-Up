@@ -15,14 +15,13 @@ import androidx.navigation.NavController
          * @param screen Screen to be displayed in the application
          */
 fun NavigationContainer(navController: NavController, screen: @Composable () -> Unit) {
-    // Calling the Background Image to be displayed
-    BackgroundImage(true)
     // The scaffold will contain the bottom navigation
     Scaffold(
         bottomBar = { BottomNavigation(navController = navController) },
         modifier = Modifier.fillMaxSize()
     ) { paddingValues ->
-
+        // Calling the Background Image to be displayed
+        BackgroundImage(true)
         // Container for the screen to be displayed
         Box(modifier = Modifier.padding(paddingValues)) {
             screen()

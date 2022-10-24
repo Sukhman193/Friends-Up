@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import ca.finalfive.strangercommons.R
@@ -28,6 +29,7 @@ fun BackgroundImage(showMoon: Boolean = true) {
         painter = image,
         contentDescription = "Background Image",
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+        contentScale = ContentScale.FillBounds
     )
 }
