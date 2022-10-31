@@ -17,3 +17,9 @@ val BottomNavBackgroundColor = Color(0xFF2E246C)
  * Background color for the selected option of the navigation item
  */
 val BottomNavSelectedColor = Color(0xFF53479F)
+
+//Game card colors
+/**
+ * Background color for the game cards
+ */
+val GameCardBackgroundColor = Color(0xFF47458F)

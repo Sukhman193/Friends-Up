@@ -8,6 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import ca.finalfive.strangercommons.composables.BackgroundImage
+import ca.finalfive.strangercommons.composables.GameCard
 import ca.finalfive.strangercommons.navigation.Navigation
 import ca.finalfive.strangercommons.ui.theme.StrangerCommonsTheme
 import ca.finalfive.strangercommons.viewmodels.MyViewModel
