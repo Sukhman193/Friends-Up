@@ -7,12 +7,20 @@ import android.widget.GridLayout.FILL
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.unit.dp
 import ca.finalfive.strangercommons.R
 import ca.finalfive.strangercommons.viewmodels.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -22,6 +30,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+
 
 @Composable
 fun AuthPage(authViewModel: AuthViewModel){
@@ -43,6 +52,31 @@ fun AuthPage(authViewModel: AuthViewModel){
         } catch (e: ApiException) {
             Log.w("TAG", "Google sign in failed", e)
         }
+    }
+    
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(15.dp),
+        verticalArrangement = Arrangement.spacedBy(
+            12.dp,
+            alignment = Alignment.CenterVertically
+        ),
+
+    ) {
+        Text(text = "Stranger Commons", fontFamily = Font(R.font.hello_valentina))
+        
+        Text(text = "Are You Ready For The Toughest Challenges Of All?")
+
+        Image(
+            painter = painterResource(id = R.drawable.google_button),
+            contentDescription = "SigninBut",
+            modifier = Modifier
+                .clickable(true, onClick = {
+                    authViewModel.signIn(token, context, launcher)
+                })
+                .size(122.dp)
+        )
     }
 
     Button(onClick = {
