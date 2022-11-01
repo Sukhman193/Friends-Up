@@ -8,6 +8,6 @@ import androidx.navigation.NavController
 @Composable
 fun FriendsScreen(navController: NavController) {
     Column() {
-        Text(text = "Friend  page")
+        Text(text = "Friend page")
     }
 }
