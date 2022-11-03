@@ -8,8 +8,10 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import ca.finalfive.strangercommons.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -29,16 +31,15 @@ import kotlin.coroutines.CoroutineContext
 
 class FirebaseAuthRepository {
 
-    var user: FirebaseUser? = Firebase.auth.currentUser
+//    var user: FirebaseUser? by mutableStateOf(Firebase.auth.currentUser)
 
     lateinit var googleSignInClient: GoogleSignInClient
-    val Req_Code:Int=123
     var auth= FirebaseAuth.getInstance()
 
     //var googleSignInClient: GoogleSignInClient? = null
 
 
-    suspend fun signIn(token: String, context: Context, launcher: ManagedActivityResultLauncher<Intent, ActivityResult> ){
+    fun signIn(token: String, context: Context, launcher: ManagedActivityResultLauncher<Intent, ActivityResult> ): FirebaseUser? {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(token)
             .requestEmail()
@@ -50,7 +51,7 @@ class FirebaseAuthRepository {
 
         launcher.launch(googleSignInClient.signInIntent)
 
-        user = auth.currentUser
+        return Firebase.auth.currentUser
     }
 
 }

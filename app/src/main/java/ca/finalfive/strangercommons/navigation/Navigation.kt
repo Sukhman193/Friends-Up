@@ -1,5 +1,6 @@
 package ca.finalfive.strangercommons.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -53,6 +54,8 @@ fun Navigation(viewModel: MyViewModel, authViewModel: AuthViewModel) {
     // Navigation controller
     val navController = rememberNavController()
 
+    //Log.d("USER2 ", authViewModel.user!!.displayName.toString() )
+
     // User Authenticated or Not
     val startingScreen: String = if (authViewModel.user == null) {
         Route.AuthScreen.route
@@ -94,7 +97,7 @@ fun Navigation(viewModel: MyViewModel, authViewModel: AuthViewModel) {
             route = Route.AuthScreen.route,
         ) {
             // Profile screen with bottom navigation
-                AuthScreen(authViewModel = authViewModel )
+                AuthScreen(authViewModel = authViewModel, navController )
 
         }
     }

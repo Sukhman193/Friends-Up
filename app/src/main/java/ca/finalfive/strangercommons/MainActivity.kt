@@ -29,7 +29,10 @@ class MainActivity : ComponentActivity() {
                 ) {
                     // Background image
                     BackgroundImage()
-                    Navigation(viewModel = viewModel,authViewModel)
+                    Navigation(
+                        viewModel = viewModel,
+                        authViewModel = authViewModel
+                    )
                 }
             }
         }

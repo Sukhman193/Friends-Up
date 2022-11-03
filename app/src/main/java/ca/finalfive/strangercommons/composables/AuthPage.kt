@@ -23,8 +23,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import ca.finalfive.strangercommons.MainActivity
 import ca.finalfive.strangercommons.R
 import ca.finalfive.strangercommons.navigation.Navigation
+import ca.finalfive.strangercommons.navigation.Route
 import ca.finalfive.strangercommons.viewmodels.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
@@ -43,8 +45,6 @@ fun AuthPage(authViewModel: AuthViewModel, navController: NavController){
     val token = stringResource(R.string.default_web_client_id)
     val scope = rememberCoroutineScope()
 
-    var user: FirebaseUser? = null
-
     val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
         val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
 
@@ -53,6 +53,8 @@ fun AuthPage(authViewModel: AuthViewModel, navController: NavController){
             val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
             scope.launch {
                 val authResult = Firebase.auth.signInWithCredential(credential).await()
+//                authViewModel.user = Firebase.auth.currentUser
+                navController.navigate(Route.GameRoomScreen.route)
                 Log.d("SUCCESS",authResult.toString())
             }
         } catch (e: ApiException) {
@@ -70,7 +72,7 @@ fun AuthPage(authViewModel: AuthViewModel, navController: NavController){
         ),
 
     ) {
-        Text(text = "Stranger Commons", style = MaterialTheme.typography.h3)
+        Text(text = "Stranger Commons", style = MaterialTheme.typography.h1)
         
         Text(text = "Are You Ready For The Toughest Challenges Of All?")
 
@@ -80,9 +82,9 @@ fun AuthPage(authViewModel: AuthViewModel, navController: NavController){
             modifier = Modifier
                 .clickable(true, onClick = {
                     authViewModel.signIn(token, context, launcher)
-                    user = authViewModel.user
-                    Log.d("USER->>>", user?.email.toString())
-//                    navController.navigate("")
+                    //user = authViewModel.user
+                    Log.d("USER->>>", authViewModel.user?.displayName.toString())
+
                 })
                 .size(122.dp)
         )
