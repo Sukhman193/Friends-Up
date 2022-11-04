@@ -44,7 +44,6 @@ sealed class BottomNavItem(var title: String, var icon: Int, var route: String) 
     object Friends : BottomNavItem("Friends", R.drawable.friend_icon, Route.FriendsScreen.route)
     // Navigation item for the Profile screen, with the icon id and the route
     object Profile : BottomNavItem("Profile", R.drawable.profile_icon, Route.ProfileScreen.route)
-
 }
 
 // navigation composable
@@ -53,8 +52,6 @@ fun Navigation(viewModel: MyViewModel, authViewModel: AuthViewModel) {
 
     // Navigation controller
     val navController = rememberNavController()
-
-    //Log.d("USER2 ", authViewModel.user!!.displayName.toString() )
 
     // User Authenticated or Not
     val startingScreen: String = if (authViewModel.user == null) {
@@ -96,9 +93,8 @@ fun Navigation(viewModel: MyViewModel, authViewModel: AuthViewModel) {
         composable(
             route = Route.AuthScreen.route,
         ) {
-            // Profile screen with bottom navigation
-                AuthScreen(authViewModel = authViewModel, navController )
-
+            // Auth Screen with authViewModel
+            AuthScreen(authViewModel = authViewModel, navController )
         }
     }
 }

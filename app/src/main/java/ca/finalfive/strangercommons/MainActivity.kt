@@ -18,6 +18,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val viewModel = MyViewModel()
+        // creating an instance of authViewModel
         val authViewModel = AuthViewModel()
 
         setContent {

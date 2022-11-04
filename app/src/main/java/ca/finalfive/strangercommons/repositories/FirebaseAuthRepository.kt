@@ -29,28 +29,35 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlin.coroutines.CoroutineContext
 
+/**
+ * The Firebase Auth Repository
+ */
 class FirebaseAuthRepository {
-
-//    var user: FirebaseUser? by mutableStateOf(Firebase.auth.currentUser)
-
+    // Google Sign-in Client variable
     lateinit var googleSignInClient: GoogleSignInClient
+    // Firebase Authentication Instance
     var auth= FirebaseAuth.getInstance()
 
-    //var googleSignInClient: GoogleSignInClient? = null
-
-
+    /**
+     * Sign-In with Google function
+     * @param token
+     * @param context
+     * @param launcher
+     * @return Firebase User
+     */
     fun signIn(token: String, context: Context, launcher: ManagedActivityResultLauncher<Intent, ActivityResult> ): FirebaseUser? {
+        // Building the Google Sign-in Options
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(token)
             .requestEmail()
             .build()
-
+        // Getting the client and storing it in the google sign-in client
         googleSignInClient = GoogleSignIn.getClient(context, gso)
-
+        // getting a new instance
         auth = FirebaseAuth.getInstance()
-
+        // call the launcher to launch the client
         launcher.launch(googleSignInClient.signInIntent)
-
+        // return the user
         return Firebase.auth.currentUser
     }
 

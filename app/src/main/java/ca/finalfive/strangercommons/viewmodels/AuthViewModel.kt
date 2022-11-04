@@ -15,16 +15,24 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
+/**
+ * AuthViewModel class Extending the ViewModel()
+ */
 class AuthViewModel: ViewModel() {
-
+    // making an instance of Firebase Repository
     private var firebaseAuthRepository = FirebaseAuthRepository()
-//    var user: FirebaseUser? by mutableStateOf(firebaseAuthRepository.user)
+    // Stating the user from the firebase instance
     var user: FirebaseUser? by mutableStateOf(Firebase.auth.currentUser)
 
+    /**
+     * Sign-In with Google function which calls the sign in function in the repository
+     * and updates the user
+     * @param token
+     * @param context
+     * @param launcher
+     */
     fun signIn(token: String, context: Context, launcher: ManagedActivityResultLauncher<Intent, ActivityResult>){
-//        viewModelScope.launch {
-             user = firebaseAuthRepository.signIn(token, context, launcher)
-//        }
+        user = firebaseAuthRepository.signIn(token, context, launcher)
 
     }
 

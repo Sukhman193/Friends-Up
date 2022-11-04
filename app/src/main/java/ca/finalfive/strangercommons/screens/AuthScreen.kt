@@ -8,6 +8,7 @@ import ca.finalfive.strangercommons.viewmodels.AuthViewModel
 
 @Composable
 fun AuthScreen(authViewModel : AuthViewModel, navController: NavController){
+    // checking to see if the user is signed in or not
     if(authViewModel.user != null) {
         navController.navigate(Route.GameRoomScreen.route)
     }

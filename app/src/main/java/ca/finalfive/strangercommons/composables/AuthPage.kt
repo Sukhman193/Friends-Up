@@ -21,7 +21,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ca.finalfive.strangercommons.MainActivity
 import ca.finalfive.strangercommons.R
@@ -37,23 +39,30 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-
+/**
+ * Composable Function To Show The Authentication Page
+ * @param authViewModel: instance of AuthViewModel
+ * @param navController: Nav Controller instance to navigate
+ * @author The Five Strangers with one less
+ */
 @Composable
 fun AuthPage(authViewModel: AuthViewModel, navController: NavController){
-
+    // local context
     val context = LocalContext.current
+    // token of friendship
     val token = stringResource(R.string.default_web_client_id)
+    // Coroutine Scope
     val scope = rememberCoroutineScope()
 
+    // The Google Sign-in Launcher
     val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
         val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
-
         try {
             val account = task.getResult(ApiException::class.java)!!
             val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
             scope.launch {
                 val authResult = Firebase.auth.signInWithCredential(credential).await()
-//                authViewModel.user = Firebase.auth.currentUser
+                // Route to the Game Screen if the sign in is successful
                 navController.navigate(Route.GameRoomScreen.route)
                 Log.d("SUCCESS",authResult.toString())
             }
@@ -61,32 +70,45 @@ fun AuthPage(authViewModel: AuthViewModel, navController: NavController){
             Log.w("TAG", "Google sign in failed", e)
         }
     }
-    
+    // structure for the screen
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(15.dp),
-        verticalArrangement = Arrangement.spacedBy(
-            12.dp,
-            alignment = Alignment.CenterVertically
-        ),
+            .padding(bottom = 35.dp, top = 20.dp),
+        verticalArrangement = Arrangement.SpaceBetween,
+        horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
-        Text(text = "Stranger Commons", style = MaterialTheme.typography.h1)
-        
-        Text(text = "Are You Ready For The Toughest Challenges Of All?")
-
+        // The title
+        Column {
+            Text(text = "Strangers",
+                modifier = Modifier.padding(start = 140.dp),
+                fontSize = 60.sp,
+                style = MaterialTheme.typography.h1
+            )
+            Text(text = "Commons",
+                modifier = Modifier.fillMaxWidth().padding(end = 20.dp),
+                fontSize = 60.sp,
+                textAlign = TextAlign.End ,
+                style = MaterialTheme.typography.h1
+            )
+        }
+        // Description of the app
+        Text(
+            text = stringResource(id = R.string.authentication_description),
+            style = MaterialTheme.typography.caption,
+            fontSize = 35.sp,
+            modifier = Modifier.padding(45.dp)
+        )
+        // Sign in with Google button
         Image(
             painter = painterResource(id = R.drawable.google_button),
             contentDescription = "SigninBut",
             modifier = Modifier
                 .clickable(true, onClick = {
                     authViewModel.signIn(token, context, launcher)
-                    //user = authViewModel.user
-                    Log.d("USER->>>", authViewModel.user?.displayName.toString())
-
                 })
-                .size(122.dp)
+                .size(275.dp,49.dp)
         )
     }
 
