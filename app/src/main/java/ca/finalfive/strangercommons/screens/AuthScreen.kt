@@ -6,11 +6,13 @@ import ca.finalfive.strangercommons.composables.AuthPage
 import ca.finalfive.strangercommons.navigation.Route
 import ca.finalfive.strangercommons.viewmodels.AuthViewModel
 
+/**
+ * Auth Screen - redirects to auth page
+ * @param authViewModel
+ * @param navController
+ */
 @Composable
 fun AuthScreen(authViewModel : AuthViewModel, navController: NavController){
-    // checking to see if the user is signed in or not
-    if(authViewModel.user != null) {
-        navController.navigate(Route.GameRoomScreen.route)
-    }
+    // Routing to Authentication Page
     AuthPage(authViewModel = authViewModel, navController = navController)
 }

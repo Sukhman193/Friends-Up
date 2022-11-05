@@ -4,6 +4,7 @@ import android.icu.number.Scale
 import android.util.Log
 import android.view.Gravity.FILL
 import android.widget.GridLayout.FILL
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -43,51 +44,60 @@ import kotlinx.coroutines.tasks.await
  * Composable Function To Show The Authentication Page
  * @param authViewModel: instance of AuthViewModel
  * @param navController: Nav Controller instance to navigate
- * @author The Five Strangers with one less
  */
 @Composable
 fun AuthPage(authViewModel: AuthViewModel, navController: NavController){
     // local context
     val context = LocalContext.current
-    // token of friendship
+    // Firebase Client Token
     val token = stringResource(R.string.default_web_client_id)
     // Coroutine Scope
     val scope = rememberCoroutineScope()
 
     // The Google Sign-in Launcher
     val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
+        // returns a task for google sign in account
         val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
         try {
+            // returns the google sign in account
             val account = task.getResult(ApiException::class.java)!!
+            // the Google Authentication credentials
             val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
             scope.launch {
+                // this async Firebase Function will use the credentials to sign in and returns the result
                 val authResult = Firebase.auth.signInWithCredential(credential).await()
                 // Route to the Game Screen if the sign in is successful
                 navController.navigate(Route.GameRoomScreen.route)
-                Log.d("SUCCESS",authResult.toString())
+
+                Toast.makeText(context, "Authentication Successful", Toast.LENGTH_SHORT).show()
             }
         } catch (e: ApiException) {
-            Log.w("TAG", "Google sign in failed", e)
+            // make a toast to notify the user that authentication was not successful
+            Toast.makeText(context, "Authentication Failed", Toast.LENGTH_SHORT).show()
         }
     }
     // structure for the screen
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 35.dp, top = 20.dp),
+            .padding(bottom = 45.dp, top = 20.dp),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
         // The title
         Column {
-            Text(text = "Strangers",
-                modifier = Modifier.padding(start = 140.dp),
+            Text(
+                text = "Friends",
+                modifier = Modifier.padding(start = 160.dp),
                 fontSize = 60.sp,
                 style = MaterialTheme.typography.h1
             )
-            Text(text = "Commons",
-                modifier = Modifier.fillMaxWidth().padding(end = 20.dp),
+            Text(
+                text = "Up",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 60.dp),
                 fontSize = 60.sp,
                 textAlign = TextAlign.End ,
                 style = MaterialTheme.typography.h1
@@ -108,7 +118,7 @@ fun AuthPage(authViewModel: AuthViewModel, navController: NavController){
                 .clickable(true, onClick = {
                     authViewModel.signIn(token, context, launcher)
                 })
-                .size(275.dp,49.dp)
+                .size(275.dp, 49.dp)
         )
     }
 

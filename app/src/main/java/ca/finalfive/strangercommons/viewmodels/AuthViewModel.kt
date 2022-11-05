@@ -27,9 +27,9 @@ class AuthViewModel: ViewModel() {
     /**
      * Sign-In with Google function which calls the sign in function in the repository
      * and updates the user
-     * @param token
-     * @param context
-     * @param launcher
+     * @param token firebase client token
+     * @param context main context of the application
+     * @param launcher Activity launcher
      */
     fun signIn(token: String, context: Context, launcher: ManagedActivityResultLauncher<Intent, ActivityResult>){
         user = firebaseAuthRepository.signIn(token, context, launcher)

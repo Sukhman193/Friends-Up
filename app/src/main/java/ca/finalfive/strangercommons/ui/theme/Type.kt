@@ -51,7 +51,8 @@ val Typography = Typography(
     caption = TextStyle(
         fontFamily = comfortaa,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
+        fontSize = 16.sp,
+        color = Color.White
     )
 
 

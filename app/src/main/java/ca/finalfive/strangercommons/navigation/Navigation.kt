@@ -25,7 +25,7 @@ sealed class Route(val route: String) {
     object FriendsScreen: Route("friends")
     // Route to the profile screen
     object ProfileScreen: Route("profile")
-
+    // Route to the Authentication screen
     object AuthScreen: Route("auth")
 
 }
@@ -54,11 +54,12 @@ fun Navigation(viewModel: MyViewModel, authViewModel: AuthViewModel) {
     val navController = rememberNavController()
 
     // User Authenticated or Not
-    val startingScreen: String = if (authViewModel.user == null) {
-        Route.AuthScreen.route
-    }else{
-        Route.GameRoomScreen.route
-    }
+    val startingScreen: String =
+        if (authViewModel.user == null) {
+            Route.AuthScreen.route
+        } else {
+            Route.GameRoomScreen.route
+        }
 
     // Define navigation host an set the initial screen
     NavHost(navController = navController, startDestination = startingScreen) {
