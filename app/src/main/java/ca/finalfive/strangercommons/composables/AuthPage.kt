@@ -86,23 +86,23 @@ fun AuthPage(authViewModel: AuthViewModel, navController: NavController){
 
     ) {
         // The title
-        Column {
+        //Column {
             Text(
-                text = "Friends",
-                modifier = Modifier.padding(start = 160.dp),
+                text = "Friends Up",
+                modifier = Modifier.padding(start = 140.dp),
                 fontSize = 60.sp,
                 style = MaterialTheme.typography.h1
             )
-            Text(
-                text = "Up",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(end = 60.dp),
-                fontSize = 60.sp,
-                textAlign = TextAlign.End ,
-                style = MaterialTheme.typography.h1
-            )
-        }
+//            Text(
+//                text = "Up",
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(end = 60.dp),
+//                fontSize = 60.sp,
+//                textAlign = TextAlign.End ,
+//                style = MaterialTheme.typography.h1
+//            )
+        //}
         // Description of the app
         Text(
             text = stringResource(id = R.string.authentication_description),
