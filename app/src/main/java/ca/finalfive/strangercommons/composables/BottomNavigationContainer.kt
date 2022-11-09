@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 
+var showMoon: Boolean = true
+
 @Composable
         /**
          * Navigation container, it will contain the bottom navigation, as well as the screen
@@ -21,11 +23,10 @@ fun NavigationContainer(navController: NavController, screen: @Composable () -> 
         modifier = Modifier.fillMaxSize()
     ) { paddingValues ->
         // Calling the Background Image to be displayed
-        BackgroundImage(true)
+        BackgroundImage(showMoon)
         // Container for the screen to be displayed
         Box(modifier = Modifier.padding(paddingValues)) {
             screen()
         }
-
     }
 }

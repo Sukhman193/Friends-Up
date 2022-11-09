@@ -9,6 +9,7 @@ import ca.finalfive.strangercommons.composables.NavigationContainer
 import ca.finalfive.strangercommons.screens.ChatRoomScreen
 import ca.finalfive.strangercommons.screens.FriendsScreen
 import ca.finalfive.strangercommons.screens.ProfileScreen
+import ca.finalfive.strangercommons.screens.TriviaGameScreen
 import ca.finalfive.strangercommons.viewmodels.MyViewModel
 
 /**
@@ -22,6 +23,8 @@ sealed class Route(val route: String) {
     object FriendsScreen: Route("friends")
     // Route to the profile screen
     object ProfileScreen: Route("profile")
+    // Route to the trivia game screen
+    object TriviaGameScreen: Route("triviaRoom")
 }
 
 // https://medium.com/geekculture/bottom-navigation-in-jetpack-compose-android-9cd232a8b16
@@ -60,7 +63,7 @@ fun Navigation(viewModel: MyViewModel) {
         }
 
         composable(
-            route = Route.FriendsScreen.route,
+            route = Route.FriendsScreen.route
         ) {
             // Friends Screen with bottom navigation
             NavigationContainer(navController = navController) {
@@ -69,11 +72,19 @@ fun Navigation(viewModel: MyViewModel) {
         }
 
         composable(
-            route = Route.ProfileScreen.route,
+            route = Route.ProfileScreen.route
         ) {
             // Profile screen with bottom navigation
             NavigationContainer(navController = navController) {
                 ProfileScreen(navController = navController)
+            }
+        }
+
+        composable(
+            route = Route.TriviaGameScreen.route
+        ) {
+            NavigationContainer(navController = navController) {
+                TriviaGameScreen(navController = navController)
             }
         }
     }
