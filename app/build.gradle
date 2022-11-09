@@ -49,10 +49,14 @@ android {
 
 dependencies {
 
+    // Firebase Implementation
     implementation(platform("com.google.firebase:firebase-bom:28.2.0"))
+    // Firebase Authentication Implementation
     implementation("com.google.firebase:firebase-auth")
+    // Google Service Implementation
     implementation("com.google.android.gms:play-services-auth:19.0.0")
 
+    // Coroutines Implementation
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.0")

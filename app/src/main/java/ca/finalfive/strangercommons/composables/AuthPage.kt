@@ -86,29 +86,18 @@ fun AuthPage(authViewModel: AuthViewModel, navController: NavController){
 
     ) {
         // The title
-        //Column {
             Text(
                 text = "Friends Up",
                 modifier = Modifier.padding(start = 140.dp),
                 fontSize = 60.sp,
                 style = MaterialTheme.typography.h1
             )
-//            Text(
-//                text = "Up",
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(end = 60.dp),
-//                fontSize = 60.sp,
-//                textAlign = TextAlign.End ,
-//                style = MaterialTheme.typography.h1
-//            )
-        //}
         // Description of the app
         Text(
             text = stringResource(id = R.string.authentication_description),
             style = MaterialTheme.typography.caption,
-            fontSize = 35.sp,
-            modifier = Modifier.padding(45.dp)
+            fontSize = 27.sp,
+            modifier = Modifier.padding(35.dp)
         )
         // Sign in with Google button
         Image(

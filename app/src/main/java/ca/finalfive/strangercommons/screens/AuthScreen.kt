@@ -8,8 +8,8 @@ import ca.finalfive.strangercommons.viewmodels.AuthViewModel
 
 /**
  * Auth Screen - redirects to auth page
- * @param authViewModel
- * @param navController
+ * @param authViewModel - The AuthViewModel Instance
+ * @param navController - The Nav-Controller to navigate through screens
  */
 @Composable
 fun AuthScreen(authViewModel : AuthViewModel, navController: NavController){

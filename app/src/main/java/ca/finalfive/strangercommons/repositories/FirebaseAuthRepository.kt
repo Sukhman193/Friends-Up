@@ -40,9 +40,9 @@ class FirebaseAuthRepository {
 
     /**
      * Sign-In with Google function
-     * @param token
-     * @param context
-     * @param launcher
+     * @param token - Google Sign-In Token
+     * @param context - The Context
+     * @param launcher - The Activity Launcher
      * @return Firebase User
      */
     fun signIn(token: String, context: Context, launcher: ManagedActivityResultLauncher<Intent, ActivityResult> ): FirebaseUser? {
