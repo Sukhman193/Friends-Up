@@ -6,10 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ca.finalfive.strangercommons.R
 import ca.finalfive.strangercommons.composables.NavigationContainer
-import ca.finalfive.strangercommons.screens.ChatRoomScreen
-import ca.finalfive.strangercommons.screens.FriendsScreen
-import ca.finalfive.strangercommons.screens.ProfileScreen
-import ca.finalfive.strangercommons.screens.TriviaGameScreen
+import ca.finalfive.strangercommons.screens.*
 import ca.finalfive.strangercommons.viewmodels.MyViewModel
 
 /**
@@ -24,7 +21,9 @@ sealed class Route(val route: String) {
     // Route to the profile screen
     object ProfileScreen: Route("profile")
     // Route to the trivia game screen
-    object TriviaGameScreen: Route("triviaRoom")
+    object TriviaGameScreen: Route("triviaGame")
+    // Route to the prompt game screen
+    object PromptGameScreen: Route("promptGame")
 }
 
 // https://medium.com/geekculture/bottom-navigation-in-jetpack-compose-android-9cd232a8b16
@@ -85,6 +84,14 @@ fun Navigation(viewModel: MyViewModel) {
         ) {
             NavigationContainer(navController = navController) {
                 TriviaGameScreen(navController = navController)
+            }
+        }
+
+        composable(
+            route = Route.PromptGameScreen.route
+        ) {
+            NavigationContainer(navController = navController) {
+                PromptGameScreen(navController = navController)
             }
         }
     }
