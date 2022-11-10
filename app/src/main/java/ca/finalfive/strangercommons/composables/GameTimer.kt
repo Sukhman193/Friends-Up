@@ -73,8 +73,7 @@ fun GameTimer(totalTime: Int, prompt: String, currentQuestion: Int, totalQuestio
 
                 Box(contentAlignment = Alignment.CenterEnd,
                     modifier = Modifier
-                        .width(45.dp)
-                        .height(45.dp)) {
+                        .size(45.dp)) {
                     // Start the circle timer animation
                     TimerAnimation(totalTime.toFloat())
                     // Contains the timer number which is counting down on lines 36-41
@@ -84,7 +83,8 @@ fun GameTimer(totalTime: Int, prompt: String, currentQuestion: Int, totalQuestio
                         fontSize = 18.sp,
                         modifier = Modifier
                             .padding(bottom = 7.dp)
-                            .align(Alignment.Center))
+                            .align(Alignment.Center)
+                    )
                 }
             }
         }
