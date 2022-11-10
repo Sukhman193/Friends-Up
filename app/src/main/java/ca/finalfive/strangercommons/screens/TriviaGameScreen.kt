@@ -46,7 +46,7 @@ fun TriviaGameScreen(navController: NavController) {
         .wrapContentSize(Alignment.Center)) {
         // Container at the top which includes the title of the mini-game
         MaterialTheme(typography = Typography(defaultFontFamily = hello_valentina)) {
-            Row() {
+            Row {
                 // Background box behind "Trivia" and the Flag icon
                 Box(
                     modifier = Modifier
