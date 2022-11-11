@@ -1,6 +1,7 @@
 package ca.finalfive.strangercommons.ui.theme
 
 import androidx.compose.material.Typography
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -31,7 +32,8 @@ val Typography = Typography(
     h1 = TextStyle(
         fontFamily = hello_valentina,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
+        fontSize = 16.sp,
+        color = Color.White
     ),
     // "h3" will be used for comfortaa with font weight Bold
     h3 = TextStyle(
@@ -49,7 +51,8 @@ val Typography = Typography(
     caption = TextStyle(
         fontFamily = comfortaa,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
+        fontSize = 16.sp,
+        color = Color.White
     )
 
 
