@@ -20,8 +20,9 @@ fun NavigationContainer(navController: NavController, screen: @Composable () -> 
         bottomBar = { BottomNavigation(navController = navController) },
         modifier = Modifier.fillMaxSize()
     ) { paddingValues ->
+
         // Calling the Background Image to be displayed
-        BackgroundImage(true)
+        BackgroundImage(showMoon = true)
         // Container for the screen to be displayed
         Box(modifier = Modifier.padding(paddingValues)) {
             screen()

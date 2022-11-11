@@ -9,6 +9,7 @@ import ca.finalfive.strangercommons.composables.NavigationContainer
 import ca.finalfive.strangercommons.screens.ChatRoomScreen
 import ca.finalfive.strangercommons.screens.FriendsScreen
 import ca.finalfive.strangercommons.screens.ProfileScreen
+import ca.finalfive.strangercommons.screens.ReportScreen
 import ca.finalfive.strangercommons.viewmodels.MyViewModel
 
 /**
@@ -22,6 +23,8 @@ sealed class Route(val route: String) {
     object FriendsScreen: Route("friends")
     // Route to the profile screen
     object ProfileScreen: Route("profile")
+    // Route to the report screen
+    object ReportScreen: Route("report")
 }
 
 // https://medium.com/geekculture/bottom-navigation-in-jetpack-compose-android-9cd232a8b16
@@ -50,6 +53,7 @@ fun Navigation(viewModel: MyViewModel) {
     // Define navigation host an set the initial screen
     NavHost(navController = navController, startDestination = Route.GameRoomScreen.route) {
 
+        // Navigation for the Game room screen
         composable(
             route = Route.GameRoomScreen.route
         ) {
@@ -59,6 +63,7 @@ fun Navigation(viewModel: MyViewModel) {
             }
         }
 
+        // Navigation for the friends screen
         composable(
             route = Route.FriendsScreen.route,
         ) {
@@ -68,6 +73,7 @@ fun Navigation(viewModel: MyViewModel) {
             }
         }
 
+        // Navigation for the profile screen
         composable(
             route = Route.ProfileScreen.route,
         ) {
@@ -75,6 +81,13 @@ fun Navigation(viewModel: MyViewModel) {
             NavigationContainer(navController = navController) {
                 ProfileScreen(navController = navController)
             }
+        }
+
+        // Navigation for the report screen
+        composable(
+            route = Route.ReportScreen.route
+        ) {
+            ReportScreen(navController = navController)
         }
     }
 }

@@ -17,3 +17,7 @@ val BottomNavBackgroundColor = Color(0xFF2E246C)
  * Background color for the selected option of the navigation item
  */
 val BottomNavSelectedColor = Color(0xFF53479F)
+
+val lightPurple = Color(0xFF605BD4)
+
+val darkPurple = Color(0xFF312E81)

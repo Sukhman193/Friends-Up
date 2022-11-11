@@ -1,0 +1,21 @@
+package ca.finalfive.strangercommons.composables
+
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+
+@Composable
+fun ScreenTitle(title: String, modifier: Modifier = Modifier) {
+
+    Text(
+        text = title,
+        style = MaterialTheme.typography.h1,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(start = 130.dp, top = 20.dp)
+    )
+}

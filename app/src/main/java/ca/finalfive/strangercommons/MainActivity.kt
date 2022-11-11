@@ -9,6 +9,7 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import ca.finalfive.strangercommons.composables.BackgroundImage
 import ca.finalfive.strangercommons.navigation.Navigation
+import ca.finalfive.strangercommons.screens.ReportScreen
 import ca.finalfive.strangercommons.ui.theme.StrangerCommonsTheme
 import ca.finalfive.strangercommons.viewmodels.MyViewModel
 
@@ -26,7 +27,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     // Background image
-                    BackgroundImage()
+                    BackgroundImage(showMoon = true)
                     Navigation(viewModel = viewModel)
                 }
             }
