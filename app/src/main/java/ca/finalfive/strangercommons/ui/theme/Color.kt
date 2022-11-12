@@ -21,3 +21,8 @@ val BottomNavSelectedColor = Color(0xFF53479F)
 val lightPurple = Color(0xFF605BD4)
 
 val darkPurple = Color(0xFF312E81)
+
+/**
+ * Background used for the title shades
+ */
+val titleBackgroundShade = Color(0xFF514175)

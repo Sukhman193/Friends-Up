@@ -33,7 +33,6 @@ val Typography = Typography(
         fontFamily = hello_valentina,
         fontWeight = FontWeight.Normal,
         fontSize = 60.sp,
-        color = Color.White
     ),
     // "h3" will be used for comfortaa with font weight Bold
     h3 = TextStyle(

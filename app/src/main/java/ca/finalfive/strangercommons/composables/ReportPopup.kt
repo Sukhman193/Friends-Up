@@ -24,6 +24,8 @@ import ca.finalfive.strangercommons.navigation.Route
 @Composable
         /**
          * Report popup for opening a popup page
+         * @param setReportPopup function which sets the report popup to change
+         * @param navController Navigation controller of the application
          */
 fun ReportPopup(
     setReportPopup: (Boolean) -> Unit,
@@ -100,7 +102,7 @@ fun ReportPopup(
                             navController.navigate(Route.ReportScreen.route)
                         }
                     )
-                    // Cacel button
+                    // Cancel button
                     Text(
                         text = stringResource(id = R.string.button_cancel),
                         color = Color.Black,

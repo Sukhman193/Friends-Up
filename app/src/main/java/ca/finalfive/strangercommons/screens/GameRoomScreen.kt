@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun ChatRoomScreen(navController: NavController) {
+fun GameRoomScreen(navController: NavController) {
     Column {
         Text(
             text = "Chat Room",

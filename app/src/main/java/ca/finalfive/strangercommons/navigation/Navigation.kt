@@ -7,11 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ca.finalfive.strangercommons.R
 import ca.finalfive.strangercommons.composables.NavigationContainer
-import ca.finalfive.strangercommons.screens.AuthScreen
-import ca.finalfive.strangercommons.screens.ChatRoomScreen
-import ca.finalfive.strangercommons.screens.FriendsScreen
-import ca.finalfive.strangercommons.screens.ProfileScreen
-import ca.finalfive.strangercommons.screens.ReportScreen
+import ca.finalfive.strangercommons.screens.*
 import ca.finalfive.strangercommons.viewmodels.AuthViewModel
 import ca.finalfive.strangercommons.viewmodels.MyViewModel
 
@@ -72,7 +68,7 @@ fun Navigation(viewModel: MyViewModel, authViewModel: AuthViewModel) {
         ) {
             // game room screen with bottom navigation
             NavigationContainer(navController = navController) {
-                ChatRoomScreen(navController = navController)
+                GameRoomScreen(navController = navController)
             }
         }
 

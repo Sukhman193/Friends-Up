@@ -1,18 +1,12 @@
 package ca.finalfive.strangercommons.composables
 
-import android.icu.number.Scale
-import android.util.Log
-import android.view.Gravity.FILL
-import android.widget.GridLayout.FILL
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -21,19 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import ca.finalfive.strangercommons.MainActivity
 import ca.finalfive.strangercommons.R
-import ca.finalfive.strangercommons.navigation.Navigation
 import ca.finalfive.strangercommons.navigation.Route
 import ca.finalfive.strangercommons.viewmodels.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -65,7 +54,7 @@ fun AuthPage(authViewModel: AuthViewModel, navController: NavController){
             val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
             scope.launch {
                 // this async Firebase Function will use the credentials to sign in and returns the result
-                val authResult = Firebase.auth.signInWithCredential(credential).await()
+                Firebase.auth.signInWithCredential(credential).await()
                 // Route to the Game Screen if the sign in is successful
                 navController.navigate(Route.GameRoomScreen.route)
 
@@ -76,39 +65,38 @@ fun AuthPage(authViewModel: AuthViewModel, navController: NavController){
             Toast.makeText(context, "Authentication Failed", Toast.LENGTH_SHORT).show()
         }
     }
-    // structure for the screen
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(bottom = 45.dp, top = 20.dp),
-        verticalArrangement = Arrangement.SpaceBetween,
-        horizontalAlignment = Alignment.CenterHorizontally
-
-    ) {
-        // The title
-            Text(
-                text = "Friends Up",
-                modifier = Modifier.padding(start = 140.dp),
-                fontSize = 60.sp,
-                style = MaterialTheme.typography.h1
-            )
-        // Description of the app
-        Text(
-            text = stringResource(id = R.string.authentication_description),
-            style = MaterialTheme.typography.caption,
-            fontSize = 27.sp,
-            modifier = Modifier.padding(35.dp)
-        )
-        // Sign in with Google button
-        Image(
-            painter = painterResource(id = R.drawable.google_button),
-            contentDescription = "SigninBut",
+    // Container for the page
+    Box {
+        // Add Image background containing the moon
+        BackgroundImage(showMoon = true)
+        // structure for the screen
+        Column(
             modifier = Modifier
-                .clickable(true, onClick = {
-                    authViewModel.signIn(token, context, launcher)
-                })
-                .size(275.dp, 49.dp)
-        )
+                .fillMaxSize()
+                .padding(bottom = 45.dp),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // Title of the page
+            ScreenTitle(title = stringResource(id = R.string.app_name))
+            // Description of the app
+            Text(
+                text = stringResource(id = R.string.authentication_description),
+                style = MaterialTheme.typography.caption,
+                fontSize = 27.sp,
+                modifier = Modifier.padding(35.dp)
+            )
+            // Sign in with Google button
+            Image(
+                painter = painterResource(id = R.drawable.google_button),
+                contentDescription = "SigninBut",
+                modifier = Modifier
+                    .clickable(true, onClick = {
+                        authViewModel.signIn(token, context, launcher)
+                    })
+                    .size(275.dp, 49.dp)
+            )
+        }
     }
 
 }

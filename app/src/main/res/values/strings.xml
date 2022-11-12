@@ -1,6 +1,6 @@
 <resources>
     <!--  Application Name  -->
-    <string name="app_name">Stranger Commons</string>
+    <string name="app_name">Friends Up</string>
 
     <!--  Bottom Bar Options  -->
     <!--  Navigation item name for the friends screen  -->
