@@ -28,24 +28,26 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ca.finalfive.strangercommons.R
 import ca.finalfive.strangercommons.composables.utils.CustomOutlineTextField
+import ca.finalfive.strangercommons.viewmodels.UserViewModel
 
 @Composable
-fun ProfilePage(navController: NavController){
+fun ProfilePage(navController: NavController, userViewModel: UserViewModel){
+    Log.d("LLAMA", userViewModel.user.toString())
     val requester = remember {
         FocusRequester()
     }
 
     var isKeyboardShown by remember { mutableStateOf(false)}
 
-    val (usernameText, setUsernameText) = rememberSaveable { mutableStateOf("") }
+    val (usernameText, setUsernameText) = rememberSaveable { mutableStateOf(userViewModel.user?.username) }
 
-    val (snapchatText, setSnapchatText) = rememberSaveable { mutableStateOf("") }
+    val (snapchatText, setSnapchatText) = rememberSaveable { mutableStateOf(userViewModel.user?.snapchat) }
 
-    val (instagramText, setInstagramText) = rememberSaveable { mutableStateOf("") }
+    val (instagramText, setInstagramText) = rememberSaveable { mutableStateOf(userViewModel.user?.instagram) }
 
-    val (discordText, setDiscordText) = rememberSaveable { mutableStateOf("") }
+    val (discordText, setDiscordText) = rememberSaveable { mutableStateOf(userViewModel.user?.discord) }
 
-    val (phoneText, setPhoneText) = rememberSaveable { mutableStateOf("") }
+    val (phoneText, setPhoneText) = rememberSaveable { mutableStateOf(userViewModel.user?.phone) }
 
     val localFocusManager = LocalFocusManager.current
 
@@ -94,7 +96,7 @@ fun ProfilePage(navController: NavController){
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             CustomOutlineTextField(
-                value = usernameText,
+                value = usernameText!!,
                 setValue = setUsernameText,
                 label = stringResource(id = R.string.profile_username),
                 iconID = R.drawable.username_icon,
@@ -105,7 +107,7 @@ fun ProfilePage(navController: NavController){
             )
 
             CustomOutlineTextField(
-                value = snapchatText,
+                value = snapchatText!!,
                 setValue = setSnapchatText ,
                 label = stringResource(id = R.string.profile_snapchat),
                 iconID = R.drawable.snapchat_icon,
@@ -115,7 +117,7 @@ fun ProfilePage(navController: NavController){
             )
 
             CustomOutlineTextField(
-                value = instagramText,
+                value = instagramText!!,
                 setValue = setInstagramText ,
                 label = stringResource(id = R.string.profile_instagram) ,
                 iconID = R.drawable.instagram_icon,
@@ -125,7 +127,7 @@ fun ProfilePage(navController: NavController){
             )
 
             CustomOutlineTextField(
-                value = discordText,
+                value = discordText!!,
                 setValue = setDiscordText ,
                 label = stringResource(id = R.string.profile_discord),
                 iconID = R.drawable.discord_icon,
@@ -135,7 +137,7 @@ fun ProfilePage(navController: NavController){
             )
 
             CustomOutlineTextField(
-                value = phoneText,
+                value = phoneText!!,
                 setValue = setPhoneText ,
                 label = stringResource(id = R.string.profile_phone_number) ,
                 iconID = R.drawable.phone_icon,
@@ -145,33 +147,42 @@ fun ProfilePage(navController: NavController){
             )
 
         }
-        
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceAround) {
-            Button(
-                onClick = { /*TODO*/ },
-                colors = ButtonDefaults.buttonColors(backgroundColor =
+
+        if (
+            userViewModel.user?.username != usernameText
+            || userViewModel.user?.snapchat != snapchatText
+            || userViewModel.user?.phone != phoneText
+            || userViewModel.user?.discord != discordText
+            || userViewModel.user?.instagram != instagramText
+        ){
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceAround) {
+                Button(
+                    onClick = { /*TODO*/ },
+                    colors = ButtonDefaults.buttonColors(backgroundColor =
                     colorResource(
                         id = R.color.cancelRed
                     ),
-                    contentColor = Color.White
-                )
-            ) {
-                Text(text = "Cancel")
-            }
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text(text = "Cancel")
+                }
 
-            Button(onClick = { /*TODO*/ },
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.Green,
-                )
-            ) {
-                Text(text = "Save")
+                Button(onClick = { /*TODO*/ },
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = Color.Green,
+                    )
+                ) {
+                    Text(text = "Save")
+                }
             }
         }
+
 
     }
 }

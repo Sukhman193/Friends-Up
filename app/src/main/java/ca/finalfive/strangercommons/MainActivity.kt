@@ -7,11 +7,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import ca.finalfive.strangercommons.composables.BackgroundImage
+import ca.finalfive.strangercommons.factories.UserViewModelFactory
 import ca.finalfive.strangercommons.navigation.Navigation
+import ca.finalfive.strangercommons.repositories.FirestoreUserRepository
 import ca.finalfive.strangercommons.ui.theme.StrangerCommonsTheme
 import ca.finalfive.strangercommons.viewmodels.AuthViewModel
 import ca.finalfive.strangercommons.viewmodels.MyViewModel
+import ca.finalfive.strangercommons.viewmodels.UserViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +24,9 @@ class MainActivity : ComponentActivity() {
         val viewModel = MyViewModel()
         // creating an instance of authViewModel
         val authViewModel = AuthViewModel()
+
+        // creating an instance of userViewModel
+//        val userViewModel = viewModel(factory =  UserViewModelFactory(FirestoreUserRepository()))
 
         setContent {
             StrangerCommonsTheme {
@@ -32,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     BackgroundImage()
                     Navigation(
                         viewModel = viewModel,
-                        authViewModel = authViewModel
+                        authViewModel = authViewModel,
                     )
                 }
             }

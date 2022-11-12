@@ -2,17 +2,21 @@ package ca.finalfive.strangercommons.navigation
 
 import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ca.finalfive.strangercommons.R
 import ca.finalfive.strangercommons.composables.NavigationContainer
+import ca.finalfive.strangercommons.factories.UserViewModelFactory
+import ca.finalfive.strangercommons.repositories.FirestoreUserRepository
 import ca.finalfive.strangercommons.screens.AuthScreen
 import ca.finalfive.strangercommons.screens.ChatRoomScreen
 import ca.finalfive.strangercommons.screens.FriendsScreen
 import ca.finalfive.strangercommons.screens.ProfileScreen
 import ca.finalfive.strangercommons.viewmodels.AuthViewModel
 import ca.finalfive.strangercommons.viewmodels.MyViewModel
+import ca.finalfive.strangercommons.viewmodels.UserViewModel
 
 /**
  * Screens for possible navigation
@@ -48,7 +52,13 @@ sealed class BottomNavItem(var title: String, var icon: Int, var route: String) 
 
 // navigation composable
 @Composable
-fun Navigation(viewModel: MyViewModel, authViewModel: AuthViewModel) {
+fun Navigation(
+    viewModel: MyViewModel,
+    authViewModel: AuthViewModel,
+    userViewModel: UserViewModel = viewModel(factory =  UserViewModelFactory(FirestoreUserRepository()
+    )
+)
+) {
 
     // Navigation controller
     val navController = rememberNavController()
@@ -87,7 +97,7 @@ fun Navigation(viewModel: MyViewModel, authViewModel: AuthViewModel) {
         ) {
             // Profile screen with bottom navigation
             NavigationContainer(navController = navController) {
-                ProfileScreen(navController = navController)
+                ProfileScreen(navController = navController, userViewModel = userViewModel)
             }
         }
 
@@ -95,7 +105,7 @@ fun Navigation(viewModel: MyViewModel, authViewModel: AuthViewModel) {
             route = Route.AuthScreen.route,
         ) {
             // Auth Screen with authViewModel
-            AuthScreen(authViewModel = authViewModel, navController )
+            AuthScreen(authViewModel = authViewModel, navController = navController, userViewModel = userViewModel )
         }
     }
 }

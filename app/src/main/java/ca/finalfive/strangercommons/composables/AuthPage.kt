@@ -28,9 +28,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ca.finalfive.strangercommons.MainActivity
 import ca.finalfive.strangercommons.R
+import ca.finalfive.strangercommons.models.User
 import ca.finalfive.strangercommons.navigation.Navigation
 import ca.finalfive.strangercommons.navigation.Route
 import ca.finalfive.strangercommons.viewmodels.AuthViewModel
+import ca.finalfive.strangercommons.viewmodels.UserViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseUser
@@ -46,7 +48,7 @@ import kotlinx.coroutines.tasks.await
  * @param navController: Nav Controller instance to navigate
  */
 @Composable
-fun AuthPage(authViewModel: AuthViewModel, navController: NavController){
+fun AuthPage(authViewModel: AuthViewModel, navController: NavController, userViewModel: UserViewModel){
     // local context
     val context = LocalContext.current
     // Firebase Client Token
@@ -66,6 +68,16 @@ fun AuthPage(authViewModel: AuthViewModel, navController: NavController){
             scope.launch {
                 // this async Firebase Function will use the credentials to sign in and returns the result
                 val authResult = Firebase.auth.signInWithCredential(credential).await()
+                userViewModel.addUser(
+                    User(
+                        email = authResult.user?.email!!,
+                        username = "",
+                        snapchat = "",
+                        instagram = "",
+                        discord = "",
+                        phone = ""
+                    )
+                )
                 // Route to the Game Screen if the sign in is successful
                 navController.navigate(Route.GameRoomScreen.route)
 
