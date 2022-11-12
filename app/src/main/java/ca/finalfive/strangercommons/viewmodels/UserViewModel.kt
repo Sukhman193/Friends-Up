@@ -17,12 +17,20 @@ class UserViewModel(private val userRepository: FirestoreUserRepository): ViewMo
 
 //    init{
 //        viewModelScope.launch {
-//
 //        }
 //    }
 
     fun addUser(newUser: User){
         userRepository.addUser(newUser)
         user = newUser
+    }
+
+//    fun userFound(id: String): Boolean{
+//        return userRepository.isUserExists(id)
+//    }
+
+    fun getuser(id: String){
+        userRepository.getUserById(id)
+        user = userRepository.firestoreUser
     }
 }

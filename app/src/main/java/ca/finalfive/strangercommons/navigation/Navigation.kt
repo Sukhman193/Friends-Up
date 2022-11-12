@@ -1,7 +1,12 @@
 package ca.finalfive.strangercommons.navigation
 
 import android.util.Log
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -55,7 +60,8 @@ sealed class BottomNavItem(var title: String, var icon: Int, var route: String) 
 fun Navigation(
     viewModel: MyViewModel,
     authViewModel: AuthViewModel,
-    userViewModel: UserViewModel = viewModel(factory =  UserViewModelFactory(FirestoreUserRepository()
+    userViewModel: UserViewModel = viewModel(
+        factory =  UserViewModelFactory(FirestoreUserRepository()
     )
 )
 ) {
@@ -95,10 +101,22 @@ fun Navigation(
         composable(
             route = Route.ProfileScreen.route,
         ) {
-            // Profile screen with bottom navigation
-            NavigationContainer(navController = navController) {
-                ProfileScreen(navController = navController, userViewModel = userViewModel)
+//            Log.d("LLAMA",authViewModel.user?.email!!)
+            if (authViewModel.user != null){
+                userViewModel.getuser(authViewModel.user!!.email!!.replace("@gmail.com",""))
             }
+            if(userViewModel.user != null){
+                // Profile screen with bottom navigation
+                NavigationContainer(navController = navController) {
+                    ProfileScreen(authViewModel = authViewModel, userViewModel = userViewModel)
+                }
+            } else {
+                NavigationContainer(navController = navController) {
+                    CircularProgressIndicator(modifier = Modifier.fillMaxSize().padding(90.dp))
+                }
+                Log.d("LLAMA","FAILED")
+            }
+
         }
 
         composable(

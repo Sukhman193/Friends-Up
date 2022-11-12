@@ -28,10 +28,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ca.finalfive.strangercommons.R
 import ca.finalfive.strangercommons.composables.utils.CustomOutlineTextField
+import ca.finalfive.strangercommons.viewmodels.AuthViewModel
 import ca.finalfive.strangercommons.viewmodels.UserViewModel
 
 @Composable
-fun ProfilePage(navController: NavController, userViewModel: UserViewModel){
+fun ProfilePage(
+    userViewModel: UserViewModel,
+    authViewModel: AuthViewModel
+){
+//    userViewModel.getuser(authViewModel.user!!.email!!.replace("@gmail.com",""))
     Log.d("LLAMA", userViewModel.user.toString())
     val requester = remember {
         FocusRequester()
@@ -50,7 +55,6 @@ fun ProfilePage(navController: NavController, userViewModel: UserViewModel){
     val (phoneText, setPhoneText) = rememberSaveable { mutableStateOf(userViewModel.user?.phone) }
 
     val localFocusManager = LocalFocusManager.current
-
 
     // structure for the screen
     Column(

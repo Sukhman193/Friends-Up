@@ -10,7 +10,6 @@ class UserViewModelFactory(private val userRepository: FirestoreUserRepository):
         if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
             return UserViewModel(userRepository) as T;
         }
-
         throw IllegalStateException();
     }
 }

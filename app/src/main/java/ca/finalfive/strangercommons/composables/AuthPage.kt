@@ -1,5 +1,6 @@
 package ca.finalfive.strangercommons.composables
 
+import android.annotation.SuppressLint
 import android.icu.number.Scale
 import android.util.Log
 import android.view.Gravity.FILL
@@ -68,16 +69,19 @@ fun AuthPage(authViewModel: AuthViewModel, navController: NavController, userVie
             scope.launch {
                 // this async Firebase Function will use the credentials to sign in and returns the result
                 val authResult = Firebase.auth.signInWithCredential(credential).await()
+                // Check to see if the user already exists in database
+//                val userAlreadyExists = userViewModel.userFound(
+//                    // First part of the gmail used as the ID of the user
+//                    authResult.user?.email!!.replace("@gmail.com","")
+//                )
+//                Log.d("LLAMA",userAlreadyExists.toString())
+//                // if the user is not in the database then create one
+//                if (!userAlreadyExists) {
                 userViewModel.addUser(
-                    User(
-                        email = authResult.user?.email!!,
-                        username = "",
-                        snapchat = "",
-                        instagram = "",
-                        discord = "",
-                        phone = ""
-                    )
+                    User(email = authResult.user?.email!!)
                 )
+//                }
+
                 // Route to the Game Screen if the sign in is successful
                 navController.navigate(Route.GameRoomScreen.route)
 

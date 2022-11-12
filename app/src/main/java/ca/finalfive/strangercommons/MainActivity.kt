@@ -3,6 +3,7 @@ package ca.finalfive.strangercommons
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -23,7 +24,7 @@ class MainActivity : ComponentActivity() {
 
         val viewModel = MyViewModel()
         // creating an instance of authViewModel
-        val authViewModel = AuthViewModel()
+        val authViewModel: AuthViewModel by viewModels()
 
         // creating an instance of userViewModel
 //        val userViewModel = viewModel(factory =  UserViewModelFactory(FirestoreUserRepository()))
