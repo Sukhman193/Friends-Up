@@ -11,6 +11,7 @@ import ca.finalfive.strangercommons.composables.BackgroundImage
 import ca.finalfive.strangercommons.navigation.Navigation
 import ca.finalfive.strangercommons.screens.ReportScreen
 import ca.finalfive.strangercommons.ui.theme.StrangerCommonsTheme
+import ca.finalfive.strangercommons.viewmodels.AuthViewModel
 import ca.finalfive.strangercommons.viewmodels.MyViewModel
 
 class MainActivity : ComponentActivity() {
@@ -18,6 +19,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val viewModel = MyViewModel()
+        // creating an instance of authViewModel
+        val authViewModel = AuthViewModel()
 
         setContent {
             StrangerCommonsTheme {
@@ -27,8 +30,11 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     // Background image
-                    BackgroundImage(showMoon = true)
-                    Navigation(viewModel = viewModel)
+                    BackgroundImage()
+                    Navigation(
+                        viewModel = viewModel,
+                        authViewModel = authViewModel
+                    )
                 }
             }
         }

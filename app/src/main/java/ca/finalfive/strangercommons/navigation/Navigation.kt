@@ -1,15 +1,18 @@
 package ca.finalfive.strangercommons.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ca.finalfive.strangercommons.R
 import ca.finalfive.strangercommons.composables.NavigationContainer
+import ca.finalfive.strangercommons.screens.AuthScreen
 import ca.finalfive.strangercommons.screens.ChatRoomScreen
 import ca.finalfive.strangercommons.screens.FriendsScreen
 import ca.finalfive.strangercommons.screens.ProfileScreen
 import ca.finalfive.strangercommons.screens.ReportScreen
+import ca.finalfive.strangercommons.viewmodels.AuthViewModel
 import ca.finalfive.strangercommons.viewmodels.MyViewModel
 
 /**
@@ -25,6 +28,8 @@ sealed class Route(val route: String) {
     object ProfileScreen: Route("profile")
     // Route to the report screen
     object ReportScreen: Route("report")
+    // Route to the Authentication screen
+    object AuthScreen: Route("auth")
 }
 
 // https://medium.com/geekculture/bottom-navigation-in-jetpack-compose-android-9cd232a8b16
@@ -45,13 +50,21 @@ sealed class BottomNavItem(var title: String, var icon: Int, var route: String) 
 
 // navigation composable
 @Composable
-fun Navigation(viewModel: MyViewModel) {
+fun Navigation(viewModel: MyViewModel, authViewModel: AuthViewModel) {
 
     // Navigation controller
     val navController = rememberNavController()
 
+    // User Authenticated or Not
+    val startingScreen: String =
+        if (authViewModel.user == null) {
+            Route.AuthScreen.route
+        } else {
+            Route.GameRoomScreen.route
+        }
+
     // Define navigation host an set the initial screen
-    NavHost(navController = navController, startDestination = Route.GameRoomScreen.route) {
+    NavHost(navController = navController, startDestination = startingScreen) {
 
         // Navigation for the Game room screen
         composable(
@@ -89,5 +102,13 @@ fun Navigation(viewModel: MyViewModel) {
         ) {
             ReportScreen(navController = navController)
         }
+        // Navigation for the authentication screen
+        composable(
+            route = Route.AuthScreen.route,
+        ) {
+            // Auth Screen with authViewModel
+            AuthScreen(authViewModel = authViewModel, navController )
+        }
+
     }
 }
