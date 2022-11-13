@@ -1,14 +1,11 @@
 <resources>
     <!--  Application Name  -->
-    <string name="app_name">Stranger Commons</string>
+    <string name="app_name">Friends Up</string>
 
     <!--  Bottom Bar Options  -->
     <!--  Navigation item name for the friends screen  -->
-    <string name="bottom_bar_friends">Friends</string>
     <!--  Navigation item name for the games screen  -->
-    <string name="bottom_bar_games">Games</string>
     <!--  Navigation item name for the profile screen  -->
-    <string name="bottom_bar_profile">Profile</string>
 
     <!--  Authentication screen  -->
     <!--  Description of the authentication screen  -->
@@ -16,38 +13,25 @@
 
     <!--  Game Room  -->
     <!--  Title of the game room screen  -->
-    <string name="game_title">Game Room</string>
     <!--  Description of the game room screen  -->
-    <string name="game_description">Start playing with others, and please be sure to be respectful!</string>
 
     <!--  Trivia queue  -->
     <!--  Title of the trivia queue screen  -->
-    <string name="trivia_queue_title">Trivia Queue</string>
     <!--  Searching for players text  -->
-    <string name="trivia_queue_search">Searching for player . . .</string>
 
     <!--  Games Options  -->
     <!--  Trivia game title -->
-    <string name="game_trivia_title">Trivia</string>
     <!--  Trivia game description  -->
-    <string name="game_trivia_description">Collaborate with another player to answer the trivia questions, but watch out, time will run out!</string>
     <!--  Prompt game  -->
     <!--  Prompt game title  -->
-    <string name="game_prompt_title">Prompt</string>
     <!--  Prompt game description  -->
-    <string name="game_prompt_description">Get a topic to talk about every minute and make sure you keep at eye at the time limit</string>
     <!--  Would you rather game  -->
     <!--  Would you rather title  -->
-    <string name="game_would_you_rather_title">Would You Rather</string>
     <!--  Would you rather description  -->
-    <string name="game_would_you_rather_description">Choose an option you would do when given two different options in a scenario!</string>
     <!--  Cards against humanity  -->
     <!--  C.A.H title  -->
-    <string name="game_cards_against_humanity_title">Cards Against Humanity</string>
     <!--  C.A.H description  -->
-    <string name="game_cards_against_humanity_title_short">C.A.H</string>
     <!--  C.A.H shortcut title  -->
-    <string name="game_cards_against_humanity_description">Play the game with another player and collaborate to agree on the best answers!</string>
 
     <!--  Report Popup  -->
     <!--  Report popup title  -->
@@ -58,14 +42,10 @@
     <string name="report_popup_note">Note: Once you report a user, the conversation will end and you will not be matched with this user again in any future games. </string>
 
     <!--  Game ended screen  -->
-    <string name="game_ended_title">Your Game has ended!</string>
-    <string name="game_ended_description">If you had a good time, add them as a friend! Or you can start a new game down below!</string>
 
     <!--  Add friend screen  -->
     <!--  Add friend screen  -->
-    <string name="add_friend_title">Pending Request</string>
     <!--  Add friend description  -->
-    <string name="add_friend_description">Waiting for user to add you as a friend</string>
 
     <!--  Report user screen  -->
     <!--  Report user title  -->
@@ -85,52 +65,34 @@
 
     <!--  Friends screen  -->
     <!--  Friend's screen title  -->
-    <string name="friends_title">Friends</string>
     <!--  Friend's screen description  -->
-    <string name="friends_description">Get in contact with your friends</string>
 
     <!--  Info screen  -->
     <!--  Friend info title  -->
-    <string name="friend_info">Info</string>
 
     <!--  Profile screen  -->
     <!--  Profile screen title -->
-    <string name="profile_title">Profile</string>
     <!--  Profile screen description  -->
-    <string name="profile_description">Help your friends connect with you</string>
 
     <!--  Profile options  -->
     <!--  TextField option for username  -->
-    <string name="profile_username">Username</string>
     <!--  TextField option for snapchat  -->
-    <string name="profile_snapchat">Snapchat</string>
     <!--  TextField option for instagram  -->
-    <string name="profile_instagram">Instagram</string>
     <!--  TextField option for discord  -->
-    <string name="profile_discord">Discord</string>
     <!--  TextField option for phone number  -->
-    <string name="profile_phone_number">Phone Number</string>
 
     <!--  Buttons  -->
     <!--  Leave button text  -->
-    <string name="button_leave">Leave</string>
     <!--  Play button text  -->
-    <string name="button_play">Play</string>
     <!--  report button text  -->
     <string name="button_report">Report</string>
     <!--  report user button text  -->
-    <string name="button_report_user">Report User</string>
     <!--  add friend button text  -->
-    <string name="button_add_as_friend">Add as Friend</string>
     <!--  start new game button text  -->
-    <string name="button_add_start_new_game">Start new Game</string>
     <!--  cancel button text  -->
     <string name="button_cancel">Cancel</string>
     <!--  remove friend text  -->
-    <string name="button_remove_friend">Remove Friend</string>
     <!--  Confirm button text  -->
-    <string name="button_confirm">Confirm</string>
     <!--  Skip button text  -->
-    <string name="button_skip">Skip</string>
 
 </resources>
