@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         gameViewModel = GameViewModel()
-        // creating an instance of authViewModel
+        // creating an instance of aut xsahViewModel
         val authViewModel = AuthViewModel()
 
         setContent {

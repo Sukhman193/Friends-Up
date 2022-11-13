@@ -125,7 +125,7 @@ class GameViewModel: ViewModel() {
                 gameApolloRepository.removeUser(
                     username = username!!,
                     gameMode = game!!.gameMode)
-                // TODO: Everything that needs to be handled by the game ends goes here
+                //  TODO: Everything that needs to be handled by the game ends goes here
                 // the game id inside the apollo repository is null reset all the values
                 if(gameApolloRepository.gameID == null) {
                     // Set game to null

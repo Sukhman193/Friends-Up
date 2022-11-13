@@ -1,8 +1,8 @@
 package ca.finalfive.friendsup.models
 
-import androidx.compose.ui.text.capitalize
-import java.util.*
-
+/**
+ * Game modes available for the games
+ */
 class GameMode {
     companion object {
         /**

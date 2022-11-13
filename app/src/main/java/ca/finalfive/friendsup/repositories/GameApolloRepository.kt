@@ -54,12 +54,16 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
                 // Get the game id
                 gameID = response.data?.joinGame?.id
             } catch(e: java.lang.Exception) {
-                Log.d("LLAMA_CATCH_ERROR", e.message.toString())
+                Log.e("ERROR", "GameApolloRepository.joinGame()")
             }
         }
     }
 
-
+    /**
+     * Remove user from the game
+     * @param username Username of the user
+     * @param gameMode Game mode selected for the game
+     */
     suspend fun removeUser(username: String, gameMode: String) {
         // if token is null get the token
         if(token!=null) {
@@ -94,7 +98,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
                     gameID = null
                 }
             } catch(e: java.lang.Exception) {
-                Log.d("LLAMA_CATCH_ERROR", e.message.toString())
+                Log.e("ERROR", "GameApolloRepository.removeUser()")
             }
         }
     }
@@ -107,7 +111,6 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
                 ?.getIdToken(true)
                 ?.addOnSuccessListener {
                     token = it.token!!
-                    Log.d("LLAMA", "Inside")
                 }
         }
     }

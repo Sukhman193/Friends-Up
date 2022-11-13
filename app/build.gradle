@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
+    // Apollo plugin
     id("com.apollographql.apollo3").version("3.7.0")
 }
 
@@ -100,7 +101,7 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
 }
-
+// Set up apollo
 apollo {
     packageName.set("ca.finalfive.friendsup")
 }

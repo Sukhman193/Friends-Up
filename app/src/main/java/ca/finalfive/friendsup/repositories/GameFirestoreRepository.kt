@@ -37,8 +37,9 @@ class GameFirestoreRepository {
                 val response = if (error == null) {
 
                     var game by mutableStateOf<Game?>(null)
+                    // Get the snapshot
                     snapshot?.let { gameSnapshot ->
-                        Log.d("LLAMA_Game", gameSnapshot.data.toString())
+                        // Convert the snapshot to a game object
                         game = gameSnapshot.toObject()
                     }
 
