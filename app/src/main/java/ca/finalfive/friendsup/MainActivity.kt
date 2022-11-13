@@ -11,13 +11,16 @@ import ca.finalfive.friendsup.composables.BackgroundImage
 import ca.finalfive.friendsup.navigation.Navigation
 import ca.finalfive.friendsup.ui.theme.StrangerCommonsTheme
 import ca.finalfive.friendsup.viewmodels.AuthViewModel
-import ca.finalfive.friendsup.viewmodels.MyViewModel
+import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 class MainActivity : ComponentActivity() {
+    // Game view model for the application
+    lateinit var gameViewModel: GameViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val viewModel = MyViewModel()
+        gameViewModel = GameViewModel()
         // creating an instance of authViewModel
         val authViewModel = AuthViewModel()
 
@@ -31,11 +34,17 @@ class MainActivity : ComponentActivity() {
                     // Background image
                     BackgroundImage()
                     Navigation(
-                        viewModel = viewModel,
+                        gameViewModel = gameViewModel,
                         authViewModel = authViewModel
                     )
                 }
             }
         }
+    }
+
+    override fun onPause() {
+        // Remove the user when they leave the screen
+        gameViewModel.removeUserFromGame()
+        super.onPause()
     }
 }

@@ -21,6 +21,7 @@ import androidx.navigation.NavController
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.navigation.Route
 import ca.finalfive.friendsup.viewmodels.AuthViewModel
+import ca.finalfive.friendsup.viewmodels.GameViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
@@ -35,7 +36,7 @@ import kotlinx.coroutines.tasks.await
  * @param navController: Nav Controller instance to navigate
  */
 @Composable
-fun AuthPage(authViewModel: AuthViewModel, navController: NavController){
+fun AuthPage(authViewModel: AuthViewModel, navController: NavController, gameViewModel: GameViewModel){
     // local context
     val context = LocalContext.current
     // Firebase Client Token
@@ -55,6 +56,9 @@ fun AuthPage(authViewModel: AuthViewModel, navController: NavController){
             scope.launch {
                 // this async Firebase Function will use the credentials to sign in and returns the result
                 Firebase.auth.signInWithCredential(credential).await()
+                // TODO: Everything that needs to be done after the user is authenticated goes here
+                // Get user token for the different games
+                gameViewModel.getToken()
                 // Route to the Game Screen if the sign in is successful
                 navController.navigate(Route.GameRoomScreen.route)
 

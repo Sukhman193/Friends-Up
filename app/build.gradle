@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
+    id("com.apollographql.apollo3").version("3.7.0")
 }
 
 android {
@@ -53,6 +54,8 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:28.2.0"))
     // Firebase Authentication Implementation
     implementation("com.google.firebase:firebase-auth")
+    // Dependency for Firebase Firestore
+    implementation 'com.google.firebase:firebase-firestore-ktx'
     // Google Service Implementation
     implementation "com.google.android.gms:play-services-auth:20.3.0"
 
@@ -78,6 +81,9 @@ dependencies {
     // Jetpack Compose Integration
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
+    // Apollo graphql runtime dependency
+    implementation("com.apollographql.apollo3:apollo-runtime:3.7.0")
+
     // Kotlin and jetpack compose base implementations
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
@@ -93,5 +99,8 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
+}
 
+apollo {
+    packageName.set("ca.finalfive.friendsup")
 }
