@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onPause() {
-        // Remove the user when they leave the screen
+        // Remove the user from the queue when they leave the screen
         gameViewModel.removeUserFromGame()
         super.onPause()
     }

@@ -4,15 +4,15 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalDensity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ca.finalfive.friendsup.models.Game
 import ca.finalfive.friendsup.models.GameMode
-import ca.finalfive.friendsup.models.Resource
 import ca.finalfive.friendsup.repositories.GameApolloRepository
 import ca.finalfive.friendsup.repositories.GameFirestoreRepository
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 // Temporary View Model
 class GameViewModel: ViewModel() {
@@ -25,6 +25,11 @@ class GameViewModel: ViewModel() {
      * Username selected by the user
      */
     var username: String? by mutableStateOf(null)
+
+    /**
+     * Random user profile picture
+     */
+    var profilePicture by mutableStateOf("https://picsum.photos/seed/${ UUID.randomUUID() }/200")
 
     /**
      * Game object for the gameplay
@@ -45,6 +50,7 @@ class GameViewModel: ViewModel() {
      * Helper function to check whether the game has been created
      */
     var createGameRoomCalled by mutableStateOf(false)
+
     /**
      * Join a new game
      * @param username Username selected by the user
@@ -70,15 +76,38 @@ class GameViewModel: ViewModel() {
                     gameID = gameID!!,
                     gameMode = gameMode
                 ).collect {
+                    // Assign the game
                     game = it.data as Game?
-//                    gameFlow.value = it
-//                    game = gameFlow.value?.data as Game?
                     Log.d("LLAMA_VIEWMODEL", game.toString())
                 }
             }
         }
     }
 
+    /**
+     * Send a new message
+     * @param content Content of the message
+     */
+    fun sendMessage(content: String = "HELLOOO") {
+        viewModelScope.launch {
+            if(username != null && game != null) {
+                gameFirestoreRepository.sendMessage(
+                    username = username!!,
+                    icon = profilePicture,
+                    content = content,
+                    gameID = gameID!!,
+                    gameMode = game!!.gameMode
+                )
+            } else {
+                Log.d("LLAMA", "ERROR NOOOOOOOOO CHECK VIEW MODEL GAME")
+            }
+        }
+    }
+
+
+    /**
+     * Remove user from the game
+     */
     fun removeUserFromGame() {
         createGameRoomCalled = false
         viewModelScope.launch {
@@ -110,6 +139,12 @@ class GameViewModel: ViewModel() {
             // get a token
             gameApolloRepository.getUserAccessToken()
         }
+    }
 
+    /**
+     * get a random profile picture for the user
+     */
+    private fun updateProfilePicture() {
+        profilePicture = "https://picsum.photos/seed/${ UUID.randomUUID() }/200"
     }
 }

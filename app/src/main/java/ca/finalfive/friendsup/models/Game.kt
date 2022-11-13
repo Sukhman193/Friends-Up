@@ -3,7 +3,7 @@ package ca.finalfive.friendsup.models
 /**
  * Game model for all the different games
  * @param id Id of the game
- * @param chatRoomId ID for the chat collection
+ * @param chatRoom array of messages sent by the users
  * @param gameMode A Game mode that the user can
  * this can be either `TRIVIA` | `PROMPT` | 'CAH' | 'WYR'
  * @param gameContent Content of the game being played
@@ -17,9 +17,9 @@ data class Game(
      */
     val id: String?,
     /**
-     * ID for the chat collection
+     * Array of messages sent by the users
      */
-    val chatRoomId: String = "",
+    val chatRoom: List<Chat> = listOf(),
     /**
      * Game mode selected
      */
@@ -43,8 +43,7 @@ data class Game(
      */
     val members: List<String> = listOf()
 ) {
-    // Cons
-//    constructor(): this(null, "","", listOf(),false,0, listOf())
+    // Constructor required by the firestore deserialization
     constructor(): this(null)
 }
 

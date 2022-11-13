@@ -1,5 +1,7 @@
 package ca.finalfive.friendsup.navigation
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -148,9 +150,15 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                     // Playing trivia game
                     GameMode.TRIVIA -> {
                         // TODO: add screen for Trivia game
-                        Text(
-                            text = "TRIVIA Game Started",
-                            style = MaterialTheme.typography.h1)
+                        Column {
+                            Text(
+                                text = "TRIVIA Game Started",
+                                style = MaterialTheme.typography.h1)
+                            Button(onClick = { gameViewModel.sendMessage("EHLLLOOOOO") }) {
+                                Text(text = "SEND MESSAGE")
+                            }
+                        }
+                        
                     }
                     // Playing Prompt game
                     GameMode.PROMPT -> {
