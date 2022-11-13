@@ -123,10 +123,10 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
         composable(
             route = Route.QueueScreen.route
         ) {
-            // If the create game has not been called go back a screen
+            // If the game has not been created, pop back one screen
             if(!gameViewModel.createGameRoomCalled) {
                 if(navController.currentBackStackEntryAsState().value?.destination?.route == Route.QueueScreen.route)
-                navController.popBackStack()
+                    navController.popBackStack()
             }
             // This statement will handle removing the user from the database
             // Whenever the user clicks on the back button while they are either

@@ -16,6 +16,9 @@ import java.util.*
 
 class GameFirestoreRepository {
 
+    /**
+     * Firestore instance
+     */
     private val firestore = FirebaseFirestore.getInstance()
 
     /**

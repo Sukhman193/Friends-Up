@@ -7,7 +7,6 @@ import ca.finalfive.friendsup.JoinGameMutation
 import ca.finalfive.friendsup.RemoveUserMutation
 import com.apollographql.apollo3.ApolloClient
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.model.mutation.DeleteMutation
 import com.google.firebase.ktx.Firebase
 
 

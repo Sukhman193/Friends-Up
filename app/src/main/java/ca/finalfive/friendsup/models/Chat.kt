@@ -11,7 +11,6 @@ import java.util.*
  * @param sentBy username of the user who sent the message
  * @param icon Icon of the user who sent the message
  * @param content Content of the message
- * @param timestamp Timestamp of the current time
  */
 data class Chat(
     /**
@@ -30,8 +29,4 @@ data class Chat(
      * Content of the message
      */
     val content: String = "",
-//    /**
-//     * Timestamp of when the message was created
-//     */
-//    val timestamp: Instant = now()
 )

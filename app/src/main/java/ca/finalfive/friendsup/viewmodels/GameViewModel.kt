@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalDensity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ca.finalfive.friendsup.models.Game
@@ -12,9 +11,11 @@ import ca.finalfive.friendsup.models.GameMode
 import ca.finalfive.friendsup.repositories.GameApolloRepository
 import ca.finalfive.friendsup.repositories.GameFirestoreRepository
 import kotlinx.coroutines.launch
-import java.util.UUID
+import java.util.*
 
-// Temporary View Model
+/**
+ * Game view model
+ */
 class GameViewModel: ViewModel() {
     /**
      * Id of the game to be joined
@@ -72,13 +73,13 @@ class GameViewModel: ViewModel() {
             gameID = gameApolloRepository.gameID
             // If the game id is not null than get the game updates
             if(gameID != null) {
+                // Get the game, and observe the changes
                 gameFirestoreRepository.getGame(
                     gameID = gameID!!,
                     gameMode = gameMode
                 ).collect {
                     // Assign the game
                     game = it.data as Game?
-                    Log.d("LLAMA_VIEWMODEL", game.toString())
                 }
             }
         }
@@ -90,7 +91,10 @@ class GameViewModel: ViewModel() {
      */
     fun sendMessage(content: String = "HELLOOO") {
         viewModelScope.launch {
+            // When sending a message username and game will never be null
+            // because they are being sent from within the game
             if(username != null && game != null) {
+                // Call the repository to sent the message
                 gameFirestoreRepository.sendMessage(
                     username = username!!,
                     icon = profilePicture,
@@ -99,7 +103,7 @@ class GameViewModel: ViewModel() {
                     gameMode = game!!.gameMode
                 )
             } else {
-                Log.d("LLAMA", "ERROR NOOOOOOOOO CHECK VIEW MODEL GAME")
+                Log.e("ERROR", "GameViewModel.SendMessage()")
             }
         }
     }
@@ -109,11 +113,15 @@ class GameViewModel: ViewModel() {
      * Remove user from the game
      */
     fun removeUserFromGame() {
+        // Set the createGameRoom to false
+        // This is needed for when the user minimizes the application
         createGameRoomCalled = false
+
         viewModelScope.launch {
             // Username is always going to have a value since
             // it's assigned when the game is being created
             if(username != null && game != null) {
+                // Use the apollo server to remove the user
                 gameApolloRepository.removeUser(
                     username = username!!,
                     gameMode = game!!.gameMode)
@@ -125,6 +133,9 @@ class GameViewModel: ViewModel() {
                     // Set game id to null
                     gameID = null
                 }
+            } else {
+                // This should never occur
+                Log.e("ERROR", "GameViewModel.removeUserFromGame()")
             }
 
         }
@@ -139,12 +150,5 @@ class GameViewModel: ViewModel() {
             // get a token
             gameApolloRepository.getUserAccessToken()
         }
-    }
-
-    /**
-     * get a random profile picture for the user
-     */
-    private fun updateProfilePicture() {
-        profilePicture = "https://picsum.photos/seed/${ UUID.randomUUID() }/200"
     }
 }
