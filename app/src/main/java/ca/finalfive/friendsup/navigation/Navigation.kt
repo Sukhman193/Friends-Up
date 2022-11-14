@@ -67,7 +67,10 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
         }
 
     // Define navigation host an set the initial screen
-    NavHost(navController = navController, startDestination = startingScreen) {
+    NavHost(
+        navController = navController,
+        startDestination = startingScreen
+    ) {
 
         // Navigation for the Game room screen
         composable(
@@ -77,7 +80,8 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
             NavigationContainer(navController = navController) {
                 GameRoomScreen(
                     navController = navController,
-                    gameViewModel = gameViewModel)
+                    gameViewModel = gameViewModel
+                )
             }
         }
 
@@ -108,7 +112,6 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
             ReportScreen(navController = navController)
         }
 
-
         // Navigation for the authentication screen
         composable(
             route = Route.AuthScreen.route,
@@ -117,21 +120,26 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
             AuthScreen(
                 authViewModel = authViewModel,
                 navController = navController,
-                gameViewModel = gameViewModel)
+                gameViewModel = gameViewModel
+            )
         }
 
+        // In game composable
+        // It will handle the different games content
         composable(
             route = Route.QueueScreen.route
         ) {
             // If the game has not been created, pop back one screen
             if(!gameViewModel.createGameRoomCalled) {
-                if(navController.currentBackStackEntryAsState().value?.destination?.route == Route.QueueScreen.route)
+                if(navController.currentBackStackEntryAsState()
+                        .value?.destination?.route == Route.QueueScreen.route)
                     navController.popBackStack()
             }
             // This statement will handle removing the user from the database
             // Whenever the user clicks on the back button while they are either
             // waiting in the queue, on in a game
-            if(navController.currentBackStackEntryAsState().value?.destination?.route != Route.QueueScreen.route) {
+            if(navController.currentBackStackEntryAsState()
+                    .value?.destination?.route != Route.QueueScreen.route) {
                 // Check if the game has been created or not
                 if(gameViewModel.game != null) {
                     // Remove the game

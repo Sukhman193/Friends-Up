@@ -80,8 +80,8 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
                 memberName = username,
                 gameMode = gameMode,
                 access = token!!,
-                gameId = gameID!!)
-
+                gameId = gameID!!
+            )
             try {
                 // Make the request to the endpoint
                 val response = apolloClient.mutation(apolloRequest).execute()

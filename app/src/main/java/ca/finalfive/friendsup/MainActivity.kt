@@ -21,8 +21,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // initialize game view model
         gameViewModel = GameViewModel()
-        // creating an instance of aut xsahViewModel
+        // creating an instance of authViewModel
         val authViewModel = AuthViewModel()
 
         setContent {
@@ -44,9 +45,13 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * Override the on pause lifecycle activity
+     */
     override fun onPause() {
         // Remove the user from the queue when they leave the screen
         gameViewModel.removeUserFromGame()
+        // default on pause handler
         super.onPause()
     }
 }
