@@ -20,6 +20,15 @@ import ca.finalfive.friendsup.composables.ScreenTitle
 import ca.finalfive.friendsup.ui.theme.redSubmitButton
 
 @Composable
+        /**
+         * Queue Screen Template
+         * @param timer current timer in seconds
+         * @param screenTitleText title of the screen
+         * @param submitButtonContent content of the submit button,
+         * integer which refers to the value in the `string.xml`
+         * @param submitAction action taken by clicking the submit button
+         * @param cardContent content of the card
+         */
 fun QueueScreenTemplate(
     timer: Int,
     screenTitleText: Int,
@@ -29,6 +38,7 @@ fun QueueScreenTemplate(
 ) {
     /**
      * Get the remaining time in a user friendly format
+     * @param seconds Number of seconds for the timer
      */
     fun getTimerFormatted(seconds: Int): String {
         // Get how many minutes are in the time
@@ -46,6 +56,7 @@ fun QueueScreenTemplate(
     }
 
     Box {
+        // Add background image
         BackgroundImage(showMoon = true)
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
@@ -75,6 +86,7 @@ fun QueueScreenTemplate(
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically
                     ){
+                        // Timer
                         Text(
                             text = getTimerFormatted(timer),
                             style = MaterialTheme.typography.caption,
@@ -90,7 +102,9 @@ fun QueueScreenTemplate(
                 contentDescription = null,
                 modifier = Modifier.size(210.dp))
 
+            // Add space
             Spacer(modifier = Modifier.height(50.dp))
+            // Submit button
             Button(
                 onClick = submitAction,
                 colors = ButtonDefaults.buttonColors(
@@ -98,6 +112,7 @@ fun QueueScreenTemplate(
                 ),
                 shape = RoundedCornerShape(20.dp)
             ) {
+                // Text of the button
                 Text(
                     text = stringResource(id = submitButtonContent),
                     style = MaterialTheme.typography.h3,

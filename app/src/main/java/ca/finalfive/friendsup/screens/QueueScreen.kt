@@ -27,6 +27,7 @@ fun GameQueueScreen(
         timer += 1
     }
 
+    // Display the queue screen
     QueueScreenTemplate(
         timer = timer,
         screenTitleText = R.string.trivia_queue_title,
@@ -34,6 +35,7 @@ fun GameQueueScreen(
         submitAction = {
             navController.popBackStack()
         }) {
+        // Content of the search user
         SearchCardContent()
     }
 }

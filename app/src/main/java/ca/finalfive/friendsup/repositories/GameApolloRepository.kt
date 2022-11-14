@@ -90,7 +90,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
                 // If a user stays on the app for too long the token might expire
                 if(response.errors?.get(0)?.message == "User token is invalid") {
                     token = null
-                    this.joinGame(username, gameMode)
+                    this.removeUser(username, gameMode)
                 }
                 // If the user is deleted successfully remove the user
                 if(response.data?.removeUser?.success == true) {
@@ -113,6 +113,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
                     token = it.token!!
                 }
         }
+        Log.d("LLAMAaaaha", token.toString())
     }
 
     companion object {
@@ -129,12 +130,13 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
             // If instance is null create a new gameApolloRepository
             if (INSTANCE == null) {
                 val apolloClient = ApolloClient.Builder()
-                    .serverUrl(" https://t8gqkrufr2.execute-api.us-west-1.amazonaws.com/dev/graphql")
+                    .serverUrl("https://t8gqkrufr2.execute-api.us-west-1.amazonaws.com/dev/graphql")
                     .build()
                 INSTANCE = GameApolloRepository(apolloClient)
                 // Get the token every time the user is already authenticated
                 INSTANCE!!.getUserAccessToken()
             }
+            // return instance
             return INSTANCE!!
         }
 

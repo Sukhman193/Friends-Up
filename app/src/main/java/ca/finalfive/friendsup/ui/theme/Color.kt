@@ -8,6 +8,7 @@ val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
 
 // Bottom navigation colors
+
 /**
  * Background color for the navigation bar
  */

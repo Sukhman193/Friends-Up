@@ -14,7 +14,12 @@ import androidx.compose.ui.unit.dp
 import ca.finalfive.friendsup.R
 
 @Composable
+        /**
+         * Content of the card on the top of the
+         * it's content is equal to searching for players
+         */
 fun SearchCardContent() {
+
     // Container of the text
     Row (
         modifier = Modifier.fillMaxSize().padding(horizontal = 10.dp),
