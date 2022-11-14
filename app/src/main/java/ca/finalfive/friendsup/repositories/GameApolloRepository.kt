@@ -106,7 +106,8 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
     }
 
     /**
-     * End the users current game
+     *  End the user's current game
+     *  @param gameMode game mode being played
      */
     suspend fun endGame(gameMode: String) {
         // Check if the token is not null

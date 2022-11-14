@@ -142,6 +142,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                     // Go back to the game selection screen
                     navController.popBackStack()
             }
+
             // This statement will handle removing the user from the database
             // Whenever the user clicks on the back button while they are either
             // waiting in the queue, or in a game
@@ -162,7 +163,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                     gameViewModel = gameViewModel
                 )
             // If the user is adding the user as a friend and the game has currently
-            // all the members inside
+            // all the members inside than display the add as queue screen
             } else if (gameViewModel.isAddAsFriendScreenOpened && 
                     gameViewModel.game?.members?.size == gameViewModel.game?.maxMembers) {
                 // TODO: Add the queue system for the add friend

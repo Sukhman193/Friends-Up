@@ -134,6 +134,8 @@ class GameViewModel: ViewModel() {
         // This is needed for when the user minimizes the application
         createGameRoomCalled = !popBackAScreen
 
+        isReportScreenOpened = false
+
         // temporary value for game
         val tempGame = game
 
@@ -149,7 +151,7 @@ class GameViewModel: ViewModel() {
                 // Use the apollo server to remove the user
                 gameApolloRepository.removeUser(
                     username = username!!,
-                    gameMode = tempGame!!.gameMode)
+                    gameMode = tempGame.gameMode)
                 //  TODO: Everything that needs to be handled by the game ends goes here
 
             } else {
@@ -162,11 +164,15 @@ class GameViewModel: ViewModel() {
 
     /**
      * Report a user
+     * @param reportReason Reasoning for the report
      */
     fun reportUser(reportReason: String) {
 
         // Set the create Room called to false
         createGameRoomCalled = false
+
+        // Set the report screen open to false
+        isReportScreenOpened = false
 
         // Create a temporary game and reset the game
         // for faster user interaction
@@ -186,9 +192,22 @@ class GameViewModel: ViewModel() {
                 Log.e("ERROR", "GameViewModel.reportUser()")
             }
         }
+    }
 
-        // Set the report screen open to false
-        isReportScreenOpened = false
+    /**
+     * End user's game when all the questions have ended
+     * This function will route the users to the end Game Screen
+     */
+    fun endGame() {
+        viewModelScope.launch {
+            // Check if game is not null
+            if(game != null) {
+                // End the game
+                gameApolloRepository.endGame(gameMode = game!!.gameMode)
+            } else {
+                Log.e("ERROR", "GameViewModel.endGame()")
+            }
+        }
     }
 
     /**
