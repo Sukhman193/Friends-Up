@@ -19,6 +19,11 @@ val BottomNavBackgroundColor = Color(0xFF2E246C)
  */
 val BottomNavSelectedColor = Color(0xFF53479F)
 
+/**
+ * Background color for the outlinetextfields
+ */
+val OutlineTextFieldColor = Color(0xFF47458F)
+
 val lightPurple = Color(0xFF605BD4)
 
 val mediumPurple = Color(0xFF3F3A95)
