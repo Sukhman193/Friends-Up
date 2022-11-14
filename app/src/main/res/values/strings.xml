@@ -31,11 +31,15 @@
     <string name="game_trivia_title">Trivia</string>
     <!--  Trivia game description  -->
     <string name="game_trivia_description">Collaborate with another player to answer the trivia questions, but watch out, time will run out!</string>
+    <!--  Trivia game counter description -->
+    <string name="trivia_game_prompt">Question %1$d of %2$d</string>
     <!--  Prompt game  -->
     <!--  Prompt game title  -->
     <string name="game_prompt_title">Prompt</string>
     <!--  Prompt game description  -->
     <string name="game_prompt_description">Get a topic to talk about every minute and make sure you keep at eye at the time limit</string>
+    <!--  Prompt game counter description -->
+    <string name="prompt_game_prompt">Prompt %1$d of %2$d</string>
     <!--  Would you rather game  -->
     <!--  Would you rather title  -->
     <string name="game_would_you_rather_title">Would You Rather</string>

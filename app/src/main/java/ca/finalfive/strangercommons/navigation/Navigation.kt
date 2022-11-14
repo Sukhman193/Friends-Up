@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ca.finalfive.strangercommons.R
+import ca.finalfive.strangercommons.composables.BackgroundImage
 import ca.finalfive.strangercommons.composables.NavigationContainer
 import ca.finalfive.strangercommons.screens.*
 import ca.finalfive.strangercommons.viewmodels.MyViewModel
@@ -45,7 +46,6 @@ sealed class BottomNavItem(var title: String, var icon: Int, var route: String) 
 // navigation composable
 @Composable
 fun Navigation(viewModel: MyViewModel) {
-
     // Navigation controller
     val navController = rememberNavController()
 
@@ -82,17 +82,15 @@ fun Navigation(viewModel: MyViewModel) {
         composable(
             route = Route.TriviaGameScreen.route
         ) {
-            NavigationContainer(navController = navController) {
-                TriviaGameScreen(navController = navController)
-            }
+            BackgroundImage(false)
+            TriviaGameScreen(navController = navController)
         }
 
         composable(
             route = Route.PromptGameScreen.route
         ) {
-            NavigationContainer(navController = navController) {
-                PromptGameScreen(navController = navController)
-            }
+            BackgroundImage(false)
+            PromptGameScreen(navController = navController)
         }
     }
 }

@@ -16,18 +16,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import ca.finalfive.strangercommons.*
 import ca.finalfive.strangercommons.R
 import ca.finalfive.strangercommons.composables.GameTimer
-import ca.finalfive.strangercommons.composables.showMoon
 import ca.finalfive.strangercommons.ui.theme.comfortaa
 import ca.finalfive.strangercommons.ui.theme.hello_valentina
+import ca.finalfive.strangercommons.viewmodels.buttonColorLight
+import ca.finalfive.strangercommons.viewmodels.containerColor
+import ca.finalfive.strangercommons.viewmodels.currentQuestion
+import ca.finalfive.strangercommons.viewmodels.totalQuestions
 
 @Composable
 fun PromptGameScreen(navController: NavController) {
-    // Disable the moon from showing
-    showMoon = false
-
     // Black background on top to make the main background dimmer
     Box(
         modifier = Modifier
@@ -75,7 +74,7 @@ fun PromptGameScreen(navController: NavController) {
 
         // Component containing the timer animation along with the lines above it,
         // and the words to the left of the timer
-        GameTimer(totalTime = 30, prompt = "Prompt", currentQuestion = currentQuestion, totalQuestions = totalQuestions)
+        GameTimer(totalTime = 30f, prompt = R.string.prompt_game_prompt, currentQuestion = currentQuestion, totalQuestions = totalQuestions)
 
         // Question for the user
         MaterialTheme(typography = Typography(defaultFontFamily = comfortaa)) {
