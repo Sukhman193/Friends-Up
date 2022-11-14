@@ -134,7 +134,10 @@ class GameViewModel: ViewModel() {
         // This is needed for when the user minimizes the application
         createGameRoomCalled = !popBackAScreen
 
+        // Set the report screen open to false
         isReportScreenOpened = false
+        // Set the add as friends queue screen to false
+        isAddAsFriendScreenOpened = false
 
         // temporary value for game
         val tempGame = game
@@ -158,7 +161,6 @@ class GameViewModel: ViewModel() {
                 // This should never occur
                 Log.e("ERROR", "GameViewModel.removeUserFromGame()")
             }
-
         }
     }
 
@@ -206,6 +208,23 @@ class GameViewModel: ViewModel() {
                 gameApolloRepository.endGame(gameMode = game!!.gameMode)
             } else {
                 Log.e("ERROR", "GameViewModel.endGame()")
+            }
+        }
+    }
+
+    /**
+     * Update user friend list queue
+     */
+    fun updateUserFriendQueue() {
+        viewModelScope.launch {
+            // Set the add user screen to not the previous value
+            isAddAsFriendScreenOpened = !isAddAsFriendScreenOpened
+            // check if game is not null
+            if(game != null) {
+                // call update user friend queue
+                gameApolloRepository.updateUserFriendQueue(game!!.gameMode)
+            } else {
+                Log.e("ERROR", "GameViewModel.updateUserFriendQueue()")
             }
         }
     }

@@ -1,5 +1,6 @@
 package ca.finalfive.friendsup.navigation
 
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -167,7 +168,17 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
             } else if (gameViewModel.isAddAsFriendScreenOpened && 
                     gameViewModel.game?.members?.size == gameViewModel.game?.maxMembers) {
                 // TODO: Add the queue system for the add friend
-                Text(text = "ADDING AS FRIEND SCREEN")
+                // If both the friends have added each other show the screen for users added
+                if(gameViewModel.game?.addFriendList?.size == gameViewModel.game?.maxMembers) {
+                    // TODO: Add screen for both users are friends 
+                    Text(text = "YOU are now friends")
+                } else {
+                    // TODO: Add the add friend queue screen
+                    Text(text = "ADDING AS FRIEND SCREEN")
+                    Button(onClick = { gameViewModel.updateUserFriendQueue() }) {
+                        Text(text = "CANCEL")
+                    }
+                }
             // If the game has started and not ended and all the members are in the game
             // than display the game screen a
             } else if (gameViewModel.game?.gameStarted == true &&
@@ -210,7 +221,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                 gameViewModel.game?.members?.size != gameViewModel.game?.maxMembers
                 )
             ) {
-                // TODO: ADD END GAME SCREEN HERE 
+                // TODO: ADD END GAME SCREEN HERE
                 Text(text = "END game ahahhahah")
             // If none of the above are true than display the game queue screen
             } else {

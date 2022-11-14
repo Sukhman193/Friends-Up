@@ -34,5 +34,10 @@ fun TriviaGameScreen(gameViewModel: GameViewModel) {
         }) {
             Text(text = "Report User")
         }
+        Button(onClick = {
+            gameViewModel.updateUserFriendQueue()
+        }) {
+            Text(text = "add to friend list")
+        }
     }
 }

@@ -50,8 +50,11 @@ data class Game(
     /**
      * States whether the game has ended or not
      */
-    val gameEnded: Boolean = false
-
+    val gameEnded: Boolean = false,
+    /**
+     * Friends added to the friendList queue
+     */
+    val  addFriendList: List<String> = listOf()
 ) {
     // Constructor required by the firestore deserialization
     constructor(): this(null)

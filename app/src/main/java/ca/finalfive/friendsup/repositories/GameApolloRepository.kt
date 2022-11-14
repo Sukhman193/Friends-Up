@@ -3,10 +3,7 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import ca.finalfive.friendsup.EndGameMutation
-import ca.finalfive.friendsup.JoinGameMutation
-import ca.finalfive.friendsup.RemoveUserMutation
-import ca.finalfive.friendsup.ReportUserMutation
+import ca.finalfive.friendsup.*
 import com.apollographql.apollo3.ApolloClient
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -173,6 +170,43 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
                 }
             } catch(e: java.lang.Exception) {
                 Log.e("ERROR", "GameApolloRepository.reportUser()")
+            }
+        }
+    }
+
+    /**
+     * Add or remove user from the friend list queue screen
+     * In case the user is already in the queue, the user will be removed
+     * In case the user is not in the queue, the user will be added
+     * @param gameMode game mode of the current game
+     */
+    suspend fun updateUserFriendQueue(gameMode: String) {
+        // check if the token is available otherwise get a token
+        if(token == null) {
+            this.getUserAccessToken()
+        }
+
+        // Check if the token is not null and the game id is not null
+        if(token != null && gameID != null) {
+            // apollo request for update friend queue list
+            val apolloRequest = UpdateAddUserFriendMutation(
+                access = token!!,
+                gameId = gameID!!,
+                gameMode = gameMode
+            )
+
+            try {
+                // Execute the apollo request
+                val response = apolloClient.mutation(apolloRequest).execute()
+
+//                // if there is an authentication error than call this function again but instead get a new token
+//                // If a user stays on the app for too long the token might expire
+                if(response.errors?.get(0)?.message == "User token is invalid") {
+                    token = null
+                    this.updateUserFriendQueue(gameMode)
+                }
+            } catch(e: java.lang.Exception) {
+                Log.e("ERROR", "GameApolloRepository.updateUserFriendQueue()")
             }
         }
     }

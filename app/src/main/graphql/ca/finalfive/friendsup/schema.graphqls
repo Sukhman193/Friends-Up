@@ -13,9 +13,9 @@ type Query {
 }
 
 type Mutation {
+  updateAddUserFriend(access: String!, gameID: String!, gameMode: String!): Success!
   reportUser(access: String!, gameID: String!, gameMode: String!, reportedReason: String!): Success!
   endGame(access: String!, gameID: String!, gameMode: String!): Success!
   removeUser(memberName: String!, gameMode: String!, access: String!, gameID: String!): Success!
   joinGame(memberName: String!, gameMode: String!, access: String!): Game!
 }
-
