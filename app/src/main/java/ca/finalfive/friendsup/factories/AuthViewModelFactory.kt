@@ -1,4 +1,4 @@
-package ca.finalfive.strangercommons.factories
+package ca.finalfive.friendsup.factories
 
 class AuthViewModelFactory {
 }

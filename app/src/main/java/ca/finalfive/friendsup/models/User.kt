@@ -1,4 +1,4 @@
-package ca.finalfive.strangercommons.models
+package ca.finalfive.friendsup.models
 
 data class User(
     val email: String,
