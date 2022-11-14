@@ -20,7 +20,11 @@ val BottomNavSelectedColor = Color(0xFF53479F)
 
 val lightPurple = Color(0xFF605BD4)
 
+val mediumPurple = Color(0xFF3F3A95)
+
 val darkPurple = Color(0xFF312E81)
+
+val redSubmitButton = Color(0xE6FF6262)
 
 /**
  * Background used for the title shades

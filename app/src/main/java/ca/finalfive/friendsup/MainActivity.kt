@@ -9,6 +9,7 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import ca.finalfive.friendsup.composables.BackgroundImage
 import ca.finalfive.friendsup.navigation.Navigation
+import ca.finalfive.friendsup.screens.GameQueueScreen
 import ca.finalfive.friendsup.ui.theme.StrangerCommonsTheme
 import ca.finalfive.friendsup.viewmodels.AuthViewModel
 import ca.finalfive.friendsup.viewmodels.GameViewModel
@@ -33,6 +34,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     // Background image
                     BackgroundImage()
+//                    GameQueueScreen()
                     Navigation(
                         gameViewModel = gameViewModel,
                         authViewModel = authViewModel
