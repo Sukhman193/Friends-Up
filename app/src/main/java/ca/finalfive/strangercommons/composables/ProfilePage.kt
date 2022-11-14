@@ -1,8 +1,5 @@
 package ca.finalfive.strangercommons.composables
 
-import android.util.Log
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -14,60 +11,64 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import ca.finalfive.strangercommons.R
-import ca.finalfive.strangercommons.composables.utils.CustomOutlineTextField
+import ca.finalfive.strangercommons.composables.utils.CustomTextField
 
+/**
+ * Profile Page
+ */
 @Composable
-fun ProfilePage(navController: NavController){
+fun ProfilePage(){
+    // saves the state of Focus Request for the keyboard
     val requester = remember {
         FocusRequester()
     }
-
+    // States of keyboard
     var isKeyboardShown by remember { mutableStateOf(false)}
 
+    // username of the user && the setter to change the username
     val (usernameText, setUsernameText) = rememberSaveable { mutableStateOf("") }
-
+    // snapchat account of the user && the setter to change it
     val (snapchatText, setSnapchatText) = rememberSaveable { mutableStateOf("") }
-
+    // instagram account of the user && the setter to change it
     val (instagramText, setInstagramText) = rememberSaveable { mutableStateOf("") }
-
+    // discord account of the user && the setter to change it
     val (discordText, setDiscordText) = rememberSaveable { mutableStateOf("") }
-
+    // phone number of the user && the setter to change it
     val (phoneText, setPhoneText) = rememberSaveable { mutableStateOf("") }
 
+    // saves the state of the local focus
     val localFocusManager = LocalFocusManager.current
-
-
     // structure for the screen
     Column(
         modifier = Modifier
             .fillMaxSize()
             .pointerInput(Unit) {
+                // checks if the user taps outside the textField
                 detectTapGestures {
                     localFocusManager.clearFocus()
                 }
             }
             .padding(top = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
-
     ) {
-        // The title
+        // The title depending on the keyboard
         Text(
             text =
+                // if the keyboard is enabled then show the title as Edit
                 if(isKeyboardShown){
-                    stringResource(id = R.string.edit_title)}
+                    stringResource(id = R.string.edit_title)
+                }
+                // if the keyboard is disabled then show the title as Profile
                 else {
                     stringResource(id = R.string.profile_title)
                     },
@@ -75,8 +76,8 @@ fun ProfilePage(navController: NavController){
             fontSize = 60.sp,
             style = MaterialTheme.typography.h1
         )
-        
-        if(!isKeyboardShown){
+        // if the keyboard is disabled then show the description of the profile page
+        if (!isKeyboardShown){
             Box(modifier = Modifier.padding(start = 20.dp)){
                 Text(
                     text = stringResource(id = R.string.profile_description),
@@ -89,11 +90,12 @@ fun ProfilePage(navController: NavController){
         } else {
             Spacer(modifier = Modifier.size(15.dp))
         }
-        
+        // text field that shows the user's information
         Column(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            CustomOutlineTextField(
+            // the customized TextField to show the user's username
+            CustomTextField(
                 value = usernameText,
                 setValue = setUsernameText,
                 label = stringResource(id = R.string.profile_username),
@@ -103,8 +105,8 @@ fun ProfilePage(navController: NavController){
                     .onFocusChanged { isKeyboardShown = it.hasFocus }
                     .padding()
             )
-
-            CustomOutlineTextField(
+            // the customized TextField to show the user's snapchat account
+            CustomTextField(
                 value = snapchatText,
                 setValue = setSnapchatText ,
                 label = stringResource(id = R.string.profile_snapchat),
@@ -113,8 +115,8 @@ fun ProfilePage(navController: NavController){
                     .focusRequester(requester)
                     .onFocusChanged { isKeyboardShown = it.hasFocus }
             )
-
-            CustomOutlineTextField(
+            // the customized TextField to show the user's instagram account
+            CustomTextField(
                 value = instagramText,
                 setValue = setInstagramText ,
                 label = stringResource(id = R.string.profile_instagram) ,
@@ -123,8 +125,8 @@ fun ProfilePage(navController: NavController){
                     .focusRequester(requester)
                     .onFocusChanged { isKeyboardShown = it.hasFocus }
             )
-
-            CustomOutlineTextField(
+            // the customized TextField to show the user's discord account
+            CustomTextField(
                 value = discordText,
                 setValue = setDiscordText ,
                 label = stringResource(id = R.string.profile_discord),
@@ -133,8 +135,8 @@ fun ProfilePage(navController: NavController){
                     .focusRequester(requester)
                     .onFocusChanged { isKeyboardShown = it.hasFocus }
             )
-
-            CustomOutlineTextField(
+            // the customized TextField to show the user's phone number
+            CustomTextField(
                 value = phoneText,
                 setValue = setPhoneText ,
                 label = stringResource(id = R.string.profile_phone_number) ,
@@ -145,13 +147,16 @@ fun ProfilePage(navController: NavController){
             )
 
         }
-        
+        // interaction buttons for the user to change
+        // its data when the user's information gets changed
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceAround) {
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
+            // cancel button to resets the data
             Button(
                 onClick = { /*TODO*/ },
                 colors = ButtonDefaults.buttonColors(backgroundColor =
@@ -159,17 +164,21 @@ fun ProfilePage(navController: NavController){
                         id = R.color.cancelRed
                     ),
                     contentColor = Color.White
-                )
+                ),
+                modifier = Modifier.width(83.dp)
             ) {
                 Text(text = "Cancel")
             }
-
+            // save button to update the new data
             Button(onClick = { /*TODO*/ },
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.Green,
-                )
+                    backgroundColor = colorResource(
+                        id = R.color.saveGreen
+                    ),
+                ),
+                modifier = Modifier.width(83.dp)
             ) {
-                Text(text = "Save")
+                Text(text = "Save", color = Color.White)
             }
         }
 

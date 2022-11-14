@@ -6,7 +6,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import ca.finalfive.strangercommons.composables.ProfilePage
 
+/**
+ * Profile Screen - navigates to the Profile Page
+ */
 @Composable
-fun ProfileScreen(navController: NavController) {
-    ProfilePage(navController)
+fun ProfileScreen() {
+    ProfilePage()
 }

@@ -87,7 +87,7 @@ fun Navigation(viewModel: MyViewModel, authViewModel: AuthViewModel) {
         ) {
             // Profile screen with bottom navigation
             NavigationContainer(navController = navController) {
-                ProfileScreen(navController = navController)
+                ProfileScreen()
             }
         }
 

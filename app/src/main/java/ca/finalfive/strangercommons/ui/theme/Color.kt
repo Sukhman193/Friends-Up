@@ -23,12 +23,3 @@ val BottomNavSelectedColor = Color(0xFF53479F)
  */
 val OutlineTextFieldColor = Color(0xFF47458F)
 
-/**
- * Color of Cancel Button
- */
-val CancelButton = Color.Red
-
-/**
- * Color of Save Button
- */
-val SaveButton = Color.Green
