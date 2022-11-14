@@ -3,8 +3,10 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import ca.finalfive.friendsup.EndGameMutation
 import ca.finalfive.friendsup.JoinGameMutation
 import ca.finalfive.friendsup.RemoveUserMutation
+import ca.finalfive.friendsup.ReportUserMutation
 import com.apollographql.apollo3.ApolloClient
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -74,7 +76,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
         // Since removing a user from the game will never happen
         // If the game is not created they both should never be null
         // Token can be null if it expires before the game ends
-        if(token != null || gameID != null) {
+        if(token != null && gameID != null) {
             // Create apollo server request
             val apolloRequest = RemoveUserMutation(
                 memberName = username,
@@ -102,6 +104,78 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
             }
         }
     }
+
+    /**
+     * End the users current game
+     */
+    suspend fun endGame(gameMode: String) {
+        // Check if the token is not null
+        if(this.token == null) {
+            // Get a new token
+            this.getUserAccessToken()
+        }
+
+        // check if the token and the game id are not null
+        if(token != null && gameID != null) {
+            // apollo request for the end game
+            val apolloRequest = EndGameMutation(
+                access = token!!,
+                gameMode = gameMode,
+                gameId = gameID!!
+            )
+
+            try {
+                // Execute the apollo request
+                val response = apolloClient.mutation(apolloRequest).execute()
+
+                // if there is an authentication error than call this function again but instead get a new token
+                // If a user stays on the app for too long the token might expire
+                if(response.errors?.get(0)?.message == "User token is invalid") {
+                    token = null
+                    this.endGame(gameMode)
+                }
+            } catch(e: java.lang.Exception) {
+                Log.e("ERROR", "GameApolloRepository.endGame()")
+            }
+        }
+    }
+
+    /**
+     * Report user
+     */
+    suspend fun reportUser(gameMode: String, reportReason: String) {
+        // Check if the token is not null
+        if(this.token == null) {
+            // Get a new token
+            this.getUserAccessToken()
+        }
+
+        // check if the token and the game id are not null
+        if(token != null && gameID != null) {
+            // apollo request for the end game
+            val apolloRequest = ReportUserMutation(
+                access = token!!,
+                gameMode = gameMode,
+                gameId = gameID!!,
+                reportedReason = reportReason
+            )
+
+            try {
+                // Execute the apollo request
+                val response = apolloClient.mutation(apolloRequest).execute()
+
+                // if there is an authentication error than call this function again but instead get a new token
+                // If a user stays on the app for too long the token might expire
+                if(response.errors?.get(0)?.message == "User token is invalid") {
+                    token = null
+                    this.reportUser(gameMode, reportReason)
+                }
+            } catch(e: java.lang.Exception) {
+                Log.e("ERROR", "GameApolloRepository.reportUser()")
+            }
+        }
+    }
+
     /**
      * Get the user's access token
      */

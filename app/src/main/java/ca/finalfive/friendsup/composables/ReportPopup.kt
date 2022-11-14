@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.navigation.Route
+import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 @Composable
         /**
@@ -28,7 +29,7 @@ import ca.finalfive.friendsup.navigation.Route
          */
 fun ReportPopup(
     setReportPopup: (Boolean) -> Unit,
-    navController: NavController
+    gameViewModel: GameViewModel
 ) {
     // Dark background to cover the entire screen
     Column(
@@ -98,7 +99,7 @@ fun ReportPopup(
                         fontSize = 14.sp,
                         style = MaterialTheme.typography.body2,
                         modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp).clickable {
-                            navController.navigate(Route.ReportScreen.route)
+                           gameViewModel.isReportScreenOpened = true
                         }
                     )
                     // Cancel button

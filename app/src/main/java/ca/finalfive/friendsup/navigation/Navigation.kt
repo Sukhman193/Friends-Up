@@ -1,7 +1,5 @@
 package ca.finalfive.friendsup.navigation
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -13,6 +11,7 @@ import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.NavigationContainer
 import ca.finalfive.friendsup.models.GameMode
 import ca.finalfive.friendsup.screens.*
+import ca.finalfive.friendsup.screens.games.TriviaGameScreen
 import ca.finalfive.friendsup.viewmodels.AuthViewModel
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
@@ -109,7 +108,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
         composable(
             route = Route.ReportScreen.route
         ) {
-            ReportScreen(navController = navController)
+           
         }
 
         // Navigation for the authentication screen
@@ -129,44 +128,56 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
         composable(
             route = Route.QueueScreen.route
         ) {
+            /**
+             * Route of the current screen
+             */
+            val currentRoute = navController.currentBackStackEntryAsState()
+                .value?.destination?.route
             // If the game has not been created, pop back one screen
+            // This is needed for the screen when the user leaves the
+            // application
             if(!gameViewModel.createGameRoomCalled) {
-                if(navController.currentBackStackEntryAsState()
-                        .value?.destination?.route == Route.QueueScreen.route)
+                // Check if the current route
+                if(currentRoute == Route.QueueScreen.route)
+                    // Go back to the game selection screen
                     navController.popBackStack()
             }
             // This statement will handle removing the user from the database
             // Whenever the user clicks on the back button while they are either
-            // waiting in the queue, on in a game
-            if(navController.currentBackStackEntryAsState()
-                    .value?.destination?.route != Route.QueueScreen.route) {
+            // waiting in the queue, or in a game
+            if(currentRoute != Route.QueueScreen.route && currentRoute != null) {
                 // Check if the game has been created or not
                 if(gameViewModel.game != null) {
                     // Remove the game
                     gameViewModel.removeUserFromGame()
                 }
             }
-            // Check whether the game has started and there are two users
-            // a user might leave right when he joins, so we need to make sure
-            // both users are present
-            // In this case I have a maxMembers value saved in the database
-            // so that in future updates we can make multiple people join at the same time
-            if(gameViewModel.game?.gameStarted == true &&
-                gameViewModel.game?.members?.size == gameViewModel.game?.maxMembers) {
+
+            // If the user has clicked on report user
+            // open the report user screen
+            if(gameViewModel.isReportScreenOpened) {
+                // Report screen display
+                ReportScreen(
+                    navController = navController,
+                    gameViewModel = gameViewModel
+                )
+            // If the user is adding the user as a friend and the game has currently
+            // all the members inside
+            } else if (gameViewModel.isAddAsFriendScreenOpened && 
+                    gameViewModel.game?.members?.size == gameViewModel.game?.maxMembers) {
+                // TODO: Add the queue system for the add friend
+                Text(text = "ADDING AS FRIEND SCREEN")
+            // If the game has started and not ended and all the members are in the game
+            // than display the game screen a
+            } else if (gameViewModel.game?.gameStarted == true &&
+                    gameViewModel.game?.members?.size == gameViewModel.game?.maxMembers &&
+                    gameViewModel.game?.gameEnded == false) {
                 // Check which game they are playing
                 when(gameViewModel.game?.gameMode) {
                     // Playing trivia game
                     GameMode.TRIVIA -> {
                         // TODO: add screen for Trivia game
-                        Column {
-                            Text(
-                                text = "TRIVIA Game Started",
-                                style = MaterialTheme.typography.h1)
-                            Button(onClick = { gameViewModel.sendMessage("EHLLLOOOOO") }) {
-                                Text(text = "SEND MESSAGE")
-                            }
-                        }
-                        
+                        TriviaGameScreen(gameViewModel)
                     }
                     // Playing Prompt game
                     GameMode.PROMPT -> {
@@ -190,13 +201,25 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                             style = MaterialTheme.typography.h1)
                     }
                 }
-                // Handle game started but the other user decided to leave
-            } else if(gameViewModel.game?.gameStarted == true) {
-                // TODO: Handle when the game started but a user decided to leave
-                // Suggestion is to navigate to the game ended screen
+            // If the game has ended or a user leaves in the middle of the game display the 
+            // end game screen
+            } else if(gameViewModel.game?.gameEnded == true ||
+                (
+                gameViewModel.game?.gameStarted == true &&
+                gameViewModel.game?.members?.size != gameViewModel.game?.maxMembers
+                )
+            ) {
+                // TODO: ADD END GAME SCREEN HERE 
+                Text(text = "END game ahahhahah")
+            // If none of the above are true than display the game queue screen
             } else {
-                // Display queue screen
-                GameQueueScreen(navController = navController)
+                // There is a bug in which when the user goes back from the game screen
+                // The game queue screen will show up for a split second
+                // so we check if the current screen route matches the game screen route
+                // Reason is that there is a time when the current route is null
+                if(currentRoute == Route.QueueScreen.route) {
+                    GameQueueScreen(navController = navController)
+                }
             }
         }
     }

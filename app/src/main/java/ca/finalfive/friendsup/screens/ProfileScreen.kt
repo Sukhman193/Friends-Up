@@ -28,7 +28,7 @@ fun ProfileScreen(navController: NavController) {
             )
         }
         if(openReportPopup) {
-            ReportPopup(setReportPopup = setReportPopup, navController = navController)
+//            ReportPopup(setReportPopup = setReportPopup)
         }
     }
 }

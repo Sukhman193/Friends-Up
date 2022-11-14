@@ -1,0 +1,15 @@
+mutation ReportUser(
+    $access: String!,
+    $gameId: String!,
+    $gameMode: String!,
+    $reportedReason: String!
+) {
+    reportUser(
+        access: $access,
+        gameID: $gameId,
+        gameMode: $gameMode,
+        reportedReason: $reportedReason
+    ) {
+        success
+    }
+}
