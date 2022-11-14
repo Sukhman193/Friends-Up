@@ -1,6 +1,5 @@
 package ca.finalfive.friendsup.navigation
 
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -101,7 +100,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
         ) {
             // Profile screen with bottom navigation
             NavigationContainer(navController = navController) {
-                ProfileScreen(navController = navController)
+                ProfileScreen()
             }
         }
 
@@ -170,14 +169,13 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                 // TODO: Add the queue system for the add friend
                 // If both the friends have added each other show the screen for users added
                 if(gameViewModel.game?.addFriendList?.size == gameViewModel.game?.maxMembers) {
-                    // TODO: Add screen for both users are friends 
+                    // TODO: Add screen for both users are friends
+                    // TODO: Add animation for this screen, it will look nice
+                    // TODO: Add 5 seconds timer to pop back a screen
                     Text(text = "YOU are now friends")
                 } else {
-                    // TODO: Add the add friend queue screen
-                    Text(text = "ADDING AS FRIEND SCREEN")
-                    Button(onClick = { gameViewModel.updateUserFriendQueue() }) {
-                        Text(text = "CANCEL")
-                    }
+                    // Display the queue for adding a user as a friend
+                    AddFriendQueueScreen(gameViewModel = gameViewModel)
                 }
             // If the game has started and not ended and all the members are in the game
             // than display the game screen a
@@ -222,7 +220,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                 )
             ) {
                 // TODO: ADD END GAME SCREEN HERE
-                Text(text = "END game ahahhahah")
+                Text(text = "END game :) :) :) :)")
             // If none of the above are true than display the game queue screen
             } else {
                 // There is a bug in which when the user goes back from the game screen

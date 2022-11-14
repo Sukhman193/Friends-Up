@@ -15,10 +15,12 @@ import ca.finalfive.friendsup.R
 
 @Composable
         /**
-         * Content of the card on the top of the
-         * it's content is equal to searching for players
+         * Content of the card on the top of the queue screen
+         * @param content Content of the card, This should be a Text
          */
-fun SearchCardContent() {
+fun SearchCardContent(
+    content: @Composable ()->Unit
+) {
 
     // Container of the text
     Row (
@@ -33,10 +35,6 @@ fun SearchCardContent() {
             modifier = Modifier.size(32.dp).offset(y = 5.dp),
             tint = Color.White)
         // Text of the card
-        Text(
-            text = stringResource(id = R.string.trivia_queue_search),
-            modifier = Modifier.padding(start = 10.dp),
-            style = MaterialTheme.typography.h3,
-        )
+        content()
     }
 }
