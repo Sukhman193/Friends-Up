@@ -98,6 +98,8 @@
     <!--  Profile screen  -->
     <!--  Profile screen title -->
     <string name="profile_title">Profile</string>
+    <!--  Profile screen title when the keyboard is up -->
+    <string name="edit_title">Edit</string>
     <!--  Profile screen description  -->
     <string name="profile_description">Help your friends connect with you</string>
 
