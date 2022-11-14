@@ -1,6 +1,6 @@
 <resources>
     <!--  Application Name  -->
-    <string name="app_name">Stranger Commons</string>
+    <string name="app_name">Friends Up</string>
 
     <!--  Bottom Bar Options  -->
     <!--  Navigation item name for the friends screen  -->
@@ -58,11 +58,13 @@
     <string name="report_popup_note">Note: Once you report a user, the conversation will end and you will not be matched with this user again in any future games. </string>
 
     <!--  Game ended screen  -->
+    <!--  Game ended screen title  -->
     <string name="game_ended_title">Your Game has ended!</string>
+    <!--  Game ended description  -->
     <string name="game_ended_description">If you had a good time, add them as a friend! Or you can start a new game down below!</string>
 
     <!--  Add friend screen  -->
-    <!--  Add friend screen  -->
+    <!--  Add friend title  -->
     <string name="add_friend_title">Pending Request</string>
     <!--  Add friend description  -->
     <string name="add_friend_description">Waiting for user to add you as a friend</string>
