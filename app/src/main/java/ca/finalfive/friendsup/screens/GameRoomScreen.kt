@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import ca.finalfive.friendsup.navigation.Route
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
+// TODO: Remove this screen and put the actual screen
 @Composable
 fun GameRoomScreen(navController: NavController, gameViewModel: GameViewModel) {
     Column {
@@ -27,7 +28,6 @@ fun GameRoomScreen(navController: NavController, gameViewModel: GameViewModel) {
                 .padding(top = 20.dp, start = 150.dp),
             fontSize = 60.sp
         )
-
         Button(onClick = {
             gameViewModel.joinGame()
             navController.navigate(Route.QueueScreen.route)

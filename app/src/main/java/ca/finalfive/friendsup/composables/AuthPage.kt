@@ -36,7 +36,11 @@ import kotlinx.coroutines.tasks.await
  * @param navController: Nav Controller instance to navigate
  */
 @Composable
-fun AuthPage(authViewModel: AuthViewModel, navController: NavController, gameViewModel: GameViewModel){
+fun AuthPage(
+    authViewModel: AuthViewModel,
+    navController: NavController,
+    gameViewModel: GameViewModel
+){
     // local context
     val context = LocalContext.current
     // Firebase Client Token
