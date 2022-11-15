@@ -9,6 +9,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.ParagraphStyle
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -18,6 +22,17 @@ import ca.finalfive.friendsup.viewmodels.GameViewModel
 // TODO: Remove this screen and put the actual screen
 @Composable
 fun GameRoomScreen(navController: NavController, gameViewModel: GameViewModel) {
+
+    val clipboard = LocalClipboardManager.current
+    fun copy(text: String = "JACK") {
+        clipboard.setText(
+            AnnotatedString(
+                text,
+                spanStyle = SpanStyle(fontSize = 12.sp)
+            )
+        )
+    }
+
     Column {
         Text(
             text = "Chat Room",
@@ -33,6 +48,11 @@ fun GameRoomScreen(navController: NavController, gameViewModel: GameViewModel) {
             navController.navigate(Route.QueueScreen.route)
         }) {
             Text(text = "START TRIVIA GAME")
+        }
+        Button(onClick = {
+            copy()
+        }) {
+            Text(text = "COPY")
         }
     }
 }

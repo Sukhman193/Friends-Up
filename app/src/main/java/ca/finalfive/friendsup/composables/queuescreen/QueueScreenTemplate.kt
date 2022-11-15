@@ -62,7 +62,7 @@ fun QueueScreenTemplate(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Add title
-            ScreenTitle(title = stringResource(id = screenTitleText))
+            ScreenTitle(title = screenTitleText)
             // Search card and timer container
             Column(
                 horizontalAlignment = Alignment.End

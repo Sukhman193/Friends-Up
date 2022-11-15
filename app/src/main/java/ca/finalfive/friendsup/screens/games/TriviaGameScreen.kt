@@ -8,6 +8,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
 import ca.finalfive.friendsup.composables.ReportPopup
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
@@ -16,6 +18,7 @@ fun TriviaGameScreen(gameViewModel: GameViewModel) {
     val (openReportPopup, setOpenReportPopup) = remember {
         mutableStateOf(false)
     }
+
 
     Box {
         if(openReportPopup) {
@@ -38,6 +41,11 @@ fun TriviaGameScreen(gameViewModel: GameViewModel) {
             gameViewModel.updateUserFriendQueue()
         }) {
             Text(text = "add to friend list")
+        }
+        Button(onClick = {
+            gameViewModel.endGame()
+        }) {
+            Text(text = "EndGame")
         }
     }
 }

@@ -86,7 +86,7 @@ fun AuthPage(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Title of the page
-            ScreenTitle(title = stringResource(id = R.string.app_name))
+            ScreenTitle(title = R.string.app_name)
             // Description of the app
             Text(
                 text = stringResource(id = R.string.authentication_description),

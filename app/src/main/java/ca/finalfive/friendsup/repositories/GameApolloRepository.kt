@@ -7,6 +7,7 @@ import ca.finalfive.friendsup.*
 import com.apollographql.apollo3.ApolloClient
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import org.json.JSONObject
 
 
 class GameApolloRepository(private val apolloClient: ApolloClient) {
@@ -31,8 +32,8 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
             // if the token is null than retrieve the user token
             this.getUserAccessToken()
         }
-        // Check if the token is not null or an empty string
-        if(token != null || token != "") {
+        // Check if the token is not null
+        if(token != null) {
             // Create the apollo server request
             val apolloRequest =
                 JoinGameMutation(
@@ -52,7 +53,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
                 }
                 // Get the game id
                 gameID = response.data?.joinGame?.id
-            } catch(e: java.lang.Exception) {
+            } catch(e: Throwable) {
                 Log.e("ERROR", "GameApolloRepository.joinGame()")
             }
         }
@@ -239,7 +240,8 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
             // If instance is null create a new gameApolloRepository
             if (INSTANCE == null) {
                 val apolloClient = ApolloClient.Builder()
-                    .serverUrl("https://t8gqkrufr2.execute-api.us-west-1.amazonaws.com/dev/graphql")
+                    // TODO: Change the url below
+                    .serverUrl("https://4920-75-157-118-144.ngrok.io/dev/graphql")
                     .build()
                 INSTANCE = GameApolloRepository(apolloClient)
                 // Get the token every time the user is already authenticated

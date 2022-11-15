@@ -31,7 +31,7 @@ fun OffsetCard(
             backgroundColor = mediumPurple,
             modifier = modifier
                 // Set offset of the card
-                .offset((-5).dp, 5.dp)
+                .offset(x = (-5).dp,y = 5.dp)
         ) {}
         // Main card to display the user
         Card(

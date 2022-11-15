@@ -219,8 +219,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                 gameViewModel.game?.members?.size != gameViewModel.game?.maxMembers
                 )
             ) {
-                // TODO: ADD END GAME SCREEN HERE
-                Text(text = "END game :) :) :) :)")
+               EndGameScreen(gameViewModel = gameViewModel)
             // If none of the above are true than display the game queue screen
             } else {
                 // There is a bug in which when the user goes back from the game screen

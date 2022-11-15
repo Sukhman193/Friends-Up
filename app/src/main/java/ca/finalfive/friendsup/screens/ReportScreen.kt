@@ -53,7 +53,7 @@ fun ReportScreen(
         // Container of the screen
         Column {
             // Add title to the screen
-            ScreenTitle(title = stringResource(id = R.string.report_user_title))
+            ScreenTitle(title = R.string.report_user_title)
             // Add description of the screen
             Column(
                 modifier = Modifier

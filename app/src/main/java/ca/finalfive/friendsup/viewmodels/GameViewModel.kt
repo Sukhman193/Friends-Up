@@ -62,6 +62,11 @@ class GameViewModel: ViewModel() {
      */
     private val gameFirestoreRepository = GameFirestoreRepository.getInstance()
 
+    /**
+     * Game mode selected by the user
+     */
+    private var gameMode by mutableStateOf(GameMode.TRIVIA)
+
 
 
     /**
@@ -69,7 +74,12 @@ class GameViewModel: ViewModel() {
      * @param username Username selected by the user
      * @param gameMode Game play mode selected by the user
      */
-    fun joinGame(username: String = UUID.randomUUID().toString(), gameMode: String = GameMode.TRIVIA) {
+    fun joinGame(username: String = UUID.randomUUID().toString(), gameMode: String = this.gameMode) {
+        // Store the game mode in a variable
+        if(this.gameMode != gameMode) {
+            this.gameMode = gameMode
+        }
+
         // Set the username for the user
         this.username = username
 
@@ -83,6 +93,7 @@ class GameViewModel: ViewModel() {
                 username = username,
                 gameMode = gameMode
             )
+            Log.d("LLAMA", "GETTING GAME")
             // TODO: Everything that needs to be handled by the game start goes here
             gameID = gameApolloRepository.gameID
             // If the game id is not null than get the game updates

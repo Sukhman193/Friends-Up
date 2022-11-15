@@ -63,11 +63,11 @@ fun ProfilePage(){
         // The title depending on the keyboard
         ScreenTitle(title =
             if(isKeyboardShown){
-                stringResource(id = R.string.edit_title)
+                 R.string.edit_title
             }
             // if the keyboard is disabled then show the title as Profile
             else {
-                stringResource(id = R.string.profile_title)
+                 R.string.profile_title
             },
         )
         // if the keyboard is disabled then show the description of the profile page
