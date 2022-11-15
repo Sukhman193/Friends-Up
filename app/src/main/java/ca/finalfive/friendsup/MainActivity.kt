@@ -27,9 +27,6 @@ class MainActivity : ComponentActivity() {
         // creating an instance of authViewModel
         val authViewModel: AuthViewModel by viewModels()
 
-        // creating an instance of userViewModel
-//        val userViewModel = viewModel(factory =  UserViewModelFactory(FirestoreUserRepository()))
-
         setContent {
             StrangerCommonsTheme {
                 // A surface container using the 'background' color from the theme

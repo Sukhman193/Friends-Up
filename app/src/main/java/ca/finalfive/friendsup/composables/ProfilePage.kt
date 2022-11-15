@@ -41,17 +41,51 @@ fun ProfilePage(
     }
     // States of keyboard
     var isKeyboardShown by remember { mutableStateOf(false)}
-    // username of the user && the setter to change the username
-    val (usernameText, setUsernameText) = rememberSaveable { mutableStateOf(userViewModel.user?.username) }
-    // snapchat account of the user && the setter to change it
-    val (snapchatText, setSnapchatText) = rememberSaveable { mutableStateOf(userViewModel.user?.snapchat) }
-    // instagram account of the user && the setter to change it
-    val (instagramText, setInstagramText) = rememberSaveable { mutableStateOf(userViewModel.user?.instagram) }
-    // discord account of the user && the setter to change it
-    val (discordText, setDiscordText) = rememberSaveable { mutableStateOf(userViewModel.user?.discord) }
-    // phone number of the user && the setter to change it
-    val (phoneText, setPhoneText) = rememberSaveable { mutableStateOf(userViewModel.user?.phone) }
 
+    // username of the user && the setter to change the username
+    val (usernameText, setUsernameText) = rememberSaveable {
+        if (userViewModel.user != null){
+            mutableStateOf(userViewModel.user!!.username)
+        } else {
+            mutableStateOf("")
+        }
+    }
+    // snapchat account of the user && the setter to change it
+    val (snapchatText, setSnapchatText) = rememberSaveable {
+        if (userViewModel.user != null) {
+            mutableStateOf(userViewModel.user!!.snapchat)
+        } else {
+            mutableStateOf("")
+        }
+    }
+    // instagram account of the user && the setter to change it
+    val (instagramText, setInstagramText) = rememberSaveable {
+        if (userViewModel.user != null) {
+            mutableStateOf(userViewModel.user!!.instagram)
+        } else {
+            mutableStateOf("")
+        }
+    }
+    // discord account of the user && the setter to change it
+    val (discordText, setDiscordText) = rememberSaveable {
+        if (userViewModel.user != null) {
+            mutableStateOf(userViewModel.user!!.discord)
+        } else {
+            mutableStateOf("")
+        }
+    }
+    // phone number of the user && the setter to change it
+    val (phoneText, setPhoneText) = rememberSaveable {
+        if (userViewModel.user != null) {
+            mutableStateOf(userViewModel.user!!.phone)
+        } else {
+            mutableStateOf("")
+        }
+    }
+
+    /**
+     * Checking with database to match the data
+     */
     fun checkWithDatabase(): Boolean{
         if(
             userViewModel.user?.username != usernameText
@@ -74,11 +108,11 @@ fun ProfilePage(
         // saves the new data as a User object
         val updatedUser = userViewModel.user?.let {
             User(
-                username = usernameText!!,
-                snapchat = snapchatText!!,
-                discord = discordText!!,
-                instagram = instagramText!!,
-                phone = phoneText!!,
+                username = usernameText,
+                snapchat = snapchatText,
+                discord = discordText,
+                instagram = instagramText,
+                phone = phoneText,
                 email = it.email
             )
         }
@@ -97,15 +131,15 @@ fun ProfilePage(
      */
     fun cancelHandler(){
         // reset the username
-        setUsernameText(userViewModel.user?.username)
+        setUsernameText(userViewModel.user!!.username)
         // reset the instagram
-        setInstagramText(userViewModel.user?.instagram)
+        setInstagramText(userViewModel.user!!.instagram)
         // reset the discord
-        setDiscordText(userViewModel.user?.discord)
+        setDiscordText(userViewModel.user!!.discord)
         // reset the snapchat
-        setSnapchatText(userViewModel.user?.snapchat)
+        setSnapchatText(userViewModel.user!!.snapchat)
         // reset the phone number
-        setPhoneText(userViewModel.user?.phone)
+        setPhoneText(userViewModel.user!!.phone)
     }
 
     // saves the state of the local focus
@@ -153,7 +187,7 @@ fun ProfilePage(
         ) {
             // the customized TextField to show the user's username
             CustomTextField(
-                value = usernameText!!,
+                value = usernameText,
                 setValue = setUsernameText,
                 label = stringResource(id = R.string.profile_username),
                 iconID = R.drawable.username_icon,
@@ -165,7 +199,7 @@ fun ProfilePage(
 
             // the customized TextField to show the user's snapchat account
             CustomTextField(
-                value = snapchatText!!,
+                value = snapchatText,
                 setValue = setSnapchatText ,
                 label = stringResource(id = R.string.profile_snapchat),
                 iconID = R.drawable.snapchat_icon,
@@ -176,7 +210,7 @@ fun ProfilePage(
 
             // the customized TextField to show the user's instagram account
             CustomTextField(
-                value = instagramText!!,
+                value = instagramText,
                 setValue = setInstagramText ,
                 label = stringResource(id = R.string.profile_instagram) ,
                 iconID = R.drawable.instagram_icon,
@@ -187,7 +221,7 @@ fun ProfilePage(
 
             // the customized TextField to show the user's discord account
             CustomTextField(
-                value = discordText!!,
+                value = discordText,
                 setValue = setDiscordText ,
                 label = stringResource(id = R.string.profile_discord),
                 iconID = R.drawable.discord_icon,
@@ -198,7 +232,7 @@ fun ProfilePage(
 
             // the customized TextField to show the user's phone number
             CustomTextField(
-                value = phoneText!!,
+                value = phoneText,
                 setValue = setPhoneText ,
                 label = stringResource(id = R.string.profile_phone_number) ,
                 iconID = R.drawable.phone_icon,

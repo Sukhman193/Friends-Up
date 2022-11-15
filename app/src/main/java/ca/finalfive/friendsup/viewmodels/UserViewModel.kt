@@ -19,7 +19,6 @@ class UserViewModel(private val userRepository: FirestoreUserRepository): ViewMo
         user = newUser
     }
 
-
     fun getuser(id: String){
         userRepository.getUserById(id)
         user = userRepository.firestoreUser
