@@ -13,22 +13,20 @@ class UserViewModel(private val userRepository: FirestoreUserRepository): ViewMo
 
     var user: User? by mutableStateOf(userRepository.firestoreUser)
 
-//    init{
-//        viewModelScope.launch {
-//        }
-//    }
 
     fun addUser(newUser: User){
         userRepository.addUser(newUser)
         user = newUser
     }
 
-//    fun userFound(id: String): Boolean{
-//        return userRepository.isUserExists(id)
-//    }
 
     fun getuser(id: String){
         userRepository.getUserById(id)
+        user = userRepository.firestoreUser
+    }
+
+    fun updateUserByID(userId: String, updatedUser: User){
+        userRepository.updateUserByID(userId, updatedUser)
         user = userRepository.firestoreUser
     }
 }

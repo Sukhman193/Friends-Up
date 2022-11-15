@@ -8,6 +8,7 @@ import androidx.compose.runtime.setValue
 import ca.finalfive.friendsup.models.User
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.ktx.toObject
 
 class Constants{
     companion object{
@@ -39,14 +40,16 @@ class FirestoreUserRepository(){
             .get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
-                    val user = User(
-                        email = document.getString("email")!!,
-                        username = document.getString("username")!!,
-                        snapchat = document.getString("snapchat")!!,
-                        instagram = document.getString("instagram")!!,
-                        discord = document.getString("discord")!!,
-                        phone = document.getString("phone")!!
-                    )
+                    //document.toObject<User>()
+                    val user = document.toObject<User>()
+//                        User(
+//                            email = document.getString("email")!!,
+//                            username = document.getString("username")!!,
+//                            snapchat = document.getString("snapchat")!!,
+//                            instagram = document.getString("instagram")!!,
+//                            discord = document.getString("discord")!!,
+//                            phone = document.getString("phone")!!,
+//                    )
                     firestoreUser = user
                     Log.d("LLAMA", firestoreUser.toString())
                     Log.d(TAG, "DocumentSnapshot data: ${document.data}")
@@ -68,10 +71,8 @@ class FirestoreUserRepository(){
                     if (document != null){
                         if (!document.exists()){
                             addUserHelper(user)
-//                            Log.d("TAG", "Document already exists.")
                         } else{
                             firestoreUser = user
-                            Log.d("TAG", "Document doesn't exist.")
                         }
                     }
                 } else{
@@ -80,15 +81,18 @@ class FirestoreUserRepository(){
             }
     }
 
-
-    fun getAllUsers(){
-
-    }
-
-    fun deleteUser(){
-
-    }
-    fun updateUserByID(){
-
+    fun updateUserByID(
+        userId: String,
+        updatedUser: User
+    ){
+        collection.document(userId).update(
+            mapOf(
+                "username" to updatedUser.username,
+                "snapchat" to updatedUser.snapchat,
+                "instagram" to updatedUser.instagram,
+                "phone" to updatedUser.phone,
+                "discord" to updatedUser.discord
+            )
+        )
     }
 }

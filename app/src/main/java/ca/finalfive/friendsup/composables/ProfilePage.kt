@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 
 import ca.finalfive.friendsup.composables.utils.CustomTextField
 import ca.finalfive.friendsup.R
+import ca.finalfive.friendsup.models.User
 import ca.finalfive.friendsup.viewmodels.AuthViewModel
 import ca.finalfive.friendsup.viewmodels.UserViewModel
 
@@ -40,21 +41,72 @@ fun ProfilePage(
     }
     // States of keyboard
     var isKeyboardShown by remember { mutableStateOf(false)}
-
-    val (usernameText, setUsernameText) = rememberSaveable { mutableStateOf(userViewModel.user?.username) }
-
-    val (snapchatText, setSnapchatText) = rememberSaveable { mutableStateOf(userViewModel.user?.snapchat) }
-
-    val (instagramText, setInstagramText) = rememberSaveable { mutableStateOf(userViewModel.user?.instagram) }
-
-    val (discordText, setDiscordText) = rememberSaveable { mutableStateOf(userViewModel.user?.discord) }
-
-    val (phoneText, setPhoneText) = rememberSaveable { mutableStateOf(userViewModel.user?.phone) }
     // username of the user && the setter to change the username
+    val (usernameText, setUsernameText) = rememberSaveable { mutableStateOf(userViewModel.user?.username) }
     // snapchat account of the user && the setter to change it
+    val (snapchatText, setSnapchatText) = rememberSaveable { mutableStateOf(userViewModel.user?.snapchat) }
     // instagram account of the user && the setter to change it
+    val (instagramText, setInstagramText) = rememberSaveable { mutableStateOf(userViewModel.user?.instagram) }
     // discord account of the user && the setter to change it
+    val (discordText, setDiscordText) = rememberSaveable { mutableStateOf(userViewModel.user?.discord) }
     // phone number of the user && the setter to change it
+    val (phoneText, setPhoneText) = rememberSaveable { mutableStateOf(userViewModel.user?.phone) }
+
+    fun checkWithDatabase(): Boolean{
+        if(
+            userViewModel.user?.username != usernameText
+            || userViewModel.user?.snapchat != snapchatText
+            || userViewModel.user?.phone != phoneText
+            || userViewModel.user?.discord != discordText
+            || userViewModel.user?.instagram != instagramText
+        ){
+            return true
+        }
+        return false
+    }
+
+    /**
+     * saves the new updated data into database
+     */
+    fun saveHandler(){
+        // user id
+        val userId = userViewModel.user?.email?.replace("@gmail.com","")
+        // saves the new data as a User object
+        val updatedUser = userViewModel.user?.let {
+            User(
+                username = usernameText!!,
+                snapchat = snapchatText!!,
+                discord = discordText!!,
+                instagram = instagramText!!,
+                phone = phoneText!!,
+                email = it.email
+            )
+        }
+        // sends the updated data to the user view model
+        if (userId != null) {
+            if (updatedUser != null) {
+                userViewModel.updateUserByID(userId, updatedUser)
+                userViewModel.getuser(userId)
+            }
+        }
+
+    }
+
+    /**
+     * resets all the changed data back to normal
+     */
+    fun cancelHandler(){
+        // reset the username
+        setUsernameText(userViewModel.user?.username)
+        // reset the instagram
+        setInstagramText(userViewModel.user?.instagram)
+        // reset the discord
+        setDiscordText(userViewModel.user?.discord)
+        // reset the snapchat
+        setSnapchatText(userViewModel.user?.snapchat)
+        // reset the phone number
+        setPhoneText(userViewModel.user?.phone)
+    }
 
     // saves the state of the local focus
     val localFocusManager = LocalFocusManager.current
@@ -156,13 +208,10 @@ fun ProfilePage(
             )
 
         }
-
+        // if the user changes any of the fields which are not equal to the database
+        // it will popup the save or cancel buttons
         if (
-            userViewModel.user?.username != usernameText
-            || userViewModel.user?.snapchat != snapchatText
-            || userViewModel.user?.phone != phoneText
-            || userViewModel.user?.discord != discordText
-            || userViewModel.user?.instagram != instagramText
+            checkWithDatabase()
         ){
             // interaction buttons for the user to change
             // its data when the user's information gets changed
@@ -175,7 +224,7 @@ fun ProfilePage(
             ) {
                 // cancel button to resets the data
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { cancelHandler() },
                     colors = ButtonDefaults.buttonColors(backgroundColor =
                     colorResource(
                         id = R.color.cancelRed
@@ -187,7 +236,8 @@ fun ProfilePage(
                     Text(text = "Cancel")
                 }
                 // save button to update the new data
-                Button(onClick = { /*TODO*/ },
+                Button(
+                    onClick = { saveHandler() },
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = colorResource(
                             id = R.color.saveGreen

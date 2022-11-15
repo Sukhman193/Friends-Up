@@ -64,9 +64,11 @@ fun AuthPage(
             scope.launch {
                 // this async Firebase Function will use the credentials to sign in and returns the result
                 val authResult = Firebase.auth.signInWithCredential(credential).await()
-                // TODO: Everything that needs to be done after the user is authenticated goes here
+                // Adding the user with the user's email and its default username to the database
                 userViewModel.addUser(
-                    User(email = authResult.user?.email!!)
+                    User(email = authResult.user?.email!!,
+                        username = authResult.user?.email!!.replace("@gmail.com","")
+                    ),
                 )
                 // Get user token for the different games
                 gameViewModel.getToken()
