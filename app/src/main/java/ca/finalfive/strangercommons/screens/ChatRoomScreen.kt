@@ -20,5 +20,9 @@ fun ChatRoomScreen(navController: NavController) {
         Button(onClick = { navController.navigate(Route.PromptGameScreen.route) }) {
             Text(text = "Prompt")
         }
+
+        Button(onClick = { navController.navigate(Route.WouldYouRatherGameScreen.route) }) {
+            Text(text = "Would You Rather")
+        }
     }
 }

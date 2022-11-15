@@ -22,7 +22,15 @@ import ca.finalfive.strangercommons.R
 import ca.finalfive.strangercommons.viewmodels.containerColor
 
 @Composable
-fun TopGameBar(gameTitle: Int) {
+fun TopGameBar(gameTitle: Int, isWYR: Boolean) {
+    val fontSize = if (isWYR) {
+        // If the game is Would You Rather
+        40.sp
+    } else {
+        // If the game isn't Would You Rather
+        60.sp
+    }
+
     // Background box behind "Trivia" and the Flag icon
     Box(
         modifier = Modifier
@@ -34,10 +42,10 @@ fun TopGameBar(gameTitle: Int) {
             text = stringResource(id = gameTitle),
             style = MaterialTheme.typography.h1,
             color = Color.White,
-            fontSize = 60.sp,
+            fontSize = fontSize,
             modifier = Modifier
                 .align(Alignment.CenterStart)
-                .padding(start = 30.dp)
+                .padding(start = 20.dp)
         )
         // Flag icon / Report button
         Image(

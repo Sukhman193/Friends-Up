@@ -66,7 +66,6 @@ fun GameTimer(totalTime: Float, prompt: Int, currentQuestion: Int, totalQuestion
     // This is a side effect which is run in a Coroutine Scope
     // which will subtract the currentTime by 1 every second
     LaunchedEffect(key1 = currentTime) {
-        Log.d("DEBUG", currentTime.toString())
         if (currentTime > 0f) {
             // The percentage (in decimals) to track how much is left
             val currentTimeDecimalValue = currentTime / totalTime
@@ -89,7 +88,7 @@ fun GameTimer(totalTime: Float, prompt: Int, currentQuestion: Int, totalQuestion
             // 300f represents the end point of the 2rd bar
             // 60f represents the starting point of the 1st bar
             if (300f * bar2Progress >= 60f && bar3Done) {
-                bar3Color = Color.White
+                bar3Color = Color.Transparent
                 // This line would look something like 0.36 / 0.36 at the start of the line
                 bar2Progress = (currentTimeDecimalValue / offsetValue)
             } // If 'The end point' * bar2Progress <= 'The starting point'
@@ -101,7 +100,7 @@ fun GameTimer(totalTime: Float, prompt: Int, currentQuestion: Int, totalQuestion
             // 300f represents the end point of the 2rd bar
             // 60f represents the starting point of the 1st bar
             if (20f * bar1Progress >= 0f && bar2Done) {
-                bar2Color = Color.White
+                bar2Color = Color.Transparent
                 // This line would look something like 0.07 / 0.07 at the start of the line
                 bar1Progress = (currentTimeDecimalValue / offsetValue)
             }
@@ -109,7 +108,7 @@ fun GameTimer(totalTime: Float, prompt: Int, currentQuestion: Int, totalQuestion
             // If the time on the timer is = 0
             if (currentTime <= 0f) {
                 bar1Done = true
-                bar1Color = Color.White
+                bar1Color = Color.Transparent
             }
         }
     }

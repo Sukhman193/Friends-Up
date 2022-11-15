@@ -17,7 +17,7 @@ import ca.finalfive.strangercommons.viewmodels.buttonColorDark
 import ca.finalfive.strangercommons.viewmodels.buttonColorLight
 
 @Composable
-fun TriviaOption(answer: String) {
+fun QuestionOption(answer: String) {
     // The entire button size (with the darker color as the background)
     Box(
         // Darker part of the button

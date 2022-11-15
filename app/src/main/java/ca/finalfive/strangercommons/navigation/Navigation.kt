@@ -25,6 +25,8 @@ sealed class Route(val route: String) {
     object TriviaGameScreen: Route("triviaGame")
     // Route to the prompt game screen
     object PromptGameScreen: Route("promptGame")
+    // Route to the would you rather game screen
+    object WouldYouRatherGameScreen: Route("wouldYouRatherGame")
 }
 
 // https://medium.com/geekculture/bottom-navigation-in-jetpack-compose-android-9cd232a8b16
@@ -91,6 +93,13 @@ fun Navigation(viewModel: MyViewModel) {
         ) {
             BackgroundImage(false)
             PromptGameScreen(navController = navController)
+        }
+
+        composable(
+            route = Route.WouldYouRatherGameScreen.route
+        ) {
+            BackgroundImage(false)
+            WYRGameScreen(navController = navController)
         }
     }
 }

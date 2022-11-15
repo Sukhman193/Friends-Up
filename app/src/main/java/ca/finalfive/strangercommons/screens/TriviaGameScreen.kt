@@ -10,18 +10,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import ca.finalfive.strangercommons.R
 import ca.finalfive.strangercommons.composables.GameScreen
-import ca.finalfive.strangercommons.composables.TriviaOption
+import ca.finalfive.strangercommons.composables.QuestionOption
 
 @Composable
 fun TriviaGameScreen(navController: NavController) {
     // Array of options for the user
+    /* TODO: Make the options randomly generated depending on the question */
     val answers = arrayOf("Option 1", "Option 2", "Option 3", "Option 4")
 
-    GameScreen() {
+    GameScreen(
+        gameTitle = R.string.game_trivia_title,
+        gameType = R.string.game_trivia_type) {
         // Question for the user
-        // Displayed Question
         Text(
+            /* TODO: Make the question randomly generated along with the options */
             text = "Which one of these is a fruit?",
             color = Color.White,
             style = MaterialTheme.typography.h3,
@@ -30,6 +34,7 @@ fun TriviaGameScreen(navController: NavController) {
                 .padding(horizontal = 30.dp)
         )
 
+        // Space between the question and the question options
         Spacer(
             modifier = Modifier
                 .padding(bottom = 30.dp)
@@ -37,7 +42,7 @@ fun TriviaGameScreen(navController: NavController) {
 
         // A for loop containing 4 button options
         for (answer in answers) {
-            TriviaOption(answer = answer)
+            QuestionOption(answer = answer)
         }
     }
 }
