@@ -9,6 +9,6 @@ import ca.finalfive.friendsup.viewmodels.UserViewModel
 /**
  * Profile Screen - navigates to the Profile Page
  */
-fun ProfileScreen(userViewModel: UserViewModel, authViewModel: AuthViewModel) {
-    ProfilePage(userViewModel = userViewModel, authViewModel = authViewModel)
+fun ProfileScreen(userViewModel: UserViewModel) {
+    ProfilePage(userViewModel = userViewModel)
 }

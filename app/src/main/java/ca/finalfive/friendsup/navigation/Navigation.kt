@@ -119,13 +119,12 @@ fun Navigation(
         ) {
             // Profile screen with bottom navigation
             if (authViewModel.user != null){
-                userViewModel.getuser(authViewModel.user!!.email!!.replace("@gmail.com",""))
+                userViewModel.getUser(authViewModel.user!!.email!!.replace("@gmail.com",""))
             }
             if(userViewModel.user != null){
                 // Profile screen with bottom navigation
                 NavigationContainer(navController = navController) {
                     ProfileScreen(
-                        authViewModel = authViewModel,
                         userViewModel = userViewModel
                     )
                 }

@@ -31,10 +31,7 @@ import ca.finalfive.friendsup.viewmodels.UserViewModel
  * Profile Page
  */
 @Composable
-fun ProfilePage(
-    userViewModel: UserViewModel,
-    authViewModel: AuthViewModel
-){
+fun ProfilePage(userViewModel: UserViewModel){
     // saves the state of Focus Request for the keyboard
     val requester = remember {
         FocusRequester()
@@ -120,7 +117,7 @@ fun ProfilePage(
         if (userId != null) {
             if (updatedUser != null) {
                 userViewModel.updateUserByID(userId, updatedUser)
-                userViewModel.getuser(userId)
+                userViewModel.getUser(userId)
             }
         }
 
@@ -130,16 +127,19 @@ fun ProfilePage(
      * resets all the changed data back to normal
      */
     fun cancelHandler(){
-        // reset the username
-        setUsernameText(userViewModel.user!!.username)
-        // reset the instagram
-        setInstagramText(userViewModel.user!!.instagram)
-        // reset the discord
-        setDiscordText(userViewModel.user!!.discord)
-        // reset the snapchat
-        setSnapchatText(userViewModel.user!!.snapchat)
-        // reset the phone number
-        setPhoneText(userViewModel.user!!.phone)
+        if(userViewModel.user != null){
+            // reset the username
+            setUsernameText(userViewModel.user!!.username)
+            // reset the instagram
+            setInstagramText(userViewModel.user!!.instagram)
+            // reset the discord
+            setDiscordText(userViewModel.user!!.discord)
+            // reset the snapchat
+            setSnapchatText(userViewModel.user!!.snapchat)
+            // reset the phone number
+            setPhoneText(userViewModel.user!!.phone)
+        }
+
     }
 
     // saves the state of the local focus
@@ -283,7 +283,5 @@ fun ProfilePage(
                 }
             }
         }
-
-
     }
 }
