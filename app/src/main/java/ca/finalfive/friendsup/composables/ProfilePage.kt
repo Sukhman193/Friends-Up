@@ -183,7 +183,8 @@ fun ProfilePage(userViewModel: UserViewModel){
         }
         // text field that shows the user's information
         Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier.width(300.dp)
         ) {
             // the customized TextField to show the user's username
             CustomTextField(
@@ -194,7 +195,7 @@ fun ProfilePage(userViewModel: UserViewModel){
                 modifier = Modifier
                     .focusRequester(requester)
                     .onFocusChanged { isKeyboardShown = it.hasFocus }
-                    .padding()
+                    .fillMaxWidth()
             )
 
             // the customized TextField to show the user's snapchat account
@@ -206,6 +207,7 @@ fun ProfilePage(userViewModel: UserViewModel){
                 modifier = Modifier
                     .focusRequester(requester)
                     .onFocusChanged { isKeyboardShown = it.hasFocus }
+                    .fillMaxWidth()
             )
 
             // the customized TextField to show the user's instagram account
@@ -217,6 +219,7 @@ fun ProfilePage(userViewModel: UserViewModel){
                 modifier = Modifier
                     .focusRequester(requester)
                     .onFocusChanged { isKeyboardShown = it.hasFocus }
+                    .fillMaxWidth()
             )
 
             // the customized TextField to show the user's discord account
@@ -228,6 +231,7 @@ fun ProfilePage(userViewModel: UserViewModel){
                 modifier = Modifier
                     .focusRequester(requester)
                     .onFocusChanged { isKeyboardShown = it.hasFocus }
+                    .fillMaxWidth()
             )
 
             // the customized TextField to show the user's phone number
@@ -239,49 +243,51 @@ fun ProfilePage(userViewModel: UserViewModel){
                 modifier = Modifier
                     .focusRequester(requester)
                     .onFocusChanged { isKeyboardShown = it.hasFocus }
+                    .fillMaxWidth()
             )
 
-        }
-        // if the user changes any of the fields which are not equal to the database
-        // it will popup the save or cancel buttons
-        if (
-            checkWithDatabase()
-        ){
-            // interaction buttons for the user to change
-            // its data when the user's information gets changed
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                // cancel button to resets the data
-                Button(
-                    onClick = { cancelHandler() },
-                    colors = ButtonDefaults.buttonColors(backgroundColor =
-                    colorResource(
-                        id = R.color.cancelRed
-                    ),
-                        contentColor = Color.White
-                    ),
-                    modifier = Modifier.width(83.dp)
+            // if the user changes any of the fields which are not equal to the database
+            // it will popup the save or cancel buttons
+            if (
+                checkWithDatabase()
+            ){
+                // interaction buttons for the user to change
+                // its data when the user's information gets changed
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "Cancel")
-                }
-                // save button to update the new data
-                Button(
-                    onClick = { saveHandler() },
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = colorResource(
-                            id = R.color.saveGreen
+                    // cancel button to resets the data
+                    Button(
+                        onClick = { cancelHandler() },
+                        colors = ButtonDefaults.buttonColors(backgroundColor =
+                        colorResource(
+                            id = R.color.cancelRed
                         ),
-                    ),
-                    modifier = Modifier.width(83.dp)
-                ) {
-                    Text(text = "Save", color = Color.White)
+                            contentColor = Color.White
+                        ),
+                        modifier = Modifier.width(83.dp)
+                    ) {
+                        Text(text = "Cancel")
+                    }
+                    // save button to update the new data
+                    Button(
+                        onClick = { saveHandler() },
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = colorResource(
+                                id = R.color.saveGreen
+                            ),
+                        ),
+                        modifier = Modifier.width(83.dp)
+                    ) {
+                        Text(text = "Save", color = Color.White)
+                    }
                 }
             }
         }
+
     }
 }
