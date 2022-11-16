@@ -7,8 +7,6 @@ import ca.finalfive.friendsup.*
 import com.apollographql.apollo3.ApolloClient
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import org.json.JSONObject
-
 
 class GameApolloRepository(private val apolloClient: ApolloClient) {
 
@@ -241,7 +239,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
             if (INSTANCE == null) {
                 val apolloClient = ApolloClient.Builder()
                     // TODO: Change the url below
-                    .serverUrl("https://4920-75-157-118-144.ngrok.io/dev/graphql")
+                    .serverUrl("https://t8gqkrufr2.execute-api.us-west-1.amazonaws.com/dev/graphql")
                     .build()
                 INSTANCE = GameApolloRepository(apolloClient)
                 // Get the token every time the user is already authenticated

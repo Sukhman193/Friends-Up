@@ -45,7 +45,7 @@ fun AddFriendQueueScreen(
         screenTitleText = R.string.add_friend_title,
         submitButtonContent = R.string.button_cancel,
         submitAction = {
-            gameViewModel.isAddAsFriendScreenOpened = false
+            gameViewModel.updateUserFriendQueue()
         }) {
         // Content of the search user
         SearchCardContent(){

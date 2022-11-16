@@ -81,5 +81,22 @@ data class GameModeContent(
      * For Would You Rather it's an array of 2 with the different options
      * For Cards against humanity it's going to be the content of the white card
      */
-    val questionOptions: List<String> = listOf()
+    val questionOptions: List<GameQuestionOption> = listOf()
+)
+
+/**
+ * Data class for the game question option
+ * @param optionText content of the option which will be displayed to the user
+ * @param selectedBy List of users who have selected the option
+ */
+data class GameQuestionOption(
+    /**
+     * Content of the question's option which will be displayed to the user
+     */
+    val optionText: String = "",
+
+    /**
+     * List of users who have selected the option
+     */
+    val selectedBy: List<String> = listOf()
 )
