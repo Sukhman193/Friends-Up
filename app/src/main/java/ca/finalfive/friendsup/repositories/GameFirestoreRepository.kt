@@ -14,6 +14,10 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import java.util.*
 
+/**
+ * Repository for getting updates regarding the game
+ * and sending messages
+ */
 class GameFirestoreRepository {
 
     /**
@@ -35,14 +39,12 @@ class GameFirestoreRepository {
             .addSnapshotListener { snapshot, error ->
                 // if the error is null
                 val response = if (error == null) {
-
                     var game by mutableStateOf<Game?>(null)
                     // Get the snapshot
                     snapshot?.let { gameSnapshot ->
                         // Convert the snapshot to a game object
                         game = gameSnapshot.toObject()
                     }
-
                     // Value of the response
                     Resource.Success(game)
                 } else {
@@ -52,6 +54,7 @@ class GameFirestoreRepository {
                 // Add element to the listener
                 this.trySend(response).isSuccess
             }
+
             // Remove the snapshot listener
             awaitClose {
                 gameDocumentSnapshot.remove()
@@ -69,17 +72,14 @@ class GameFirestoreRepository {
     fun sendMessage(username: String, icon: String, content: String, gameID: String, gameMode: String ) {
         // Get the collection name
         val collectionName = GameMode.getGameCollection(gameMode)
-
         // Get game document reference
         val docRef = firestore.collection(collectionName).document(gameID)
-
         // start a transaction
         firestore.runTransaction { transaction ->
             // Get the game snapshot
             val snapshot = transaction.get(docRef)
             // convert game to game object
             val game: Game? = snapshot.toObject()
-
             // Check if game is not null
             // This is never going to be false
             if(game != null) {
@@ -120,8 +120,5 @@ class GameFirestoreRepository {
             // return the instance
             return INSTANCE!!
         }
-
     }
-
-
 }

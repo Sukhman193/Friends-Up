@@ -16,11 +16,14 @@ import ca.finalfive.friendsup.composables.buttons.ReportButtonRed
 import ca.finalfive.friendsup.composables.endgame.EndGameDescription
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
+/**
+ * End game screen to display once the game has ended
+ * @param gameViewModel view model for the game
+ */
 @Composable
 fun EndGameScreen(
     gameViewModel: GameViewModel
 ) {
-
     /**
      * Check whether the report popup should be open or not
      */
@@ -41,7 +44,6 @@ fun EndGameScreen(
         ) {
             // Add the screen title
             ScreenTitle(title = R.string.game_ended_title)
-
             // Container for aligning the content of the page dynamically
             Column(
                 modifier = Modifier
@@ -52,10 +54,8 @@ fun EndGameScreen(
                 // Align all the content to be horizontally aligned
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 // Add page description with decorations
                 EndGameDescription()
-
                 // Add as Friend button
                 EndGameSubmitButton(
                     value = R.string.button_add_as_friend,
@@ -66,20 +66,17 @@ fun EndGameScreen(
                     // Add user to friend queue
                     gameViewModel.updateUserFriendQueue()
                 }
-
                 // End game button
                 EndGameSubmitButton(
                     value = R.string.button_add_start_new_game,
                     icon = R.drawable.start_new_game
                 ) {
-                    gameViewModel.removeUserFromGame(popBackAScreen = false)
+                    gameViewModel.removeUserFromGame()
                     // TODO: Add username to the join game
                     gameViewModel.joinGame()
                 }
-
                 // Adding some space for better ui Presentation
                 Spacer(modifier = Modifier.height(10.dp))
-
                 // Report button
                 ReportButtonRed {
                     setReportPopupOpen(true)

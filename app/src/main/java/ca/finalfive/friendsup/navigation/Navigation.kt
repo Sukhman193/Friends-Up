@@ -1,5 +1,6 @@
 package ca.finalfive.friendsup.navigation
 
+import android.util.Log
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -133,6 +134,14 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
              */
             val currentRoute = navController.currentBackStackEntryAsState()
                 .value?.destination?.route
+            // if any error occurs while playing the game, I.E. Network error leave the game
+            if(gameViewModel.errorMessage != null) {
+                Log.d("LLAMA", "ERRROR")
+                // if the current route it the game than pop back a screen
+                if(currentRoute == Route.QueueScreen.route) {
+                    navController.popBackStack()
+                }
+            }
             // If the game has not been created, pop back one screen
             // This is needed for the screen when the user leaves the
             // application
@@ -213,11 +222,8 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                 }
             // If the game has ended or a user leaves in the middle of the game display the 
             // end game screen
-            } else if(gameViewModel.game?.gameEnded == true ||
-                (
-                gameViewModel.game?.gameStarted == true &&
-                gameViewModel.game?.members?.size != gameViewModel.game?.maxMembers
-                )
+            } else if(gameViewModel.game?.gameEnded == true
+                // TODO: check if the game contains the user by the username
             ) {
                EndGameScreen(gameViewModel = gameViewModel)
             // If none of the above are true than display the game queue screen
@@ -227,6 +233,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                 // so we check if the current screen route matches the game screen route
                 // Reason is that there is a time when the current route is null
                 if(currentRoute == Route.QueueScreen.route) {
+                    Log.d("LLAMA", gameViewModel.errorMessage.toString())
                     GameQueueScreen(navController = navController)
                 }
             }

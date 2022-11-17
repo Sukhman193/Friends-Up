@@ -61,8 +61,7 @@ fun AuthPage(
                 // this async Firebase Function will use the credentials to sign in and returns the result
                 Firebase.auth.signInWithCredential(credential).await()
                 // TODO: Everything that needs to be done after the user is authenticated goes here
-                // Get user token for the different games
-                gameViewModel.getToken()
+
                 // Route to the Game Screen if the sign in is successful
                 navController.navigate(Route.GameRoomScreen.route)
 
