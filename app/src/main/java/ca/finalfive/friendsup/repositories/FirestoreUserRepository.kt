@@ -9,83 +9,112 @@ import ca.finalfive.friendsup.models.User
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.toObject
+import ca.finalfive.friendsup.helpers.Error
 
-class Constants{
-    companion object{
+/**
+ * Constants Class - holds the USERS field from collection
+ */
+class Constants {
+    companion object {
+        // user's collection name
         const val USERS = "Users"
     }
 }
 
-class FirestoreUserRepository(){
+/**
+ * FirestoreUserRepository class - configurations and functions for firestore database
+ */
+class FirestoreUserRepository() {
+    // get the instance of the firestore
     private val firestore = FirebaseFirestore.getInstance()
+
+    // get the collection of the Users
     private val collection = firestore.collection(Constants.USERS)
+
+    // firestore user which by default is null
     var firestoreUser: User? by mutableStateOf(null)
 
+    /**
+     * addUserHelper - if the user doesn't exist it adds the user to the database
+     * @param user - User object
+     */
     private fun addUserHelper(user: User) = run {
-//        val collection = firestore.collection(Constants.USERS)
-        val userID = user.email.replace("@gmail.com","")
-
-        collection.document(userID).set(user, SetOptions.merge()).addOnSuccessListener { documentReference ->
-            firestoreUser = user
-            Log.d("LLAMA", "DocumentSnapshot written: $documentReference")
-        }
+        // id of the user which extracts from the first part of the gmail
+        val userID = user.email.replace("@gmail.com", "")
+        // creates a document with the userID in the collection
+        collection.document(userID).set(user, SetOptions.merge())
+            .addOnSuccessListener {
+                firestoreUser = user
+            }
             .addOnFailureListener { e ->
-                Log.w("LLAMA", "Error adding document", e)
+                throw Error.NotFoundException(e.message.toString())
             }
     }
 
-    fun getUserById(userId: String)= run {
-//        val collection = firestore.collection(Constants.USERS)
+    /**
+     * getUserByID - get the user from the database
+     * @param userId - id of the user
+     */
+    fun getUserById(userId: String) = run {
+        // gets the user
         collection.document(userId)
             .get()
             .addOnSuccessListener { document ->
-                if (document.exists()) {
-                    //document.toObject<User>()
-                    val user = document.toObject<User>()
-//                        User(
-//                            email = document.getString("email")!!,
-//                            username = document.getString("username")!!,
-//                            snapchat = document.getString("snapchat")!!,
-//                            instagram = document.getString("instagram")!!,
-//                            discord = document.getString("discord")!!,
-//                            phone = document.getString("phone")!!,
-//                    )
-                    firestoreUser = user
-                    Log.d("LLAMA", firestoreUser.toString())
-                    Log.d(TAG, "DocumentSnapshot data: ${document.data}")
-                    return@addOnSuccessListener
-                } else {
-                    Log.d(TAG, "No such document")
+                // return if document does not exist
+                if (!document.exists()) {
+                    throw Error.NotFoundException(userId)
                 }
+                // stores to the user as an User Object
+                val user = document.toObject<User>()
+                // stores the user
+                firestoreUser = user
+                return@addOnSuccessListener
             }
             .addOnFailureListener { exception ->
-                Log.d(TAG, "get failed with ", exception)
+                throw Error.NotFoundException(exception.message.toString())
             }
     }
 
+    /**
+     * addUser - Add the user to the database
+     * @param user - User Object
+     */
     fun addUser(user: User) = run {
-        collection.document(user.email.replace("@gmail.com","")).get()
-            .addOnCompleteListener{ task ->
-                if (task.isSuccessful){
-                    val document = task.result
-                    if (document != null){
-                        if (!document.exists()){
-                            addUserHelper(user)
-                        } else{
-                            firestoreUser = user
-                        }
+        val userId = user.email.replace("@gmail.com", "")
+        // asks for the user from the database
+        collection.document(userId).get()
+            .addOnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    throw Error.NotFoundException(userId)
+                }
+                // if the task is successful it saves the result
+                val document = task.result
+
+                if (document != null) {
+                    // if the user does not exist on database
+                    if (!document.exists()) {
+                        // we call the addUserHelper and pass the user to it
+                        addUserHelper(user)
+                    } else {
+                        // save the instance of the user if user exists
+                        firestoreUser = user
                     }
-                } else{
-                    Log.d("TAG", "Error: ", task.exception)
                 }
             }
     }
 
+    /**
+     * updateUserByID - updates the user's information by the id of the user
+     * @param userId - Id of the user
+     * @param updatedUser - A user object with the newest information
+     */
     fun updateUserByID(
         userId: String,
         updatedUser: User
-    ){
+    ) {
+        // updates the document with the user's id
         collection.document(userId).update(
+            // maps the new info to the user's fields
             mapOf(
                 "username" to updatedUser.username,
                 "snapchat" to updatedUser.snapchat,
@@ -93,6 +122,8 @@ class FirestoreUserRepository(){
                 "phone" to updatedUser.phone,
                 "discord" to updatedUser.discord
             )
-        )
+        ).addOnFailureListener{
+            throw Error.NotFoundException(userId)
+        }
     }
 }
