@@ -24,7 +24,8 @@ fun PromptGameScreen(navController: NavController) {
     // if there is one
     GameScreen(
         gameTitle = R.string.game_prompt_title,
-        gameType = R.string.game_prompt_type) {
+        gameType = R.string.game_prompt_type,
+        titleFontSize = 60.sp) {
         // The only purpose of this box is to make a bottom alignment
         // for the skip button
         Box(

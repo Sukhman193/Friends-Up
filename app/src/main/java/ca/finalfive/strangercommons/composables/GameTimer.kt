@@ -1,6 +1,5 @@
 package ca.finalfive.strangercommons.composables
 
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -18,6 +17,7 @@ import ca.finalfive.strangercommons.animations.TimerAnimation
 import ca.finalfive.strangercommons.viewmodels.*
 import kotlinx.coroutines.delay
 
+
 @Composable
         /** This component represents the game timer for the mini games, including details around the timer
          * @param totalTime The initial starting time for the timer
@@ -25,93 +25,25 @@ import kotlinx.coroutines.delay
          * @param currentQuestion The question the users are on
          * @param totalQuestions The total amount of questions in the lobby
          */
+
 fun GameTimer(totalTime: Float, prompt: Int, currentQuestion: Int, totalQuestions: Int) {
-    // Timer Number
+    // Number on the timer
     var currentTime by remember {
         mutableStateOf(totalTime)
     }
-    // The progress, color and a boolean of whether it's complete or not
-    // for the first bar
-    var bar1Progress: Float by remember {
-        mutableStateOf(1f)
-    }
-    var bar1Color: Color by remember {
-        mutableStateOf(buttonColorLight)
-    }
-    var bar1Done: Boolean by remember {
-        mutableStateOf(false)
-    }
-    // The progress, color and a boolean for the second bar
-    var bar2Progress: Float by remember {
-        mutableStateOf(1f)
-    }
-    var bar2Color: Color by remember {
-        mutableStateOf(buttonColorLight)
-    }
-    var bar2Done: Boolean by remember {
-        mutableStateOf(false)
-    }
-    // The progress, color and a boolean for the third and longest bar
-    var bar3Progress: Float by remember {
-        mutableStateOf(1f)
-    }
-    var bar3Color: Color by remember {
-        mutableStateOf(buttonColorLight)
-    }
-    var bar3Done: Boolean by remember {
-        mutableStateOf(false)
-    }
 
-
-    // This is a side effect which is run in a Coroutine Scope
-    // which will subtract the currentTime by 1 every second
     LaunchedEffect(key1 = currentTime) {
         if (currentTime > 0f) {
-            // The percentage (in decimals) to track how much is left
-            val currentTimeDecimalValue = currentTime / totalTime
-
             // Will update every 0.2s
             delay(200L)
             currentTime -= 0.2f
-
-            // 900f represents the end point of the 3rd bar
-            // 340f represents the starting point of the 1st bar
-            if (900f * bar3Progress >= 340f) {
-                bar3Progress = currentTimeDecimalValue
-            } // If 'The end point' * bar3Progress <= 'The starting point'
-            if (900 * bar3Progress <= 340f && !bar3Done) {
-                bar3Done = true
-                // This will set the denominator for the next upcoming bar
-                offsetValue = currentTimeDecimalValue
-            }
-
-            // 300f represents the end point of the 2rd bar
-            // 60f represents the starting point of the 1st bar
-            if (300f * bar2Progress >= 60f && bar3Done) {
-                bar3Color = Color.Transparent
-                // This line would look something like 0.36 / 0.36 at the start of the line
-                bar2Progress = (currentTimeDecimalValue / offsetValue)
-            } // If 'The end point' * bar2Progress <= 'The starting point'
-            if (300f * bar2Progress <= 60f && !bar2Done){
-                bar2Done = true
-                offsetValue = currentTimeDecimalValue
-            }
-
-            // 300f represents the end point of the 2rd bar
-            // 60f represents the starting point of the 1st bar
-            if (20f * bar1Progress >= 0f && bar2Done) {
-                bar2Color = Color.Transparent
-                // This line would look something like 0.07 / 0.07 at the start of the line
-                bar1Progress = (currentTimeDecimalValue / offsetValue)
-            }
-
-            // If the time on the timer is = 0
-            if (currentTime <= 0f) {
-                bar1Done = true
-                bar1Color = Color.Transparent
-            }
         }
     }
+
+    // This is a side effect which is run in a Coroutine Scope
+    // which will subtract the currentTime by 1 every second
+    ProgressBar(totalTime = totalTime)
+
 
     Box(modifier = Modifier
         .fillMaxWidth()) {

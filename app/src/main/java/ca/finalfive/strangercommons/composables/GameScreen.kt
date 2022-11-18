@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import ca.finalfive.strangercommons.viewmodels.currentQuestion
 import ca.finalfive.strangercommons.viewmodels.totalQuestions
 
@@ -19,7 +21,7 @@ import ca.finalfive.strangercommons.viewmodels.totalQuestions
          * @param isWYR checks to see if the game is Would You Rather so that it'll
          *      reduce the font for the title since it's such a long name
          */
-fun GameScreen(gameTitle: Int, gameType: Int, isWYR: Boolean = false, gameContent: @Composable () -> Unit) {
+fun GameScreen(gameTitle: Int, gameType: Int, titleFontSize: TextUnit, gameContent: @Composable () -> Unit) {
     // Black background over the background to make the background dimmer
     Box(
         modifier = Modifier
@@ -36,7 +38,9 @@ fun GameScreen(gameTitle: Int, gameType: Int, isWYR: Boolean = false, gameConten
         Column(modifier = Modifier
             ) {
             // Container at the top which includes the title of the mini-game
-            TopGameBar(gameTitle, isWYR)
+            TopGameBar(
+                gameTitle = gameTitle,
+                fontSize = titleFontSize)
             // Space between the 3 lines and the top bar
             Spacer(
                 modifier = Modifier

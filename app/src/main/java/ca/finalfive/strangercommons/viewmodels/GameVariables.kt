@@ -2,6 +2,7 @@ package ca.finalfive.strangercommons.viewmodels
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 
@@ -21,3 +22,17 @@ var totalQuestions: Int by mutableStateOf(5)
 // The value for the denominator in finding the decimal value for
 // a single bar
 var offsetValue: Float by mutableStateOf(1f)
+
+// The progress, color and a boolean of whether it's complete or not
+// for the first bar
+var bar1Progress: Float by mutableStateOf(1f)
+var bar1Color: Color by mutableStateOf(buttonColorLight)
+var bar1Done: Boolean by mutableStateOf(false)
+// The progress, color and a boolean for the second bar
+var bar2Progress: Float by mutableStateOf(1f)
+var bar2Color: Color by mutableStateOf(buttonColorLight)
+var bar2Done: Boolean by mutableStateOf(false)
+// The progress, color and a boolean for the third and longest bar
+var bar3Progress: Float by mutableStateOf(1f)
+var bar3Color: Color by mutableStateOf(buttonColorLight)
+var bar3Done: Boolean by mutableStateOf(false)

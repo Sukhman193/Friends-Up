@@ -18,18 +18,17 @@ import ca.finalfive.strangercommons.composables.QuestionOption
 fun WYRGameScreen(navController: NavController) {
     // Array of options for the user
     /* TODO: Make the options randomly generated */
-    val answers = arrayOf("Option 1", "Option 2")
+    val options = arrayOf("Option 1", "Option 2")
 
     // Game content which includes the topBar, gameTimer and
     // the question if there is one
     GameScreen(
         gameTitle = R.string.game_would_you_rather_title,
         gameType = R.string.game_would_you_rather_type,
-        isWYR = true) {
+        titleFontSize = 40.sp) {
             // Question for the user
             Text(
-                /* TODO: Make the question randomly generated along with the options */
-                text = "Eat an apple or eat a pear?",
+                text = "Would you rather...",
                 color = Color.White,
                 style = MaterialTheme.typography.h3,
                 fontSize = 26.sp,
@@ -43,8 +42,8 @@ fun WYRGameScreen(navController: NavController) {
             )
 
             // A for loop containing 4 button options
-            for (answer in answers) {
-                QuestionOption(answer = answer)
+            for (option in options) {
+                QuestionOption(option = option)
             }
         }
     }

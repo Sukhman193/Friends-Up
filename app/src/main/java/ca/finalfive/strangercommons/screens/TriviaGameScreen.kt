@@ -22,7 +22,8 @@ fun TriviaGameScreen(navController: NavController) {
 
     GameScreen(
         gameTitle = R.string.game_trivia_title,
-        gameType = R.string.game_trivia_type) {
+        gameType = R.string.game_trivia_type,
+        titleFontSize = 60.sp) {
         // Question for the user
         Text(
             /* TODO: Make the question randomly generated along with the options */

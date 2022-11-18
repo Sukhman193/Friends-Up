@@ -16,21 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.finalfive.strangercommons.R
 import ca.finalfive.strangercommons.viewmodels.containerColor
 
 @Composable
-fun TopGameBar(gameTitle: Int, isWYR: Boolean) {
-    val fontSize = if (isWYR) {
-        // If the game is Would You Rather
-        40.sp
-    } else {
-        // If the game isn't Would You Rather
-        60.sp
-    }
-
+fun TopGameBar(gameTitle: Int, fontSize: TextUnit = 60.sp) {
     // Background box behind "Trivia" and the Flag icon
     Box(
         modifier = Modifier

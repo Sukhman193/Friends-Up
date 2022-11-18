@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -17,7 +17,8 @@ import ca.finalfive.strangercommons.viewmodels.buttonColorDark
 import ca.finalfive.strangercommons.viewmodels.buttonColorLight
 
 @Composable
-fun QuestionOption(option: String) {
+fun FriendButton(friendName: String)
+{
     // The entire button size (with the darker color as the background)
     Box(
         // Darker part of the button
@@ -29,17 +30,9 @@ fun QuestionOption(option: String) {
             .background(buttonColorDark)
             .clickable { /* TODO */ }
     ) {
-        // Lighter color on the left of the button
-        Box(
-            modifier = Modifier
-                .fillMaxHeight()
-                .width(50.dp)
-                .background(buttonColorLight)
-        )
-
         // Text inside the button
         Text(
-            text = "$option",
+            text = "$friendName",
             color = Color.White,
             style = MaterialTheme.typography.h3,
             fontSize = 20.sp,
