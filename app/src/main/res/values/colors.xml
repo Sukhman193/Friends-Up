@@ -9,4 +9,5 @@
     <color name="cancelRed">#B3FF6262</color>
     <!-- Color of Save Button -->
     <color name="saveGreen">#E6008000</color>
+    <color name="gameCardDescFont">#FFC0C0C0</color>
 </resources>
