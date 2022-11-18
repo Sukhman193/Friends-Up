@@ -19,7 +19,6 @@ import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.buttons.playButton
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
-
 @Composable
 fun GameSelectionCard(gameName: String, gameDesc: String, gameViewModel: GameViewModel, navController: NavController){
     Card(

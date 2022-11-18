@@ -69,7 +69,6 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
     // Define navigation host an set the initial screen
     NavHost(
         navController = navController,
-        //changing this for testing
         startDestination = Route.AuthScreen.route
     ) {
 

@@ -27,7 +27,7 @@ fun GameRoomScreen(navController: NavController, gameViewModel: GameViewModel) {
             color = Color.White,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 20.dp, start = 150.dp),
+                .padding(top = 20.dp, start = 130.dp),
             fontSize = 60.sp
         )
         Spacer(modifier = Modifier.height(50.dp))

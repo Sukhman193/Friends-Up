@@ -59,7 +59,6 @@ fun AuthPage(
             val account = task.getResult(ApiException::class.java)!!
             // the Google Authentication credentials
             val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
-            Log.d("llama", "credential done")
             scope.launch {
                 // this async Firebase Function will use the credentials to sign in and returns the result
                 Firebase.auth.signInWithCredential(credential).await()
@@ -74,7 +73,6 @@ fun AuthPage(
         } catch (e: ApiException) {
             // make a toast to notify the user that authentication was not successful
             Toast.makeText(context, "Authentication Failed", Toast.LENGTH_SHORT).show()
-            Log.d("llama", e.message.toString())
         }
     }
     // Container for the page

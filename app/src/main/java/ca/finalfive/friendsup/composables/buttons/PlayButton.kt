@@ -38,7 +38,10 @@ fun playButton(gameViewModel: GameViewModel, navController: NavController){
             navController.navigate(Route.QueueScreen.route)
         }) {
         //this is the inside of the whole button
-        Column(modifier = Modifier.padding(top = 5.dp).width(100.dp)) {
+        Column(modifier = Modifier
+                .padding(top = 5.dp)
+                .width(100.dp)
+        ) {
             //custom text icons with a shadow
             DropShadowIcon(Icon = R.drawable.ic_play_arrow)
             //custom text box with a shadow
@@ -46,13 +49,5 @@ fun playButton(gameViewModel: GameViewModel, navController: NavController){
                 fontSize = 10.sp,
             )
         }
-    }
-}
-
-@Preview(showBackground = false)
-@Composable
-fun DefaultPreview1() {
-    StrangerCommonsTheme {
-        //playButton()
     }
 }
