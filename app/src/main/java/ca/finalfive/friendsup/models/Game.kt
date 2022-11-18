@@ -7,7 +7,8 @@ package ca.finalfive.friendsup.models
  * @param gameMode A Game mode that the user can
  * this can be either `TRIVIA` | `PROMPT` | 'CAH' | 'WYR'
  * @param gameContent Content of the game being played
- * @param gameStarted Boolean which defines whether the game has started or not
+ * @param isGameStarted Boolean which defines whether the game has started or not
+ * @param isGameEnded Boolean which defines whether the game has ended or not
  * @param maxMembers Maximum number of players for the game
  * @param members List of all the members in the game
  */
@@ -32,29 +33,29 @@ data class Game(
     /**
      * Boolean which defines whether the game has started or not
      */
-    val gameStarted: Boolean = false,
+    var isGameStarted: Boolean = false,
     // Cannot use Number because firebase does not support deserialization
     /**
      * Maximum number of player for each game
      */
     val maxMembers: Int = 0,
     /**
-     * List of all the usernames for the players inside the game
+     * List of all the users inside a game
      */
-    val members: List<String> = listOf(),
-    /**
-     * List of all the emails of the players inside the game
-     * Users will not have access to this game
-     */
-    val membersEmails: List<String> = listOf(),
+    val members: List<GameUserMember> = listOf(),
     /**
      * States whether the game has ended or not
      */
-    val gameEnded: Boolean = false,
+    var isGameEnded: Boolean = false,
     /**
      * Friends added to the friendList queue
      */
-    val  addFriendList: List<String> = listOf()
+    val addFriendList: List<String> = listOf(),
+    /**
+     * Number which keeps track of which gameContent question the
+     * players are at
+     */
+    val gameProgress: Int = 0
 ) {
     // Constructor required by the firestore deserialization
     constructor(): this(null)
@@ -98,5 +99,26 @@ data class GameQuestionOption(
     /**
      * List of users who have selected the option
      */
-    val selectedBy: List<String> = listOf()
+    var selectedBy: List<String> = listOf()
+)
+
+/**
+ * Details of all the users inside a game
+ * @param username Username of the user
+ * @param email Email of the user
+ * @param icon Icon of the user
+ */
+data class GameUserMember(
+    /**
+     * Username of the user
+     */
+    val username: String = "",
+    /**
+     * Email of the user
+     */
+    val email: String = "",
+    /**
+     * Icon of the user
+     */
+    val icon: String = ""
 )

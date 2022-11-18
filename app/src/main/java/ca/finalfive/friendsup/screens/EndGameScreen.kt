@@ -61,7 +61,7 @@ fun EndGameScreen(
                     value = R.string.button_add_as_friend,
                     icon = R.drawable.add_friend,
                     // Set the button to enabled to false if the other player left the game
-                    buttonEnabled = gameViewModel.game?.members?.size == gameViewModel.game?.maxMembers
+                    buttonEnabled = gameViewModel.game?.members?.filter { m -> m.username != "" }?.size == gameViewModel.game?.maxMembers
                 ) {
                     // Add user to friend queue
                     gameViewModel.updateUserFriendQueue()

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ca.finalfive.friendsup.models.Game
 import ca.finalfive.friendsup.models.GameMode
+import ca.finalfive.friendsup.models.GameQuestionOption
 import ca.finalfive.friendsup.repositories.GameApolloRepository
 import ca.finalfive.friendsup.repositories.GameFirestoreRepository
 import kotlinx.coroutines.launch
@@ -23,9 +24,11 @@ class GameViewModel: ViewModel() {
     private var gameID: String? by mutableStateOf(null)
 
     /**
-     * Username selected by the user
+     * Saved username for the user
+     * This is needed because if a game has 2 users
+     * with the same username, one of them will be renamed
      */
-    private var username: String? by mutableStateOf(null)
+    var savedUsername: String? by mutableStateOf(null)
 
     /**
      * Random user profile picture
@@ -53,6 +56,11 @@ class GameViewModel: ViewModel() {
     var isAddAsFriendScreenOpened by mutableStateOf(false)
 
     /**
+     * Boolean which refers to whether a question has been answered or not
+     */
+    var questionAnswered by mutableStateOf(false)
+
+    /**
      * Apollo client repository
      */
     private val gameApolloRepository = GameApolloRepository.getInstance()
@@ -74,43 +82,45 @@ class GameViewModel: ViewModel() {
 
     /**
      * Join a new game
-     * @param username Username selected by the user
      * @param gameMode Game play mode selected by the user
      */
-    fun joinGame(username: String = UUID.randomUUID().toString(), gameMode: String = this.gameMode) {
+    fun joinGame(gameMode: String = this.gameMode) {
         // Reassign the game mode in case the user changes it
         if(this.gameMode != gameMode) {
             this.gameMode = gameMode
         }
-        // Set the username for the user
-        this.username = username
+
         // Set game to be null
         // Needed when the user clicks on play again in the end game screen
         this.game = null
         // Set the createGameRoomCalled to true
-        createGameRoomCalled = true
+        this.createGameRoomCalled = true
         viewModelScope.launch {
             // // join the match through the apollo server
             try {
                 // Make the repository request
                 gameApolloRepository.joinGame(
-                    username = username,
-                    gameMode = gameMode
+                    gameMode = gameMode,
                 )
                 // TODO: Everything that needs to be handled by the game start goes here
                 // Set the game id
                 gameID = gameApolloRepository.gameID
-                // If the game id is not null than get the game updates
-                if(gameID != null) {
-                    // Get the game, and subscribe to the firestore changes the changes
-                    gameFirestoreRepository.getGame(
-                        gameID = gameID!!,
-                        gameMode = gameMode
-                    ).collect {
-                        // Assign the game
-                        game = it.data as Game?
-                    }
+                // Set the savedUsername
+                savedUsername = gameApolloRepository.username
+                // If the game id is null than end the function
+                if(gameID == null) {
+                    return@launch
                 }
+                // Get the game, and subscribe to the firestore changes the changes
+                gameFirestoreRepository.getGame(
+                    gameID = gameID!!,
+                    gameMode = gameMode
+                ).collect {
+                    // Assign the game
+                    Log.d("LLAMA -> game data", it.data.toString())
+                    game = it.data as Game?
+                }
+
             } catch (error: Exception) {
                 // In case of errors set the error message to be here
                 errorMessage = error.message
@@ -127,10 +137,10 @@ class GameViewModel: ViewModel() {
         viewModelScope.launch {
             // When sending a message username and game will never be null
             // because they are being sent from within the game
-            if(username != null && game != null) {
+            if(savedUsername != null && game != null) {
                 // Call the repository to sent the message
                 gameFirestoreRepository.sendMessage(
-                    username = username!!,
+                    username = savedUsername!!,
                     icon = profilePicture,
                     content = content,
                     gameID = gameID!!,
@@ -166,11 +176,11 @@ class GameViewModel: ViewModel() {
         viewModelScope.launch {
             // Username is always going to have a value since
             // it's assigned when the game is being created
-            if(username != null && tempGame != null) {
+            if(savedUsername != null && tempGame != null) {
                 try {
                     // Use the apollo server to remove the user
                     gameApolloRepository.removeUser(
-                        username = username!!,
+                        username = savedUsername!!,
                         gameMode = tempGame.gameMode
                     )
                     //  TODO: Everything that needs to be handled by the game ends goes here
@@ -255,6 +265,7 @@ class GameViewModel: ViewModel() {
                 try {
                     // call update user friend queue
                     gameApolloRepository.updateUserFriendQueue(game!!.gameMode)
+
                 } catch (error: java.lang.Exception) {
                     // In case of errors set the error message to be here
                     errorMessage = error.message
@@ -262,6 +273,64 @@ class GameViewModel: ViewModel() {
             } else {
                 Log.e("ERROR", "GameViewModel.updateUserFriendQueue()")
             }
+        }
+    }
+
+    /**
+     * Handle the user selecting a game option answer
+     * @param gameOption option of the game that the user selected
+     */
+    fun handleAnswerGameOption(gameOption: GameQuestionOption) {
+        // Check if the question has already been answered
+        if(!this.questionAnswered) {
+            // Set the question answered variable to be true
+            this.questionAnswered = true
+            viewModelScope.launch {
+                // When updating the game option the will never be null
+                // because they cannot select an option without having the game
+                if (savedUsername != null && game != null) {
+                    // Call the repository to update the answer
+                    gameFirestoreRepository.sendAnswerSelected(
+                        username = savedUsername!!,
+                        gameID = gameID!!,
+                        gameMode = game!!.gameMode,
+                        gameOption = gameOption
+                    )
+                } else {
+                    Log.e("ERROR", "GameViewModel.handleAnswerGameOption()")
+                }
+            }
+        } else {
+            Log.d("LLAMA", "Cannot change response")
+        }
+    }
+
+    /**
+     * Handle game progress,
+     * This will route to the next question
+     */
+    fun handleGameProgress() {
+        // Update the game progress game question progress only if the
+        // game is not at the last question
+        if(game!= null && game!!.gameProgress != (game!!.gameContent.size -1)) {
+            // set the question answered to false
+            this.questionAnswered = false
+            viewModelScope.launch {
+                // Check if the game is not null
+                // This will never happen because the game has to exist to move forward
+                if (game != null) {
+                    // game to update
+                    gameFirestoreRepository.handleGameProgress(
+                        gameProgress = game!!.gameProgress + 1,
+                        gameMode = gameMode,
+                        gameID = gameID!!
+                    )
+                } else {
+                    Log.e("ERROR", "GameViewModel.handleGameProgress()")
+                }
+            }
+        } else {
+            Log.d("LLAMA", "GameViewModel.handleGameProgress()")
         }
     }
 }

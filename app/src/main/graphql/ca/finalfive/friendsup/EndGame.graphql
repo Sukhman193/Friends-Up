@@ -3,11 +3,11 @@ mutation EndGame(
     $gameId: String!,
     $gameMode: String!
 ) {
-    endGame(
-        access: $access,
-        gameID: $gameId,
-        gameMode: $gameMode
-    ) {
-        success
-    }
+  endGame(
+    access: $access,
+    gameID: $gameId,
+    gameMode: $gameMode
+  ) {
+    success
+  }
 }

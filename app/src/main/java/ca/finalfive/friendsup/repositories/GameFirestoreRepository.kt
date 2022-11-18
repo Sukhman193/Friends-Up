@@ -4,10 +4,7 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import ca.finalfive.friendsup.models.Chat
-import ca.finalfive.friendsup.models.Game
-import ca.finalfive.friendsup.models.GameMode
-import ca.finalfive.friendsup.models.Resource
+import ca.finalfive.friendsup.models.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.channels.awaitClose
@@ -42,8 +39,12 @@ class GameFirestoreRepository {
                     var game by mutableStateOf<Game?>(null)
                     // Get the snapshot
                     snapshot?.let { gameSnapshot ->
+
                         // Convert the snapshot to a game object
-                        game = gameSnapshot.toObject()
+                        game = gameSnapshot.toObject<Game>()
+                        // TODO: ASK YUDHVIR Y THIS IS NOT WORKIN
+                        game?.isGameEnded = gameSnapshot.get("isGameEnded").toString() == "true"
+                        game?.isGameStarted = gameSnapshot.get("isGameStarted").toString() == "true"
                     }
                     // Value of the response
                     Resource.Success(game)
@@ -96,7 +97,80 @@ class GameFirestoreRepository {
                 transaction.update(docRef, "chatRoom", chatList.toList())
             } else {
                 // This error will throw if the game is not found
-                Log.d("LLAMA", "SNAPSHOT DOESN\"T EXIST")
+                Log.e("LLAMA", "SNAPSHOT DOESN'T EXIST")
+            }
+            // Success
+            null
+        }
+    }
+
+    /**
+     * Add message to the database
+     * @param username Username of the user
+     * @param gameID game id of the game
+     * @param gameMode Game mode of the current game
+     * @param gameOption game option's answer to add the user to
+     */
+    fun sendAnswerSelected(username: String, gameID: String, gameMode: String, gameOption: GameQuestionOption) {
+        // Get the collection name
+        val collectionName = GameMode.getGameCollection(gameMode)
+        // Get game document reference
+        val docRef = this.firestore.collection(collectionName).document(gameID)
+        // start a transaction
+        this.firestore.runTransaction { transaction ->
+            // Get the game snapshot
+            val snapshot = transaction.get(docRef)
+            // convert game to game object
+            val game: Game? = snapshot.toObject()
+            // Check if game is not null
+            // This is never going to be false
+            if(game == null) {
+                // This error will throw if the game is not found
+                Log.d("LLAMA", "SNAPSHOT DOESN'T EXIST")
+                return@runTransaction
+            }
+
+            // Get the list of the game content
+            val gameContentList: List<GameModeContent> = game.gameContent
+            // Get the games options for the current question
+            val gameOptions: List<GameQuestionOption> = game.gameContent[game.gameProgress].questionOptions
+            // Get the index of the selected option
+            val optionSelectedIndex = gameOptions.indexOfFirst { it.optionText == gameOption.optionText }
+            // get the list of the selected by list of the option selected
+            val selectedBy = gameOptions[optionSelectedIndex].selectedBy.toMutableList()
+            // add the username to the list
+            selectedBy.add(username)
+            // Update the gameContent
+            gameContentList[game.gameProgress].questionOptions[optionSelectedIndex].selectedBy = selectedBy
+            // Update the document
+            transaction.update(docRef, "gameContent", gameContentList)
+        }
+    }
+
+    /**
+     * Handle game progress, which will move to the next game content
+     * @param gameProgress game progress to update to
+     * @param gameMode current game mode being played
+     * @param gameID id of the current game
+     */
+    fun handleGameProgress(gameProgress: Int, gameMode: String, gameID: String) {
+        // Get the collection name
+        val collectionName = GameMode.getGameCollection(gameMode)
+        // Get game document reference
+        val docRef = this.firestore.collection(collectionName).document(gameID)
+
+        this.firestore.runTransaction { transaction ->
+            // Get the game snapshot
+            val snapshot = transaction.get(docRef)
+            // convert game to game object
+            val game: Game? = snapshot.toObject()
+            // Check if game is not null
+            // This is never going to be false
+            if(game != null) {
+                transaction.update(docRef, "gameProgress", gameProgress)
+            } else {
+                // This error will throw if the game is not found
+                Log.d("LLAMA", "SNAPSHOT DOESN'T EXIST")
             }
             // Success
             null
