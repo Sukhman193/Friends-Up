@@ -1,21 +1,45 @@
 package ca.finalfive.friendsup.services
+import ca.finalfive.friendsup.helpers.Error
+import kotlin.text.Regex
 
+/**
+ * Constants Class - contains a Regex Class
+ */
 class Constants {
+    /**
+     * Regex Class - contains companion objects of different patterns such as phone number or username
+     */
     class Regex {
         companion object {
-            val PHONE_NUMBER = kotlin.text.Regex("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}\$")
+            // Phone Number Regex Pattern
+            val PHONE_NUMBER = Regex("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}\$")
         }
     }
 }
 
+/**
+ * ValidationService class - contains functions to validate
+ */
 class ValidationService {
-    fun isPhoneNumber(data: String): Boolean{
-        try{
-            Constants.Regex.PHONE_NUMBER.matches(data)
-//            val phoneNumber =
-            return true
+    /**
+     * isPhoneNumber - validates the phone number
+     * @param data - The phone number given to the function
+     */
+    fun isPhoneNumber(data: String): Boolean {
+        return try{
+            // using the Regex built-in to check if the data matches the regex pattern
+            // and returns a boolean state
+            val result = Constants.Regex.PHONE_NUMBER.matches(data)
+            if(!result){
+                // if doesnt match throw an error
+                throw Error.PhonePatternException()
+            }
+            result
+
         }catch(e: Exception){
-            return false
+            false
         }
     }
+
+
 }

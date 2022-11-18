@@ -12,12 +12,14 @@ class Error {
      * NotFoundException - a class that throws an exception when the user does not found
      * @param id - id of the object
      */
-    class NotFoundException(id: String): Exception("object with id $id was not found")
+    class NotFoundException(message: String): Exception("User Not Found:  $message ")
 
     /**
      * NoNetworkException - a class that throws an exception when there is no internet connection
      */
     class NoNetworkException(): Exception("No Network Connection")
+
+    class PhonePatternException(): Exception()
 
     /**
      * ValidationException
