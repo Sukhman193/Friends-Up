@@ -1,4 +1,4 @@
-package ca.finalfive.strangercommons.composables
+package ca.finalfive.friendsup.composables
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
