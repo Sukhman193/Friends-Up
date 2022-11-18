@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import ca.finalfive.friendsup.repositories.FirebaseAuthRepository
+import ca.finalfive.friendsup.repositories.FirestoreUserRepository
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -16,9 +17,9 @@ import com.google.firebase.ktx.Firebase
 /**
  * AuthViewModel class Extending the ViewModel()
  */
-class AuthViewModel: ViewModel() {
+class AuthViewModel(private val authRepository: FirebaseAuthRepository): ViewModel() {
     // making an instance of Firebase Repository
-    private var firebaseAuthRepository = FirebaseAuthRepository()
+    private var firebaseAuthRepository = authRepository
     // Stating the user from the firebase instance
     var user: FirebaseUser? by mutableStateOf(Firebase.auth.currentUser)
 
@@ -30,6 +31,6 @@ class AuthViewModel: ViewModel() {
      * @param launcher Activity launcher
      */
     fun signIn(token: String, context: Context, launcher: ManagedActivityResultLauncher<Intent, ActivityResult>){
-        user = firebaseAuthRepository.signIn(token, context, launcher)
+        firebaseAuthRepository.signIn(token, context, launcher)
     }
 }

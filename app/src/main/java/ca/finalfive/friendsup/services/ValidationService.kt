@@ -26,20 +26,11 @@ class ValidationService {
      * @param data - The phone number given to the function
      */
     fun isPhoneNumber(data: String): Boolean {
-        return try{
-            // using the Regex built-in to check if the data matches the regex pattern
-            // and returns a boolean state
-            val result = Constants.Regex.PHONE_NUMBER.matches(data)
-            if(!result){
-                // if doesnt match throw an error
-                throw Error.PhonePatternException()
-            }
-            result
-
-        }catch(e: Exception){
-            false
-        }
+            return Constants.Regex.PHONE_NUMBER.matches(data)
     }
-
+    // TODO GET INSTANCE
+//    companion object{
+//
+//    }
 
 }

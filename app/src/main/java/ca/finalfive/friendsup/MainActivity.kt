@@ -24,8 +24,7 @@ class MainActivity : ComponentActivity() {
 
         // initialize game view model
         gameViewModel = GameViewModel()
-        // creating an instance of authViewModel
-        val authViewModel: AuthViewModel by viewModels()
+
 
         setContent {
             StrangerCommonsTheme {
@@ -38,7 +37,6 @@ class MainActivity : ComponentActivity() {
                     BackgroundImage()
                     Navigation(
                         gameViewModel = gameViewModel,
-                        authViewModel = authViewModel
                     )
                 }
             }

@@ -26,6 +26,7 @@ import ca.finalfive.friendsup.viewmodels.GameViewModel
 import ca.finalfive.friendsup.viewmodels.UserViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -42,7 +43,6 @@ import kotlinx.coroutines.tasks.await
 fun AuthPage(
     authViewModel: AuthViewModel,
     navController: NavController,
-    gameViewModel: GameViewModel,
     userViewModel: UserViewModel
 ){
     // local context
@@ -54,28 +54,30 @@ fun AuthPage(
 
     // The Google Sign-in Launcher
     val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
-        // returns a task for google sign in account
-        val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
         try {
+            // returns a task for google sign in account
+            val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
             // returns the google sign in account
             val account = task.getResult(ApiException::class.java)!!
             // the Google Authentication credentials
             val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
             scope.launch {
-                // this async Firebase Function will use the credentials to sign in and returns the result
-                val authResult = Firebase.auth.signInWithCredential(credential).await()
-                // Adding the user with the user's email and its default username to the database
-                userViewModel.addUser(
-                    User(email = authResult.user?.email!!,
-                        username = authResult.user?.email!!.replace("@gmail.com","")
-                    ),
-                )
-                // Get user token for the different games
-                gameViewModel.getToken()
-                // Route to the Game Screen if the sign in is successful
-                navController.navigate(Route.GameRoomScreen.route)
-
-                Toast.makeText(context, "Authentication Successful", Toast.LENGTH_SHORT).show()
+                try {
+                    // this async Firebase Function will use the credentials to sign in and returns the result
+                    val authResult = Firebase.auth.signInWithCredential(credential).await()
+                    authViewModel.user = authResult.user
+                    // Adding the user with the user's email and its default username to the database
+                    userViewModel.addUser(
+                        User(
+                            email = authResult.user?.email!!,
+                            username = authResult.user?.email!!.replace("@gmail.com", "")
+                        ),
+                    )
+                    // Route to the Game Screen if the sign in is successful
+                    navController.navigate(Route.GameRoomScreen.route)
+                }catch (error: FirebaseAuthInvalidUserException) {
+                    Toast.makeText(context, error.message.toString(), Toast.LENGTH_SHORT).show()
+                }
             }
         } catch (e: ApiException) {
             // make a toast to notify the user that authentication was not successful

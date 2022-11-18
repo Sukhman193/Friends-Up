@@ -4,8 +4,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import ca.finalfive.friendsup.models.User
 import ca.finalfive.friendsup.repositories.FirestoreUserRepository
+import ca.finalfive.friendsup.services.ValidationService
+import kotlinx.coroutines.launch
 
 /**
  * UserViewModel - stores the and handles the user's functionality
@@ -15,13 +18,16 @@ class UserViewModel(private val userRepository: FirestoreUserRepository): ViewMo
     // saved the user's object
     var user: User? by mutableStateOf(userRepository.firestoreUser)
 
+    val validationService = ValidationService()
+
     /**
      * addUser - calls the add function in firestore user repository to add the user to database
      * @param newUser - User object
      */
     fun addUser(newUser: User){
-        userRepository.addUser(newUser)
-        user = newUser
+        viewModelScope.launch {
+            userRepository.addUser(newUser)
+        }
     }
 
     /**
@@ -29,8 +35,10 @@ class UserViewModel(private val userRepository: FirestoreUserRepository): ViewMo
      * @param userId - id of the user
      */
     fun getUser(userId: String){
-        userRepository.getUserById(userId)
-        user = userRepository.firestoreUser
+        viewModelScope.launch {
+            userRepository.getUserById(userId)
+            user = userRepository.firestoreUser
+        }
     }
 
     /**
@@ -39,7 +47,10 @@ class UserViewModel(private val userRepository: FirestoreUserRepository): ViewMo
      * @param updatedUser - an object of the updated user's information
      */
     fun updateUserByID(userId: String, updatedUser: User){
-        userRepository.updateUserByID(userId, updatedUser)
-        user = userRepository.firestoreUser
+        //TODO CALL THE AVALIDATION SERVICE
+        viewModelScope.launch {
+            userRepository.updateUserByID(userId, updatedUser)
+            user = userRepository.firestoreUser
+        }
     }
 }

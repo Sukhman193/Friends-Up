@@ -25,11 +25,10 @@ class Error {
      * ValidationException
      * @param reason - The reason of the Error
      */
-    class ValidationException(reason: String): Exception() {
-        val title = reason
+    class ValidationException(private val reason: String): Exception() {
 
         fun makeToast(context: Context){
-            Toast.makeText(context, title, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, reason, Toast.LENGTH_SHORT).show()
         }
     }
 
