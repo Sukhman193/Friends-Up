@@ -14,19 +14,13 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ca.finalfive.friendsup.R
 
-// The colors used for the gradient in the button
-val lightBlue = Color(0xFF5275CF)
-val lightPurple = Color(0xFF6B66DC)
-
-@Preview
+/**
+ * This component is for the send button in the MessageBox composable
+ */
 @Composable
-        /**
-         * This component is for the send button in the MessageBox composable
-         */
 fun SendButton() {
     // Box with the gradient color inside
     Box(modifier = Modifier
@@ -36,8 +30,8 @@ fun SendButton() {
         .background(
             brush = Brush.linearGradient(
                 colors = listOf(
-                    lightPurple,
-                    lightBlue
+                    Color(R.color.button_light_purple),
+                    Color(R.color.light_blue)
                 ),
                 start = Offset(0.0f, 35.0f),
                 end = Offset(35.0f, 0.0f)

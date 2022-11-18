@@ -14,11 +14,11 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import ca.finalfive.friendsup.R
 
+/**
+ * The MessageBox composable is the TextField for people to message in
+ * on the bottom of the games
+ */
 @Composable
-        /**
-         * The MessageBox composable is the TextField for people to message in
-         * on the bottom of the games
-         */
 fun MessageBox() {
     // Text string for the text field
     var text by remember {

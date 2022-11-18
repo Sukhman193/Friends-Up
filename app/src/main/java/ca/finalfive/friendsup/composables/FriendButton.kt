@@ -15,6 +15,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.R
 
+/**
+ * A button composable for the Friends List Screen
+ * @param friendName represents the name that will be displayed on the button
+ */
 @Composable
 fun FriendButton(friendName: String)
 {

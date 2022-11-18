@@ -15,6 +15,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.R
 
+/**
+ * The buttons options for Trivia and Would you Rather
+ * @param option represents the name of the option
+ */
 @Composable
 fun QuestionOption(option: String) {
     // The entire button size (with the darker color as the background)

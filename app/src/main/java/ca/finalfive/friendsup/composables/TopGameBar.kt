@@ -21,6 +21,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.R
 
+/**
+ * This composable is the bar at the top of each game
+ * @param gameTitle represents the title of the game that will be displayed at the top left
+ * @param fontSize is the font size of the title (would you rather would be different)
+ */
 @Composable
 fun TopGameBar(gameTitle: Int, fontSize: TextUnit = 60.sp) {
     // Color for the top container

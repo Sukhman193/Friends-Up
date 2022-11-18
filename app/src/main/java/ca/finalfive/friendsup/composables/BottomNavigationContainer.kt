@@ -8,12 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 
+/**
+ * Navigation container, it will contain the bottom navigation, as well as the screen
+ * @param navController Navigation controller for the application
+ * @param screen Screen to be displayed in the application
+ */
 @Composable
-        /**
-         * Navigation container, it will contain the bottom navigation, as well as the screen
-         * @param navController Navigation controller for the application
-         * @param screen Screen to be displayed in the application
-         */
 fun NavigationContainer(navController: NavController, screen: @Composable () -> Unit) {
     // The scaffold will contain the bottom navigation
     Scaffold(

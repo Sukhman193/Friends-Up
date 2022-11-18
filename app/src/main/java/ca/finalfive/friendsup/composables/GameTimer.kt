@@ -13,15 +13,13 @@ import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.animations.TimerAnimation
 import kotlinx.coroutines.delay
 
-
+/** This component represents the game timer for the mini games, including details around the timer
+ * @param totalTime The initial starting time for the timer
+ * @param prompt The word before the question the user is on (Ex. "Question" 1 of 5)
+ * @param currentQuestion The question the users are on
+ * @param totalQuestions The total amount of questions in the lobby
+ */
 @Composable
-        /** This component represents the game timer for the mini games, including details around the timer
-         * @param totalTime The initial starting time for the timer
-         * @param prompt The word before the question the user is on (Ex. "Question" 1 of 5)
-         * @param currentQuestion The question the users are on
-         * @param totalQuestions The total amount of questions in the lobby
-         */
-
 fun GameTimer(totalTime: Float, prompt: Int, currentQuestion: Int, totalQuestions: Int) {
     // Number on the timer
     var currentTime by remember {

@@ -15,4 +15,8 @@
     <color name="dark_purple">#FF47458F</color>
     <!--  Light grey color -->
     <color name="light_grey">#FFD9D9D9</color>
+    <!-- Light blue color -->
+    <color name="light_blue">#FF5275CF</color>
+    <!-- Light purple for sending the message -->
+    <color name="button_light_purple">#FF6B66DC</color>
 </resources>

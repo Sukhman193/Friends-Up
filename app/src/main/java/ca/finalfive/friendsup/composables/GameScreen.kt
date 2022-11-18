@@ -8,16 +8,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 
+/**
+ * GameScreen is the default game screen for all the different kinds of
+ * games, which contains the Top bar, Game Timer animation and the Message Box
+ * @param gameTitle is the title at the Top bar
+ * @param gameType is the variable beside the numbers in the timer animation
+ *      for example "<Question> 1 of 5". gameType being the word Question
+ * @param isWYR checks to see if the game is Would You Rather so that it'll
+ *      reduce the font for the title since it's such a long name
+ */
 @Composable
-        /**
-         * GameScreen is the default game screen for all the different kinds of
-         * games, which contains the Top bar, Game Timer animation and the Message Box
-         * @param gameTitle is the title at the Top bar
-         * @param gameType is the variable beside the numbers in the timer animation
-         *      for example "<Question> 1 of 5". gameType being the word Question
-         * @param isWYR checks to see if the game is Would You Rather so that it'll
-         *      reduce the font for the title since it's such a long name
-         */
 fun GameScreen(gameTitle: Int, gameType: Int, titleFontSize: TextUnit, gameContent: @Composable () -> Unit) {
     // Keeps track of what question the user is on
     var currentQuestion by remember {

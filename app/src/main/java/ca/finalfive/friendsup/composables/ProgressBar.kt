@@ -13,6 +13,10 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import ca.finalfive.friendsup.R
 
+/**
+ * The progress bar above the amount of questions left and the timer animation
+ * @param totalTime is the total amount of time for the progressBar
+ */
 @Composable
 fun ProgressBar(totalTime: Float) {
     // The progress, color and a boolean of whether it's complete or not
@@ -20,9 +24,11 @@ fun ProgressBar(totalTime: Float) {
     var bar1Progress by remember {
         mutableStateOf(1f)
     }
+    // The color of the first bar, which will be changed to transparent when it's done
     var bar1Color by remember {
         mutableStateOf(Color(R.color.light_purple))
     }
+    // Checks to see if the first bar is done
     var bar1Done by remember {
         mutableStateOf(false)
     }
@@ -30,9 +36,11 @@ fun ProgressBar(totalTime: Float) {
     var bar2Progress by remember {
         mutableStateOf(1f)
     }
+    // The color of the second bar, which will be changed to transparent when it's done
     var bar2Color by remember {
         mutableStateOf(Color(R.color.light_purple))
     }
+    // Checks to see if the second bar is done
     var bar2Done by remember {
         mutableStateOf(false)
     }
@@ -40,12 +48,15 @@ fun ProgressBar(totalTime: Float) {
     var bar3Progress by remember {
         mutableStateOf(1f)
     }
+    // The color of the third bar, which will be changed to transparent when it's done
     var bar3Color by remember {
         mutableStateOf(Color(R.color.light_purple))
     }
+    // Checks to see if the third bar is done
     var bar3Done by remember {
         mutableStateOf(false)
     }
+
     // The value for the denominator in finding the decimal value for
     // a single bar
     var offsetValue by remember {
@@ -56,6 +67,7 @@ fun ProgressBar(totalTime: Float) {
         mutableStateOf(totalTime)
     }
 
+    // A LaunchedEffect for the progress bar, it will run as long as currentTime is updating
     LaunchedEffect(key1 = currentTime) {
         if (currentTime > 0f) {
             // Will update every 0.2s
@@ -104,6 +116,7 @@ fun ProgressBar(totalTime: Float) {
         }
     }
 
+    // A canvas containing all the lines
     Canvas(
         modifier = Modifier
             .fillMaxWidth()

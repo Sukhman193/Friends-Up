@@ -8,10 +8,11 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 
+/**
+ * The animation of the circle timer (not including the number inside)
+ * @param length The length of the timer in seconds
+ */
 @Composable
-        /** The animation of the circle timer (not including the number inside)
-         * @param length The length of the timer in seconds
-         */
 fun TimerAnimation(length: Float) {
     // Variable for the composition
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.circle_timer))

@@ -1,4 +1,4 @@
-package ca.finalfive.strangercommons.screens
+package ca.finalfive.friendsup.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
