@@ -1,6 +1,8 @@
 package ca.finalfive.friendsup.screens
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -14,22 +16,18 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.GameSelectionCard
+import ca.finalfive.friendsup.composables.ScreenTitle
+import ca.finalfive.friendsup.models.Game
+import ca.finalfive.friendsup.models.GameMode
 import ca.finalfive.friendsup.navigation.Route
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
-// TODO: Remove this screen and put the actual screen
 @Composable
 fun GameRoomScreen(navController: NavController, gameViewModel: GameViewModel) {
-    Column {
-        Text(
-            text = "Game Room",
-            style = MaterialTheme.typography.h1,
-            color = Color.White,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp, start = 130.dp),
-            fontSize = 60.sp
-        )
+    Column(
+        modifier = Modifier.verticalScroll(rememberScrollState())
+    ) {
+        ScreenTitle(title = stringResource(id = R.string.game_title))
         Spacer(modifier = Modifier.height(50.dp))
 
         Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
@@ -38,25 +36,29 @@ fun GameRoomScreen(navController: NavController, gameViewModel: GameViewModel) {
                 gameName = stringResource(id = R.string.game_trivia_title),
                 gameDesc = stringResource(id = R.string.game_trivia_description),
                 gameViewModel = gameViewModel,
-                navController = navController
+                navController = navController,
+                gameMode = GameMode.TRIVIA
             )
             GameSelectionCard(
                 gameName = stringResource(id = R.string.game_prompt_title),
                 gameDesc = stringResource(id = R.string.game_prompt_description),
                 gameViewModel = gameViewModel,
-                navController = navController
+                navController = navController,
+                gameMode = GameMode.PROMPT
             )
             GameSelectionCard(
                 gameName = stringResource(id = R.string.game_would_you_rather_title),
                 gameDesc = stringResource(id = R.string.game_would_you_rather_description),
                 gameViewModel = gameViewModel,
-                navController = navController
+                navController = navController,
+                gameMode = GameMode.WOULD_YOU_RATHER
             )
             GameSelectionCard(
                 gameName = stringResource(id = R.string.game_cards_against_humanity_title),
                 gameDesc = stringResource(id = R.string.game_cards_against_humanity_description),
                 gameViewModel = gameViewModel,
-                navController = navController
+                navController = navController,
+                gameMode = GameMode.CARDS_AGAINST_HUMANITY
             )
         }
     }

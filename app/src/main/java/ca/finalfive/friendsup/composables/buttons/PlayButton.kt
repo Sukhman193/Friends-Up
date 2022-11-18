@@ -17,11 +17,12 @@ import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.ui.theme.StrangerCommonsTheme
 import ca.finalfive.friendsup.composables.DropShadowIcon
 import ca.finalfive.friendsup.composables.DropShadowText
+import ca.finalfive.friendsup.models.GameMode
 import ca.finalfive.friendsup.navigation.Route
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 @Composable
-fun playButton(gameViewModel: GameViewModel, navController: NavController){
+fun playButton(gameViewModel: GameViewModel, navController: NavController, gameMode: String){
     //this component makes the play button that appears on the main game screen
     Button(modifier = Modifier
         .background(shape = RoundedCornerShape(8.dp), color = Color.Transparent)
@@ -34,7 +35,7 @@ fun playButton(gameViewModel: GameViewModel, navController: NavController){
         ),
         //when the button is clicked, we will send the user to the correct game that's passed in
         onClick = {
-            gameViewModel.joinGame()
+            gameViewModel.joinGame(gameMode = gameMode)
             navController.navigate(Route.QueueScreen.route)
         }) {
         //this is the inside of the whole button

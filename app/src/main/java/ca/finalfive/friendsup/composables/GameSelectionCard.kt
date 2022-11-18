@@ -17,14 +17,21 @@ import androidx.navigation.NavController
 import ca.finalfive.friendsup.ui.theme.GameCardBackgroundColor
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.buttons.playButton
+import ca.finalfive.friendsup.models.GameMode
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 @Composable
-fun GameSelectionCard(gameName: String, gameDesc: String, gameViewModel: GameViewModel, navController: NavController){
+fun GameSelectionCard(
+        gameName: String,
+        gameDesc: String,
+        gameViewModel: GameViewModel,
+        navController: NavController,
+        gameMode: String
+){
     Card(
         modifier = Modifier
             .width(470.dp)
-            .height(120.dp)
+            .height(130.dp)
             .padding(horizontal = 20.dp, vertical = 10.dp),
         shape = RoundedCornerShape(8.dp),
         backgroundColor = GameCardBackgroundColor,
@@ -34,6 +41,7 @@ fun GameSelectionCard(gameName: String, gameDesc: String, gameViewModel: GameVie
             Column(modifier = Modifier
                 .background(color = Color.Transparent)
                 .width(275.dp)
+                .padding(horizontal = 10.dp)
             ) {
                 DropShadowText(text = gameName, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 Image(
@@ -46,7 +54,7 @@ fun GameSelectionCard(gameName: String, gameDesc: String, gameViewModel: GameVie
             Column(modifier = Modifier
                 .fillMaxWidth()
             ) {
-                playButton(gameViewModel, navController)
+                playButton(gameViewModel, navController, gameMode)
             }
         }
 
