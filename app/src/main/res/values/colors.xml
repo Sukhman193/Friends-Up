@@ -19,4 +19,6 @@
     <color name="light_blue">#FF5275CF</color>
     <!-- Light purple for sending the message -->
     <color name="button_light_purple">#FF6B66DC</color>
+    <!-- Game card description font color -->
+    <color name="gameCardDescFont">#FFC0C0C0</color>
 </resources>
