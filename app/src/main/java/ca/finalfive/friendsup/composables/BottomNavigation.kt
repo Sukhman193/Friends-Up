@@ -36,7 +36,7 @@ fun BottomNavigation(navController: NavController) {
         BottomNavItem.Profile
     )
 
-    //  https://johncodeos.com/how-to-create-bottom-navigation-bar-with-jetpack-compose/
+    // https://johncodeos.com/how-to-create-bottom-navigation-bar-with-jetpack-compose/
     // Bottom navigation
     BottomNavigation(
         modifier = Modifier.height(67.dp)
@@ -78,7 +78,6 @@ fun BottomNavigation(navController: NavController) {
                     navController.navigate(item.route)
                 }
             )
-
         }
     }
 }

@@ -8,9 +8,7 @@ import androidx.navigation.NavController
 import ca.finalfive.friendsup.R
 
 @Composable
-fun GameQueueScreen(
-    navController: NavController,
-) {
+fun GameQueueScreen(navController: NavController) {
     Text(
         text = stringResource(id = R.string.trivia_queue_search),
         style = MaterialTheme.typography.h1)

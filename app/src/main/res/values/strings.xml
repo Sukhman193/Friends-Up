@@ -31,16 +31,22 @@
     <string name="game_trivia_title">Trivia</string>
     <!--  Trivia game description  -->
     <string name="game_trivia_description">Collaborate with another player to answer the trivia questions, but watch out, time will run out!</string>
+    <!--  Trivia game counter description -->
+    <string name="game_trivia_type">Question %1$d of %2$d</string>
     <!--  Prompt game  -->
     <!--  Prompt game title  -->
     <string name="game_prompt_title">Prompt</string>
     <!--  Prompt game description  -->
     <string name="game_prompt_description">Get a topic to talk about every minute and make sure you keep at eye at the time limit</string>
+    <!--  Prompt game counter description -->
+    <string name="game_prompt_type">Prompt %1$d of %2$d</string>
     <!--  Would you rather game  -->
     <!--  Would you rather title  -->
     <string name="game_would_you_rather_title">Would You Rather</string>
     <!--  Would you rather description  -->
     <string name="game_would_you_rather_description">Choose an option you would do when given two different options in a scenario!</string>
+    <!--  Would you rather game counter description -->
+    <string name="game_would_you_rather_type">Scenario %1$d of %2$d</string>
     <!--  Cards against humanity  -->
     <!--  C.A.H title  -->
     <string name="game_cards_against_humanity_title">Cards Against Humanity</string>
@@ -48,7 +54,9 @@
     <string name="game_cards_against_humanity_title_short">C.A.H</string>
     <!--  C.A.H shortcut title  -->
     <string name="game_cards_against_humanity_description">Play the game with another player and collaborate to agree on the best answers!</string>
-
+    <!--  Would you rather game counter description -->
+    <string name="game_cards_against_humanity_type">Game %1$d of %2$d</string>
+    s
     <!--  Report Popup  -->
     <!--  Report popup title  -->
     <string name="report_popup_title">Report User</string>
