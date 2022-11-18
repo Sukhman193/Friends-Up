@@ -1,4 +1,4 @@
-package ca.finalfive.strangercommons.screens
+package ca.finalfive.friendsup.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -13,10 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import androidx.navigation.NavController
-import ca.finalfive.strangercommons.R
-import ca.finalfive.strangercommons.composables.GameCard
-import ca.finalfive.strangercommons.ui.theme.StrangerCommonsTheme
+import ca.finalfive.friendsup.R
+import ca.finalfive.friendsup.ui.theme.StrangerCommonsTheme
 
 @Composable
 fun CAHScreen(){
@@ -73,13 +71,9 @@ fun CAHScreen(){
                 shape = RoundedCornerShape(8.dp),
                 backgroundColor = colorResource(id = R.color.white),
                 elevation = 10.dp,
-
             ){
                 Text("White Card", modifier = Modifier.padding(20.dp))
             }
-
-
-
 
             //the black question card that will display in the middle
             Card(modifier = Modifier
@@ -93,8 +87,6 @@ fun CAHScreen(){
             ){
                 Text("Black Card", color = colorResource(id = R.color.white), modifier = Modifier.padding(10.dp))
             }
-
-
         }
     }
 }
