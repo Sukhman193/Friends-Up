@@ -1,0 +1,28 @@
+type Game {
+  """
+  ID of the game instance
+  """
+  id: String
+}
+
+type Success {
+  """
+  State whether the user was removed successfully or not
+  """
+  success: Boolean
+}
+
+type Query {
+  ok: Boolean!
+}
+
+type Mutation {
+  removeUser(memberName: String!, gameMode: String!, access: String!, gameID: String!): Success!
+
+  joinGame(memberName: String!, gameMode: String!, access: String!): Game!
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
