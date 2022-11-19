@@ -1,0 +1,13 @@
+mutation UpdateAddUserFriend(
+    $access: String!,
+    $gameId: String!,
+    $gameMode: String!
+) {
+    updateAddUserFriend(
+        access: $access,
+        gameID: $gameId,
+        gameMode: $gameMode
+    ) {
+        success
+    }
+}

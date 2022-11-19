@@ -49,6 +49,7 @@ fun AuthPage(
     val context = LocalContext.current
     // Firebase Client Token
     val token = stringResource(R.string.default_web_client_id)
+    //val token = stringResource(R.string.default_web_client_id)
     // Coroutine Scope
     val scope = rememberCoroutineScope()
 
@@ -70,8 +71,7 @@ fun AuthPage(
                         username = authResult.user?.email!!.replace("@gmail.com","")
                     ),
                 )
-                // Get user token for the different games
-                gameViewModel.getToken()
+
                 // Route to the Game Screen if the sign in is successful
                 navController.navigate(Route.GameRoomScreen.route)
 
@@ -95,7 +95,7 @@ fun AuthPage(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Title of the page
-            ScreenTitle(title = stringResource(id = R.string.app_name))
+            ScreenTitle(title = R.string.app_name)
             // Description of the app
             Text(
                 text = stringResource(id = R.string.authentication_description),

@@ -1,13 +1,12 @@
 mutation JoinGame(
-  $memberName: String!
-  $gameMode: String!
-  $userAccess: String!
+    $gameMode: String!,
+    $access: String!
 ) {
   joinGame(
-    memberName: $memberName
-    gameMode: $gameMode
-    access: $userAccess
+    gameMode: $gameMode,
+    access: $access
   ) {
     id
+    username
   }
 }

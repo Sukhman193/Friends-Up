@@ -7,7 +7,8 @@ package ca.finalfive.friendsup.models
  * @param gameMode A Game mode that the user can
  * this can be either `TRIVIA` | `PROMPT` | 'CAH' | 'WYR'
  * @param gameContent Content of the game being played
- * @param gameStarted Boolean which defines whether the game has started or not
+ * @param isGameStarted Boolean which defines whether the game has started or not
+ * @param isGameEnded Boolean which defines whether the game has ended or not
  * @param maxMembers Maximum number of players for the game
  * @param members List of all the members in the game
  */
@@ -32,16 +33,29 @@ data class Game(
     /**
      * Boolean which defines whether the game has started or not
      */
-    val gameStarted: Boolean = false,
+    var isGameStarted: Boolean = false,
     // Cannot use Number because firebase does not support deserialization
     /**
      * Maximum number of player for each game
      */
     val maxMembers: Int = 0,
     /**
-     * List of all the usernames for the players inside the game
+     * List of all the users inside a game
      */
-    val members: List<String> = listOf()
+    val members: List<GameUserMember> = listOf(),
+    /**
+     * States whether the game has ended or not
+     */
+    var isGameEnded: Boolean = false,
+    /**
+     * Friends added to the friendList queue
+     */
+    val addFriendList: List<String> = listOf(),
+    /**
+     * Number which keeps track of which gameContent question the
+     * players are at
+     */
+    val gameProgress: Int = 0
 ) {
     // Constructor required by the firestore deserialization
     constructor(): this(null)
@@ -68,5 +82,43 @@ data class GameModeContent(
      * For Would You Rather it's an array of 2 with the different options
      * For Cards against humanity it's going to be the content of the white card
      */
-    val questionOptions: List<String> = listOf()
+    val questionOptions: List<GameQuestionOption> = listOf()
+)
+
+/**
+ * Data class for the game question option
+ * @param optionText content of the option which will be displayed to the user
+ * @param selectedBy List of users who have selected the option
+ */
+data class GameQuestionOption(
+    /**
+     * Content of the question's option which will be displayed to the user
+     */
+    val optionText: String = "",
+
+    /**
+     * List of users who have selected the option
+     */
+    var selectedBy: List<String> = listOf()
+)
+
+/**
+ * Details of all the users inside a game
+ * @param username Username of the user
+ * @param email Email of the user
+ * @param icon Icon of the user
+ */
+data class GameUserMember(
+    /**
+     * Username of the user
+     */
+    val username: String = "",
+    /**
+     * Email of the user
+     */
+    val email: String = "",
+    /**
+     * Icon of the user
+     */
+    val icon: String = ""
 )
