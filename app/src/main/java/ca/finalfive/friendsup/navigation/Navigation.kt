@@ -197,9 +197,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                 // Suggestion is to navigate to the game ended screen
             } else {
                 // Display queue screen
-                GameQueueScreen(
-                    navController = navController,
-                )
+                GameQueueScreen(navController = navController)
             }
         }
     }

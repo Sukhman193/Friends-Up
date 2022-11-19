@@ -8,6 +8,7 @@ val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
 
 // Bottom navigation colors
+
 /**
  * Background color for the navigation bar
  */
@@ -25,7 +26,11 @@ val OutlineTextFieldColor = Color(0xFF47458F)
 
 val lightPurple = Color(0xFF605BD4)
 
+val mediumPurple = Color(0xFF3F3A95)
+
 val darkPurple = Color(0xFF312E81)
+
+val redSubmitButton = Color(0xE6FF6262)
 
 /**
  * Background used for the title shades
