@@ -34,7 +34,7 @@ fun FriendButton(friendName: String) {
     ) {
         // Text inside the button
         Text(
-            text = "$friendName",
+            text = friendName,
             color = Color.White,
             style = MaterialTheme.typography.h3,
             fontSize = 20.sp,

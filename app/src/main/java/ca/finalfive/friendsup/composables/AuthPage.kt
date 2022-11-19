@@ -19,8 +19,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ca.finalfive.friendsup.R
+import ca.finalfive.friendsup.models.User
 import ca.finalfive.friendsup.navigation.Route
 import ca.finalfive.friendsup.viewmodels.AuthViewModel
+import ca.finalfive.friendsup.viewmodels.UserViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
@@ -35,10 +37,12 @@ import kotlinx.coroutines.tasks.await
  * @param navController: Nav Controller instance to navigate
  */
 @Composable
+
 fun AuthPage(
     authViewModel: AuthViewModel,
     navController: NavController,
-) {
+    userViewModel: UserViewModel
+){
     // local context
     val context = LocalContext.current
     // Firebase Client Token
@@ -48,30 +52,32 @@ fun AuthPage(
     val scope = rememberCoroutineScope()
 
     // The Google Sign-in Launcher
-    val launcher =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
-            // returns a task for google sign in account
-            val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
-            try {
-                // returns the google sign in account
-                val account = task.getResult(ApiException::class.java)!!
-                // the Google Authentication credentials
-                val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
-                scope.launch {
-                    // this async Firebase Function will use the credentials to sign in and returns the result
-                    Firebase.auth.signInWithCredential(credential).await()
-                    // TODO: Everything that needs to be done after the user is authenticated goes here
-
-                    // Route to the Game Screen if the sign in is successful
-                    navController.navigate(Route.GameRoomScreen.route)
-
-                    Toast.makeText(context, "Authentication Successful", Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: ApiException) {
-                // make a toast to notify the user that authentication was not successful
-                Toast.makeText(context, "Authentication Failed", Toast.LENGTH_SHORT).show()
+    val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
+        // returns a task for google sign in account
+        val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
+        try {
+            // returns the google sign in account
+            val account = task.getResult(ApiException::class.java)!!
+            // the Google Authentication credentials
+            val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
+            scope.launch {
+                // this async Firebase Function will use the credentials to sign in and returns the result
+                val authResult = Firebase.auth.signInWithCredential(credential).await()
+                // Adding the user with the user's email and its default username to the database
+                userViewModel.addUser(
+                    User(email = authResult.user?.email!!,
+                        username = authResult.user?.email!!.replace("@gmail.com","")
+                    ),
+                )
+                // Route to the Game Screen if the sign in is successful
+                navController.navigate(Route.GameRoomScreen.route)
             }
+        } catch (e: ApiException) {
+            // make a toast to notify the user that authentication was not successful
+            Toast.makeText(context, "Authentication Failed", Toast.LENGTH_SHORT).show()
         }
+    }
+
     // Container for the page
     Box {
         // Add Image background containing the moon

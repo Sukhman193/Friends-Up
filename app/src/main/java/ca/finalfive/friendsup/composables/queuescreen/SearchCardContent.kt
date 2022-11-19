@@ -18,7 +18,6 @@ import ca.finalfive.friendsup.R
 fun SearchCardContent(
     content: @Composable () -> Unit
 ) {
-
     // Container of the text
     Row(
         modifier = Modifier

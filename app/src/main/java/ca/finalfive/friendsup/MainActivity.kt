@@ -33,6 +33,7 @@ class MainActivity : ComponentActivity() {
         // initialize game view model
         gameViewModel = GameViewModel()
         // creating an instance of authViewModel
+
         val authViewModel = AuthViewModel()
         setContent {
             // Every time there is an error message, set the error message to be null
