@@ -1,7 +1,6 @@
 package ca.finalfive.friendsup.repositories
 
 import android.accounts.NetworkErrorException
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -50,10 +49,8 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
                 gameMode = gameMode,
                 access = token!!
             )
-        Log.d("LLAMA", apolloRequest.toString())
         // Make the request to the endpoint
         val response = this.apolloClient.mutation(apolloRequest).execute()
-        Log.d("LLAMA", response.toString())
         // check if there is any error
         if (!response.errors.isNullOrEmpty()) {
             // if there is an authentication error than call this function again but instead get a new token
@@ -146,9 +143,6 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
                 if (response.errors?.get(0)?.message == "User token is invalid") {
                     token = null
                     this.endGame(gameMode)
-                } else {
-                    // throw any errors sent by the apollo server
-                    throw ApolloException(response.errors?.get(0)?.message.toString())
                 }
             }
         }
@@ -260,7 +254,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
             if (INSTANCE == null) {
                 val apolloClient = ApolloClient.Builder()
                     // TODO: Change the url below
-                    .serverUrl("https://ed63-75-157-118-144.ngrok.io/dev/graphql")
+                    .serverUrl("https://b96a-75-157-118-144.ngrok.io/dev/graphql")
                     .build()
                 INSTANCE = GameApolloRepository(apolloClient)
             }

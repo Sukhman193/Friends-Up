@@ -11,32 +11,45 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.animations.TimerAnimation
+import ca.finalfive.friendsup.viewmodels.GameViewModel
 import kotlinx.coroutines.delay
 
 /** This component represents the game timer for the mini games, including details around the timer
  * @param totalTime The initial starting time for the timer
  * @param prompt The word before the question the user is on (Ex. "Question" 1 of 5)
- * @param currentQuestion The question the users are on
- * @param totalQuestions The total amount of questions in the lobby
+ * @param gameViewModel view model  for the game
  */
 @Composable
 fun GameTimer(
     totalTime: Float,
     prompt: Int,
-    currentQuestion: Int,
-    totalQuestions: Int
+    gameViewModel: GameViewModel
 ) {
+    // Content of the game
+    val game = gameViewModel.game!!
+    // Keeps track of what question the user is on
+    val currentQuestion = game.gameProgress
+    // The total amount of questions in the game
+    val totalQuestions = game.gameContent.size
     // Number on the timer
     var currentTime by remember {
         mutableStateOf(totalTime)
     }
 
+    // Change the timer for the response
     LaunchedEffect(key1 = currentTime) {
         if (currentTime > 0f) {
             // Will update every 0.2s
             delay(200L)
             currentTime -= 0.2f
+        } else {
+            gameViewModel.handleGameProgress()
         }
+    }
+
+    // Every time the question changes reset the timer
+    LaunchedEffect(key1 = currentQuestion) {
+        currentTime = totalTime
     }
 
     Box(
@@ -45,7 +58,7 @@ fun GameTimer(
     ) {
         // This is a side effect which is run in a Coroutine Scope
         // which will subtract the currentTime by 1 every second
-        ProgressBar(totalTime = totalTime)
+        ProgressBar(totalTime = totalTime, updateValue = currentQuestion)
 
         // Row containing the current question number and the timer animation
         Row(
@@ -57,7 +70,7 @@ fun GameTimer(
 
             // Current question number
             Text(
-                text = stringResource(id = prompt, currentQuestion, totalQuestions),
+                text = stringResource(id = prompt, currentQuestion + 1, totalQuestions),
                 color = Color.White,
                 style = MaterialTheme.typography.h3,
                 fontSize = 18.sp,

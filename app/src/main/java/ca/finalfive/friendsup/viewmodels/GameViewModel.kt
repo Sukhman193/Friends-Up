@@ -1,5 +1,6 @@
 package ca.finalfive.friendsup.viewmodels
 
+import android.accounts.NetworkErrorException
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -234,19 +235,17 @@ class GameViewModel : ViewModel() {
      * End user's game when all the questions have ended
      * This function will route the users to the end Game Screen
      */
-    fun endGame() {
+    private fun endGame() {
+        // If game is null than exit the function
+        if(game == null) return
+
         viewModelScope.launch {
-            // Check if game is not null
-            if (game != null) {
-                try {
-                    // End the game
-                    gameApolloRepository.endGame(gameMode = game!!.gameMode)
-                } catch (error: java.lang.Exception) {
-                    // In case of errors set the error message to be here
-                    errorMessage = error.message
-                }
-            } else {
-                Log.e("ERROR", "GameViewModel.endGame()")
+            try {
+                // end the game
+                gameApolloRepository.endGame(gameMode = game!!.gameMode)
+            } catch (error: NetworkErrorException) {
+                // catch the thrown error
+                errorMessage = error.message
             }
         }
     }
@@ -310,27 +309,27 @@ class GameViewModel : ViewModel() {
      * This will route to the next question
      */
     fun handleGameProgress() {
-        // Update the game progress game question progress only if the
-        // game is not at the last question
-        if (game != null && game!!.gameProgress != (game!!.gameContent.size - 1)) {
-            // set the question answered to false
-            this.questionAnswered = false
-            viewModelScope.launch {
-                // Check if the game is not null
-                // This will never happen because the game has to exist to move forward
-                if (game != null) {
-                    // game to update
-                    gameFirestoreRepository.handleGameProgress(
-                        gameProgress = game!!.gameProgress + 1,
-                        gameMode = gameMode,
-                        gameID = gameID!!
-                    )
-                } else {
-                    Log.e("ERROR", "GameViewModel.handleGameProgress()")
-                }
-            }
-        } else {
-            Log.d("LLAMA", "GameViewModel.handleGameProgress()")
+
+        // Game should never be null when this function is called
+        if (game == null) {
+            return
+        }
+        // Check if it's the last question that is being answered
+        if (game!!.gameContent.size - 1 == game!!.gameProgress) {
+            // end the game if the timer of the last question reaches 0
+            this.endGame()
+            return
+        }
+
+        // set the question answered to false
+        this.questionAnswered = false
+        viewModelScope.launch {
+            // Update the game
+            gameFirestoreRepository.handleGameProgress(
+                gameProgress = game!!.gameProgress + 1,
+                gameMode = gameMode,
+                gameID = gameID!!
+            )
         }
     }
 }

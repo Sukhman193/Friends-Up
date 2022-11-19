@@ -17,7 +17,7 @@ import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 @Composable
 fun CAHScreen(gameViewModel: GameViewModel? = null){
-    Column() {
+    Column {
         Text(text = "CAH game screen")
         //this spacer is where we will add the other premade components
         Spacer(modifier = Modifier.height(200.dp))

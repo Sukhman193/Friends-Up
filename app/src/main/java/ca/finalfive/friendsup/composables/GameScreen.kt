@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 /**
  * GameScreen is the default game screen for all the different kinds of
@@ -15,23 +16,17 @@ import androidx.compose.ui.unit.dp
  * @param gameType is the variable beside the numbers in the timer animation
  *      for example "<Question> 1 of 5". gameType being the word Question
  * @param titleFontSize font size for the title
+ * @param gameTimer timer of the game
  */
 @Composable
 fun GameScreen(
     gameTitle: Int,
     gameType: Int,
     titleFontSize: TextUnit,
+    gameTimer: Float = 90f,
+    gameViewModel: GameViewModel,
     gameContent: @Composable () -> Unit
 ) {
-    // Keeps track of what question the user is on
-    val currentQuestion by remember {
-        mutableStateOf(1)
-    }
-    // The total amount of questions in the game, made it a mutableState
-    // just in case we would ever need to change it
-    val totalQuestions by remember {
-        mutableStateOf(5)
-    }
 
     // Black background over the background to make the background dimmer
     Box(
@@ -65,10 +60,9 @@ fun GameScreen(
             // Component containing the timer animation along with the lines above it,
             // and the words to the left of the timer
             GameTimer(
-                totalTime = 90f,
+                totalTime = gameTimer,
                 prompt = gameType,
-                currentQuestion = currentQuestion,
-                totalQuestions = totalQuestions
+                gameViewModel = gameViewModel
             )
 
             // The content for which ever game is used, such as cards for
