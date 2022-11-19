@@ -113,7 +113,6 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
                     token = it.token!!
                 }
         }
-        Log.d("LLAMAaaaha", token.toString())
     }
 
     companion object {
