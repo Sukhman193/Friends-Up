@@ -13,6 +13,9 @@ class Constants {
         companion object {
             // Phone Number Regex Pattern
             val PHONE_NUMBER = Regex("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}\$")
+
+            // Discord Username Regex Pattern
+            val DISCORD_USERNAME = Regex("^.{3,32}#[0-9]{4}\$")
         }
     }
 }
