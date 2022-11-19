@@ -19,11 +19,11 @@ import ca.finalfive.friendsup.composables.buttons.ReportSubmitButton
 import ca.finalfive.friendsup.composables.drawings.LineSeparator
 import ca.finalfive.friendsup.navigation.Route
 
+/**
+ * Report screen for reporting the users
+ * @param navController Navigation controller for the application
+ */
 @Composable
-        /**
-         * Report screen for reporting the users
-         * @param navController Navigation controller for the application
-         */
 fun ReportScreen(
     navController: NavController
 ) {
