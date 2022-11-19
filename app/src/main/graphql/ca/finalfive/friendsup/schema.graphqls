@@ -1,14 +1,10 @@
 type Game {
-  """
-  ID of the game instance
-  """
+  """ID of the game instance"""
   id: String
 }
 
 type Success {
-  """
-  State whether the user was removed successfully or not
-  """
+  """State wether the user was removed successfully or not"""
   success: Boolean
 }
 
@@ -17,12 +13,9 @@ type Query {
 }
 
 type Mutation {
+  reportUser(access: String!, gameID: String!, gameMode: String!, reportedReason: String!): Success!
+  endGame(access: String!, gameID: String!, gameMode: String!): Success!
   removeUser(memberName: String!, gameMode: String!, access: String!, gameID: String!): Success!
-
   joinGame(memberName: String!, gameMode: String!, access: String!): Game!
 }
 
-schema {
-  query: Query
-  mutation: Mutation
-}

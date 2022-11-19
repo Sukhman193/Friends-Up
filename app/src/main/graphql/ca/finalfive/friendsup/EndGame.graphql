@@ -1,0 +1,13 @@
+mutation EndGame(
+    $access: String!,
+    $gameId: String!,
+    $gameMode: String!
+) {
+    endGame(
+        access: $access,
+        gameID: $gameId,
+        gameMode: $gameMode
+    ) {
+        success
+    }
+}

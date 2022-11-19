@@ -18,6 +18,7 @@ import ca.finalfive.friendsup.composables.buttons.CustomRadioButton
 import ca.finalfive.friendsup.composables.buttons.ReportSubmitButton
 import ca.finalfive.friendsup.composables.drawings.LineSeparator
 import ca.finalfive.friendsup.navigation.Route
+import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 /**
  * Report screen for reporting the users
@@ -25,7 +26,8 @@ import ca.finalfive.friendsup.navigation.Route
  */
 @Composable
 fun ReportScreen(
-    navController: NavController
+    navController: NavController,
+    gameViewModel: GameViewModel
 ) {
     // https://foso.github.io/Jetpack -Compose-Playground/material/radiobutton/
     /**
@@ -43,6 +45,7 @@ fun ReportScreen(
      */
     val (selectedOption, setOptionSelected) = remember { mutableStateOf(radioOptions[3] ) }
 
+    val reportReasonString = stringResource(id = selectedOption)
     // Container of the page
     Box {
         // Add background image
@@ -53,7 +56,9 @@ fun ReportScreen(
             ScreenTitle(title = stringResource(id = R.string.report_user_title))
             // Add description of the screen
             Column(
-                modifier = Modifier.fillMaxSize().padding(horizontal = 40.dp, vertical = 50.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 40.dp, vertical = 50.dp),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Column {
@@ -85,8 +90,11 @@ fun ReportScreen(
 
                 // Report button
                 ReportSubmitButton(text = R.string.button_report) {
-                    // TODO: Action for reporting the user and navigate to the game page
+                    gameViewModel.reportUser(reportReason = reportReasonString)
                     navController.navigate(Route.GameRoomScreen.route)
+                }
+                ReportSubmitButton(text = R.string.button_cancel)    {
+                    gameViewModel.isReportScreenOpened = false
                 }
             }
         }

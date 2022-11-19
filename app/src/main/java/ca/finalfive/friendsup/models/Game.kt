@@ -41,7 +41,17 @@ data class Game(
     /**
      * List of all the usernames for the players inside the game
      */
-    val members: List<String> = listOf()
+    val members: List<String> = listOf(),
+    /**
+     * List of all the emails of the players inside the game
+     * Users will not have access to this game
+     */
+    val membersEmails: List<String> = listOf(),
+    /**
+     * States whether the game has ended or not
+     */
+    val gameEnded: Boolean = false
+
 ) {
     // Constructor required by the firestore deserialization
     constructor(): this(null)
