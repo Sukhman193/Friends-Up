@@ -31,7 +31,5 @@ class AuthViewModel: ViewModel() {
      */
     fun signIn(token: String, context: Context, launcher: ManagedActivityResultLauncher<Intent, ActivityResult>){
         user = firebaseAuthRepository.signIn(token, context, launcher)
-
     }
-
 }

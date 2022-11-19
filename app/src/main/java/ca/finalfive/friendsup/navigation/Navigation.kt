@@ -1,17 +1,26 @@
 package ca.finalfive.friendsup.navigation
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.NavigationContainer
+import ca.finalfive.friendsup.factories.UserViewModelFactory
 import ca.finalfive.friendsup.models.GameMode
+import ca.finalfive.friendsup.repositories.FirestoreUserRepository
 import ca.finalfive.friendsup.screens.*
 import ca.finalfive.friendsup.viewmodels.AuthViewModel
 import ca.finalfive.friendsup.viewmodels.GameViewModel
+import ca.finalfive.friendsup.viewmodels.UserViewModel
 
 /**
  * Screens for possible navigation
@@ -57,7 +66,11 @@ sealed class BottomNavItem(var title: String, var icon: Int, var route: String) 
 
 // navigation composable
 @Composable
-fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
+fun Navigation(
+    gameViewModel: GameViewModel,
+    authViewModel: AuthViewModel,
+    userViewModel: UserViewModel = viewModel(factory = UserViewModelFactory(FirestoreUserRepository()))
+) {
 
     // Navigation controller
     val navController = rememberNavController()
@@ -104,8 +117,24 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
             route = Route.ProfileScreen.route,
         ) {
             // Profile screen with bottom navigation
-            NavigationContainer(navController = navController) {
-                ProfileScreen()
+            if (authViewModel.user != null) {
+                userViewModel.getUser(authViewModel.user!!.email!!.replace("@gmail.com", ""))
+            }
+            if (userViewModel.user != null) {
+                // Profile screen with bottom navigation
+                NavigationContainer(navController = navController) {
+                    ProfileScreen(
+                        userViewModel = userViewModel
+                    )
+                }
+            } else {
+                NavigationContainer(navController = navController) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(90.dp)
+                    )
+                }
             }
         }
 
@@ -124,6 +153,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
             AuthScreen(
                 authViewModel = authViewModel,
                 navController = navController,
+                userViewModel = userViewModel
             )
         }
 
