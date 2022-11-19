@@ -43,6 +43,7 @@ fun GameTimer(
             delay(200L)
             currentTime -= 0.2f
         } else {
+            // Go to the next question
             gameViewModel.handleGameProgress()
         }
     }

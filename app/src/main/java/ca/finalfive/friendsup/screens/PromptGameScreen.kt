@@ -49,29 +49,26 @@ fun PromptGameScreen(gameViewModel: GameViewModel) {
     ) {
         // The only purpose of this box is to make a bottom alignment
         // for the skip button
-        Column {
-            Box(
-                modifier = Modifier
-            ) {
-                // Question for the user
-                Text(
-                    text = prompt,
-                    color = Color.White,
-                    style = MaterialTheme.typography.h3,
-                    fontSize = 26.sp,
-                    modifier = Modifier
-                        .padding(horizontal = 30.dp)
-                )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(30.dp)
+        ) {
+            // Question for the user
+            Text(
+                text = prompt,
+                color = Color.White,
+                style = MaterialTheme.typography.h3,
+                fontSize = 26.sp,
+            )
 
-
-            }
             // check if it's the last question or not
             // if it's the last question don't display the button
             if(currentPromptIndex < 4) {
                 // Skip button
                 Box(
                     modifier = Modifier
-                        .padding(end = 30.dp, top = 20.dp)
+                        .padding(top = 20.dp)
                         .height(45.dp)
                         .width(120.dp)
                         .clip(RoundedCornerShape(30.dp))

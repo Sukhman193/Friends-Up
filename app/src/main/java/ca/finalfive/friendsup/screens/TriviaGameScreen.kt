@@ -37,7 +37,6 @@ fun TriviaGameScreen(gameViewModel: GameViewModel) {
     ) {
         // Question for the user
         Text(
-            /* TODO: Make the question randomly generated along with the options */
             text = question,
             color = Color.White,
             style = MaterialTheme.typography.h3,

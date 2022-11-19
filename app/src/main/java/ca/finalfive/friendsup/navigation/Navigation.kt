@@ -1,5 +1,6 @@
 package ca.finalfive.friendsup.navigation
 
+import android.util.Log
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -201,6 +202,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                     }
                     // Playing Cards against humanity game
                     GameMode.CARDS_AGAINST_HUMANITY -> {
+                        Log.d("LLAMA", "HERE")
                         CAHScreen(gameViewModel)
                     }
                 }

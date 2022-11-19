@@ -1,10 +1,16 @@
 package ca.finalfive.friendsup.composables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import ca.finalfive.friendsup.viewmodels.GameViewModel
@@ -28,6 +34,17 @@ fun GameScreen(
     gameContent: @Composable () -> Unit
 ) {
 
+    // saves the state of Focus Request for the keyboard
+    val requester = remember {
+        FocusRequester()
+    }
+
+    // States of keyboard
+    var isKeyboardShown by remember { mutableStateOf(false) }
+
+    // saves the state of the local focus
+    val localFocusManager = LocalFocusManager.current
+
     // Black background over the background to make the background dimmer
     Box(
         modifier = Modifier
@@ -39,18 +56,23 @@ fun GameScreen(
     // arrange the MessageBox to the bottom
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .pointerInput(Unit) {
+                // checks if the user taps outside the textField
+                detectTapGestures {
+                    localFocusManager.clearFocus()
+                }
+            },
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         // Column containing all the elements except the MessageBox
-        Column(
-            modifier = Modifier
-        ) {
+        Column {
             // Container at the top which includes the title of the mini-game
             TopGameBar(
                 gameTitle = gameTitle,
                 fontSize = titleFontSize
             )
+
             // Space between the 3 lines and the top bar
             Spacer(
                 modifier = Modifier
@@ -65,22 +87,22 @@ fun GameScreen(
                 gameViewModel = gameViewModel
             )
 
-            // The content for which ever game is used, such as cards for
-            // Cards Against Humanities, or Question Options for Trivia
-            // and Would you Rather
-            gameContent()
-
-            // Spacer between the options
-            Spacer(
-                modifier = Modifier
-                    .padding(bottom = 12.dp)
-            )
+            if(!isKeyboardShown) {
+                // The content for which ever game is used, such as cards for
+                // Cards Against Humanities, or Question Options for Trivia
+                // and Would you Rather
+                gameContent()
+            }
         }
+
         Box(
             modifier = Modifier
                 .padding(bottom = 12.dp)
+                .imePadding()
         ) {
-            MessageBox()
+            MessageBox(modifier = Modifier
+                .focusRequester(requester)
+                .onFocusChanged { isKeyboardShown = it.hasFocus })
         }
     }
 }
