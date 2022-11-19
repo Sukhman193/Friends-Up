@@ -21,12 +21,12 @@ import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.navigation.Route
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
+/**
+ * Report popup for opening a popup page
+ * @param setReportPopup function which sets the report popup to change
+ * @param gameViewModel view model for the games
+ */
 @Composable
-        /**
-         * Report popup for opening a popup page
-         * @param setReportPopup function which sets the report popup to change
-         * @param gameViewModel view model for the games
-         */
 fun ReportPopup(
     setReportPopup: (Boolean) -> Unit,
     gameViewModel: GameViewModel

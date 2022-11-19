@@ -1,7 +1,5 @@
 package ca.finalfive.friendsup.navigation
 
-import android.util.Log
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -12,7 +10,6 @@ import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.NavigationContainer
 import ca.finalfive.friendsup.models.GameMode
 import ca.finalfive.friendsup.screens.*
-import ca.finalfive.friendsup.screens.games.TriviaGameScreen
 import ca.finalfive.friendsup.viewmodels.AuthViewModel
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
@@ -76,7 +73,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
     // Define navigation host an set the initial screen
     NavHost(
         navController = navController,
-        startDestination = startingScreen
+        startDestination = Route.AuthScreen.route
     ) {
 
         // Navigation for the Game room screen
@@ -141,6 +138,10 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
              */
             val currentRoute = navController.currentBackStackEntryAsState()
                 .value?.destination?.route
+
+            // If the game has not been created, pop back one screen
+            // This is needed for the screen when the user leaves the
+            // application or
             // if any error occurs while playing the game, I.E. Network error leave the game
             if (gameViewModel.errorMessage != null || !gameViewModel.createGameRoomCalled) {
                 // if the current route it the game than pop back a screen
@@ -148,20 +149,6 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                     navController.popBackStack()
                 }
             }
-
-            // If the game has not been created, pop back one screen
-            // This is needed for the screen when the user leaves the
-            // application
-//            if (!gameViewModel.createGameRoomCalled) {
-//                // Check if the current route
-//                if (currentRoute == Route.QueueScreen.route) {
-//                    // Go back to the game selection screen
-//                    navController.popBackStack()
-//                }
-//            }
-
-            Log.d("LLAMA Navigation", gameViewModel.game?.members?.size.toString())
-
             // This statement will handle removing the user from the database
             // Whenever the user clicks on the back button while they are either
             // waiting in the queue, or in a game
@@ -170,7 +157,6 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                 // Remove the game
                 gameViewModel.removeUserFromGame()
             }
-
             // If the user has clicked on report user
             // open the report user screen
             if (gameViewModel.isReportScreenOpened) {
@@ -184,7 +170,6 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
             } else if (gameViewModel.isAddAsFriendScreenOpened &&
                 gameViewModel.game?.members?.size == gameViewModel.game?.maxMembers
             ) {
-                // TODO: Add the queue system for the add friend
                 // If both the friends have added each other show the screen for users added
                 if (gameViewModel.game?.addFriendList?.size == gameViewModel.game?.maxMembers) {
                     // TODO: Add screen for both users are friends
@@ -205,39 +190,24 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                 when (gameViewModel.game?.gameMode) {
                     // Playing trivia game
                     GameMode.TRIVIA -> {
-                        // TODO: add screen for Trivia game
                         TriviaGameScreen(gameViewModel)
                     }
                     // Playing Prompt game
                     GameMode.PROMPT -> {
-                        // TODO: add screen for Prompt game
-                        Text(
-                            text = "PROMPT Game Started",
-                            style = MaterialTheme.typography.h1
-                        )
+                       PromptGameScreen(gameViewModel)
                     }
                     // Playing Would you rather game
                     GameMode.WOULD_YOU_RATHER -> {
-                        // TODO: add screen for would you rather
-                        Text(
-                            text = "WOULD YOU RATHER Game Started",
-                            style = MaterialTheme.typography.h1
-                        )
+                        WYRGameScreen(gameViewModel)
                     }
                     // Playing Cards against humanity game
                     GameMode.CARDS_AGAINST_HUMANITY -> {
-                        // TODO: add screen for cards against humanity
-                        Text(
-                            text = "Cards against humanity Game Started",
-                            style = MaterialTheme.typography.h1
-                        )
+                       CAHScreen(gameViewModel)
                     }
                 }
                 // If the game has ended or a user leaves in the middle of the game display the
                 // end game screen
-                // TODO: gameEnded -> isGameEnded
             } else if (gameViewModel.game?.isGameEnded == true &&
-                // TODO: make a contains function for this
                 gameViewModel.game?.members?.filter { member -> member.username != gameViewModel.savedUsername }?.size == 1
             ) {
                 EndGameScreen(gameViewModel = gameViewModel)

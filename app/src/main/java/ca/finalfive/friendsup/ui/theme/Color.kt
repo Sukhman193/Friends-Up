@@ -36,3 +36,8 @@ val redSubmitButton = Color(0xE6FF6262)
  * Background used for the title shades
  */
 val titleBackgroundShade = Color(0xFF514175)
+//Game card colors
+/**
+ * Background color for the game cards
+ */
+val GameCardBackgroundColor = Color(0xFF47458F)

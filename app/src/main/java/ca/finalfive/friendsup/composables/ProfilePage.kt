@@ -61,7 +61,8 @@ fun ProfilePage(){
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // The title depending on the keyboard
-        ScreenTitle(title =
+        ScreenTitle(
+            title =
             if(isKeyboardShown){
                  R.string.edit_title
             }

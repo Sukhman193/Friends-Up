@@ -1,6 +1,5 @@
 package ca.finalfive.friendsup.repositories
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -95,9 +94,6 @@ class GameFirestoreRepository {
                 ))
                 // Update the document
                 transaction.update(docRef, "chatRoom", chatList.toList())
-            } else {
-                // This error will throw if the game is not found
-                Log.e("LLAMA", "SNAPSHOT DOESN'T EXIST")
             }
             // Success
             null
@@ -120,16 +116,9 @@ class GameFirestoreRepository {
         this.firestore.runTransaction { transaction ->
             // Get the game snapshot
             val snapshot = transaction.get(docRef)
-            // convert game to game object
-            val game: Game? = snapshot.toObject()
-            // Check if game is not null
-            // This is never going to be false
-            if(game == null) {
-                // This error will throw if the game is not found
-                Log.d("LLAMA", "SNAPSHOT DOESN'T EXIST")
-                return@runTransaction
-            }
-
+            // If the game doesn't exist than return
+            // get the game
+            val game: Game = snapshot.toObject() ?: return@runTransaction
             // Get the list of the game content
             val gameContentList: List<GameModeContent> = game.gameContent
             // Get the games options for the current question
@@ -162,18 +151,12 @@ class GameFirestoreRepository {
         this.firestore.runTransaction { transaction ->
             // Get the game snapshot
             val snapshot = transaction.get(docRef)
-            // convert game to game object
-            val game: Game? = snapshot.toObject()
+            // if the game doesn't exist than end the transaction
+            snapshot.toObject<Game>() ?: return@runTransaction
             // Check if game is not null
             // This is never going to be false
-            if(game != null) {
-                transaction.update(docRef, "gameProgress", gameProgress)
-            } else {
-                // This error will throw if the game is not found
-                Log.d("LLAMA", "SNAPSHOT DOESN'T EXIST")
-            }
-            // Success
-            null
+            transaction.update(docRef, "gameProgress", gameProgress)
+
         }
     }
 

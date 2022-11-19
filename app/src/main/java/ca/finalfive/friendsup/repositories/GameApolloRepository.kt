@@ -1,15 +1,10 @@
 package ca.finalfive.friendsup.repositories
 
 import android.accounts.NetworkErrorException
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import ca.finalfive.friendsup.JoinGameMutation
-import ca.finalfive.friendsup.UpdateAddUserFriendMutation
-import ca.finalfive.friendsup.ReportUserMutation
-import ca.finalfive.friendsup.EndGameMutation
-import ca.finalfive.friendsup.RemoveUserMutation
+import ca.finalfive.friendsup.*
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.exception.ApolloException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
@@ -38,7 +33,6 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
 
     /**
      * Create match in the firestore database
-     * @param username username of the user
      * @param gameMode gameMode selected by the user
      * @throws NetworkErrorException thrown if there is a network error like
      * no network connection
@@ -244,8 +238,6 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
                 throw NetworkErrorException("Network error: Please restart the application")
             }
         }
-
-        Log.d("LLLAMA", this.token.toString())
     }
 
     companion object {

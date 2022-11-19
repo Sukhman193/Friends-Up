@@ -14,15 +14,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.ui.theme.titleBackgroundShade
 
+/**
+ * Screen title for the different pages
+ * @param title value of the text to display
+ * @param modifier Modifier for additional changes
+ */
 @Composable
-        /**
-         * Screen title for the different pages
-         * @param title value of the text to display
-         * @param modifier Modifier for additional changes
-         */
 fun ScreenTitle(
-    title: Int,
-    modifier: Modifier = Modifier) {
+            title: Int,
+            modifier: Modifier = Modifier) {
 
     // Container of the screen
     Column {
