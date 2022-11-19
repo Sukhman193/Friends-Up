@@ -15,6 +15,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -31,6 +32,8 @@ import ca.finalfive.friendsup.viewmodels.UserViewModel
  */
 @Composable
 fun ProfilePage(userViewModel: UserViewModel) {
+    // local context
+    val context = LocalContext.current
     // saves the state of Focus Request for the keyboard
     val requester = remember {
         FocusRequester()
@@ -116,7 +119,7 @@ fun ProfilePage(userViewModel: UserViewModel) {
         // sends the updated data to the user view model
         if (userId != null) {
             if (updatedUser != null) {
-                userViewModel.updateUserByID(userId, updatedUser)
+                userViewModel.updateUserByID(userId, updatedUser, context)
                 userViewModel.getUser(userId)
             }
         }
