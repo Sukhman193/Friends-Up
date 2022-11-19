@@ -21,7 +21,7 @@ import ca.finalfive.friendsup.R
  * @param value Value of the button
  * @param icon Icon of the button
  * @param modifier Modifier for the button
- * @param buttonEnabled States whether the button is enabled or not
+ * @param isButtonEnabled States whether the button is enabled or not
  * @param action onClick event for the button
  */
 @Composable
@@ -29,16 +29,16 @@ fun EndGameSubmitButton(
     value: Int,
     icon: Int,
     modifier: Modifier = Modifier,
-    buttonEnabled: Boolean = true,
+    isButtonEnabled: Boolean = true,
     action: () -> Unit
 ) {
     // Container of the button
     // Used to add elevation to the button
     Card(
-        elevation = if (buttonEnabled) 9.dp else 0.dp,
+        elevation = if (isButtonEnabled) 9.dp else 0.dp,
         shape = RoundedCornerShape(20.dp),
         // Change card color in case the button is disabled
-        modifier = Modifier.alpha(if (buttonEnabled) 1f else 0.65f)
+        modifier = Modifier.alpha(if (isButtonEnabled) 1f else 0.65f)
     ) {
         // Display button
         Button(
@@ -49,7 +49,7 @@ fun EndGameSubmitButton(
                 backgroundColor = colorResource(id = R.color.light_purple),
                 disabledBackgroundColor = colorResource(id = R.color.light_purple)
             ),
-            enabled = buttonEnabled
+            enabled = isButtonEnabled
         ) {
             // Put the button in a row
             Row(
