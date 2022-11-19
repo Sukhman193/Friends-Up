@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import ca.finalfive.friendsup.models.User
 import ca.finalfive.friendsup.repositories.FirestoreUserRepository
+import ca.finalfive.friendsup.services.ValidationService
 
 /**
  * UserViewModel - stores the and handles the user's functionality
@@ -39,6 +40,9 @@ class UserViewModel(private val userRepository: FirestoreUserRepository): ViewMo
      * @param updatedUser - an object of the updated user's information
      */
     fun updateUserByID(userId: String, updatedUser: User){
+        // Instance of Validation Service
+        val validationService = ValidationService.getInstance()
+
         userRepository.updateUserByID(userId, updatedUser)
         user = userRepository.firestoreUser
     }

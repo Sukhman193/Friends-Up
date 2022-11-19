@@ -1,5 +1,6 @@
 package ca.finalfive.friendsup.services
 import ca.finalfive.friendsup.helpers.Error
+import ca.finalfive.friendsup.repositories.GameFirestoreRepository
 import kotlin.text.Regex
 
 /**
@@ -13,6 +14,9 @@ class Constants {
         companion object {
             // Phone Number Regex Pattern
             val PHONE_NUMBER = Regex("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}\$")
+
+            // Discord Username Regex Pattern
+            val DISCORD_USERNAME = Regex("^.{3,32}#[0-9]{4}\$")
         }
     }
 }
@@ -26,20 +30,37 @@ class ValidationService {
      * @param data - The phone number given to the function
      */
     fun isPhoneNumber(data: String): Boolean {
-        return try{
-            // using the Regex built-in to check if the data matches the regex pattern
-            // and returns a boolean state
-            val result = Constants.Regex.PHONE_NUMBER.matches(data)
-            if(!result){
-                // if doesnt match throw an error
-                throw Error.PhonePatternException()
-            }
-            result
-
-        }catch(e: Exception){
-            false
-        }
+        return Constants.Regex.PHONE_NUMBER.matches(data)
     }
 
+    /**
+     * isDiscordValid - validates the phone number
+     * @param data - The discord username given to the function
+     */
+    fun isDiscordValid(data: String): Boolean{
+        return Constants.Regex.DISCORD_USERNAME.matches(data)
+    }
+
+
+
+    companion object {
+        /**
+         * Singleton for the class
+         */
+        private var INSTANCE: ValidationService? = null
+
+        /**
+         * Get instance for the game firestore repository
+         */
+        fun getInstance(): ValidationService {
+            // Check if an instance already exists
+            if(INSTANCE == null) {
+                INSTANCE = ValidationService()
+            }
+            // return the instance
+            return INSTANCE!!
+        }
+
+    }
 
 }
