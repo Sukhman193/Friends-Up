@@ -172,10 +172,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
             ) {
                 // If both the friends have added each other show the screen for users added
                 if (gameViewModel.game?.addFriendList?.size == gameViewModel.game?.maxMembers) {
-                    // TODO: Add screen for both users are friends
-                    // TODO: Add animation for this screen, it will look nice
-                    // TODO: Add 5 seconds timer to pop back a screen
-                    Text(text = "YOU are now friends")
+                    FriendAddedScreen(navController = navController)
                 } else {
                     // Display the queue for adding a user as a friend
                     AddFriendQueueScreen(gameViewModel = gameViewModel)
