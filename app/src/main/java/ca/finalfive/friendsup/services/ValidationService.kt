@@ -45,8 +45,6 @@ class ValidationService{
         return Constants.Regex.DISCORD_USERNAME.matches(data)
     }
 
-
-
     companion object {
         /**
          * Singleton for the class
@@ -64,10 +62,7 @@ class ValidationService{
             // return the instance
             return INSTANCE!!
         }
+
     }
-    // TODO GET INSTANCE
-//    companion object{
-//
-//    }
 
 }
