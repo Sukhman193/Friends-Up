@@ -9,13 +9,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
 
+/**
+ * Line separator for the screen, it adds a small
+ * padding to the top of the line
+ * @param strokeWidth Width of the stroke, default to `7f`
+ * @param lineSpacing Spacing between the decorative lines, default to `40f`
+ */
 @Composable
-        /**
-         * Line separator for the screen, it adds a small
-         * padding to the top of the line
-         * @param strokeWidth Width of the stroke, default to `7f`
-         * @param lineSpacing Spacing between the decorative lines, default to `40f`
-         */
 fun LineSeparator(
     strokeWidth: Float = 7f,
     lineSpacing: Float = 40f,

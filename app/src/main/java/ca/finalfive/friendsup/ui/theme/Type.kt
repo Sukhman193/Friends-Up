@@ -55,6 +55,4 @@ val Typography = Typography(
         fontSize = 16.sp,
         color = Color.White
     )
-
-
 )

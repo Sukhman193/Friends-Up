@@ -3,6 +3,7 @@ package ca.finalfive.friendsup.navigation
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -68,7 +69,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
     // Define navigation host an set the initial screen
     NavHost(
         navController = navController,
-        startDestination = startingScreen
+        startDestination = Route.AuthScreen.route
     ) {
 
         // Navigation for the Game room screen
@@ -100,7 +101,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
         ) {
             // Profile screen with bottom navigation
             NavigationContainer(navController = navController) {
-                ProfileScreen(navController = navController)
+                ProfileScreen(navController)
             }
         }
 

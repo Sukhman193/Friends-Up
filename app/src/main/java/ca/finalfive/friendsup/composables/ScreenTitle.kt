@@ -13,12 +13,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ca.finalfive.friendsup.ui.theme.titleBackgroundShade
 
+/**
+ * Screen title for the different pages
+ * @param title value of the text to display
+ * @param modifier Modifier for additional changes
+ */
 @Composable
-        /**
-         * Screen title for the different pages
-         * @param title value of the text to display
-         * @param modifier Modifier for additional changes
-         */
 fun ScreenTitle(title: String, modifier: Modifier = Modifier) {
 
     Box {
