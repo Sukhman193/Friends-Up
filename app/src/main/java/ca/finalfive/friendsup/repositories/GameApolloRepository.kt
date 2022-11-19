@@ -1,4 +1,5 @@
 package ca.finalfive.friendsup.repositories
+
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,7 +8,6 @@ import ca.finalfive.friendsup.*
 import com.apollographql.apollo3.ApolloClient
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-
 
 class GameApolloRepository(private val apolloClient: ApolloClient) {
 

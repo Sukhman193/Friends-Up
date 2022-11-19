@@ -12,12 +12,12 @@ import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.ui.theme.darkPurple
 import ca.finalfive.friendsup.ui.theme.lightPurple
 
+/**
+ * Submit button for the Report Screen
+ * @param text ID of the string.xml corresponding to the string
+ * @param onClick Handle the click event
+ */
 @Composable
-        /**
-         * Submit button for the Report Screen
-         * @param text ID of the string.xml corresponding to the string
-         * @param onClick Handle the click event
-         */
 fun ReportSubmitButton(text: Int, onClick: () -> Unit) {
     // Container for the button, which helps aligning the button to the center
     Column(

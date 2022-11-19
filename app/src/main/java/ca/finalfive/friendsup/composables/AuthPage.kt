@@ -1,5 +1,6 @@
 package ca.finalfive.friendsup.composables
 
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -45,6 +46,7 @@ fun AuthPage(
     val context = LocalContext.current
     // Firebase Client Token
     val token = stringResource(R.string.default_web_client_id)
+    //val token = stringResource(R.string.default_web_client_id)
     // Coroutine Scope
     val scope = rememberCoroutineScope()
 
