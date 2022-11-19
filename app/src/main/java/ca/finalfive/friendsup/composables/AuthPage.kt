@@ -1,6 +1,5 @@
 package ca.finalfive.friendsup.composables
 
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -63,8 +62,7 @@ fun AuthPage(
                 // this async Firebase Function will use the credentials to sign in and returns the result
                 Firebase.auth.signInWithCredential(credential).await()
                 // TODO: Everything that needs to be done after the user is authenticated goes here
-                // Get user token for the different games
-                gameViewModel.getToken()
+
                 // Route to the Game Screen if the sign in is successful
                 navController.navigate(Route.GameRoomScreen.route)
 
@@ -88,7 +86,7 @@ fun AuthPage(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Title of the page
-            ScreenTitle(title = stringResource(id = R.string.app_name))
+            ScreenTitle(title = R.string.app_name)
             // Description of the app
             Text(
                 text = stringResource(id = R.string.authentication_description),

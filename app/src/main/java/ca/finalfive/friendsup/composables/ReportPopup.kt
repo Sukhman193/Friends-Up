@@ -24,7 +24,7 @@ import ca.finalfive.friendsup.viewmodels.GameViewModel
 /**
  * Report popup for opening a popup page
  * @param setReportPopup function which sets the report popup to change
- * @param navController Navigation controller of the application
+ * @param gameViewModel view model for the games
  */
 @Composable
 fun ReportPopup(

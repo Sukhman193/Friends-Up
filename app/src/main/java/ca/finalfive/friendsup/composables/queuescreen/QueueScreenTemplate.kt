@@ -7,7 +7,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -62,7 +62,7 @@ fun QueueScreenTemplate(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Add title
-            ScreenTitle(title = stringResource(id = screenTitleText))
+            ScreenTitle(title = screenTitleText)
             // Search card and timer container
             Column(
                 horizontalAlignment = Alignment.End

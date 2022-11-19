@@ -15,9 +15,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.composables.GameScreen
 import ca.finalfive.friendsup.R
+import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 @Composable
-fun PromptGameScreen() {
+fun PromptGameScreen(gameViewModel: GameViewModel) {
     // Game content which includes the topBar, gameTimer and the question
     // if there is one
     GameScreen(

@@ -13,9 +13,10 @@ import androidx.navigation.NavController
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.GameScreen
 import ca.finalfive.friendsup.composables.QuestionOption
+import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 @Composable
-fun WYRGameScreen(navController: NavController) {
+fun WYRGameScreen(gameViewModel: GameViewModel) {
     // Array of options for the user
     /* TODO: Make the options randomly generated */
     val options = arrayOf("Option 1", "Option 2")

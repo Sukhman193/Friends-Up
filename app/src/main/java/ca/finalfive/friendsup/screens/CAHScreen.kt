@@ -1,6 +1,5 @@
 package ca.finalfive.friendsup.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -9,15 +8,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.ui.theme.StrangerCommonsTheme
+import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 @Composable
-fun CAHScreen(){
+fun CAHScreen(gameViewModel: GameViewModel? = null){
     Column() {
         Text(text = "CAH game screen")
         //this spacer is where we will add the other premade components

@@ -22,7 +22,7 @@
 
     <!--  Trivia queue  -->
     <!--  Title of the trivia queue screen  -->
-    <string name="trivia_queue_title">Trivia Queue</string>
+    <string name="trivia_queue_title">Game Queue</string>
     <!--  Searching for players text  -->
     <string name="trivia_queue_search">Searching for player . . .</string>
 
@@ -73,7 +73,7 @@
 
     <!--  Add friend screen  -->
     <!--  Add friend title  -->
-    <string name="add_friend_title">Pending Request</string>
+    <string name="add_friend_title">Add Friend</string>
     <!--  Add friend description  -->
     <string name="add_friend_description">Waiting for user to add you as a friend</string>
 
