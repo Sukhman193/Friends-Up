@@ -203,6 +203,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                             style = MaterialTheme.typography.h1)
                     }
                 }
+
             // If the game has ended or a user leaves in the middle of the game display the 
             // end game screen
             } else if(gameViewModel.game?.gameEnded == true ||
@@ -222,6 +223,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                 if(currentRoute == Route.QueueScreen.route) {
                     GameQueueScreen(navController = navController)
                 }
+
             }
         }
     }
