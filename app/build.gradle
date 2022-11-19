@@ -50,9 +50,9 @@ android {
 }
 
 dependencies {
+    // Firebase Implementation
+    implementation(platform("com.google.firebase:firebase-bom:31.0.2"))
 
-    // Firebase Bom for getting firebase versions automatically
-    implementation(platform("com.google.firebase:firebase-bom:28.2.0"))
     // Firebase Authentication Implementation
     implementation("com.google.firebase:firebase-auth")
     // Dependency for Firebase Firestore

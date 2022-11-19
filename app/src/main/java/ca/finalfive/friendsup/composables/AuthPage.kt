@@ -19,9 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ca.finalfive.friendsup.R
+import ca.finalfive.friendsup.models.User
 import ca.finalfive.friendsup.navigation.Route
 import ca.finalfive.friendsup.viewmodels.AuthViewModel
 import ca.finalfive.friendsup.viewmodels.GameViewModel
+import ca.finalfive.friendsup.viewmodels.UserViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
@@ -36,10 +38,12 @@ import kotlinx.coroutines.tasks.await
  * @param navController: Nav Controller instance to navigate
  */
 @Composable
+
 fun AuthPage(
     authViewModel: AuthViewModel,
     navController: NavController,
-    gameViewModel: GameViewModel
+    gameViewModel: GameViewModel,
+    userViewModel: UserViewModel
 ){
     // local context
     val context = LocalContext.current
@@ -60,8 +64,13 @@ fun AuthPage(
             val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
             scope.launch {
                 // this async Firebase Function will use the credentials to sign in and returns the result
-                Firebase.auth.signInWithCredential(credential).await()
-                // TODO: Everything that needs to be done after the user is authenticated goes here
+                val authResult = Firebase.auth.signInWithCredential(credential).await()
+                // Adding the user with the user's email and its default username to the database
+                userViewModel.addUser(
+                    User(email = authResult.user?.email!!,
+                        username = authResult.user?.email!!.replace("@gmail.com","")
+                    ),
+                )
 
                 // Route to the Game Screen if the sign in is successful
                 navController.navigate(Route.GameRoomScreen.route)
