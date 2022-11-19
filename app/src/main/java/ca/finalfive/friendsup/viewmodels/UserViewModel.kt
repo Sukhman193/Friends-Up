@@ -45,12 +45,36 @@ class UserViewModel(private val userRepository: FirestoreUserRepository): ViewMo
         // Instance of Validation Service
         val validationService = ValidationService.getInstance()
         try {
-            validationService.isPhoneNumber(updatedUser.phone)
-        }catch (e: Error.ValidationException){
+
+            // validating the phone number
+            if (updatedUser.phone != ""){
+                validationService.isPhoneNumber(updatedUser.phone)
+            }
+
+            // validating the instagram
+            if (updatedUser.instagram != ""){
+                validationService.isInstagramValid(updatedUser.instagram)
+            }
+
+            // validating the snapchat
+            if (updatedUser.snapchat != ""){
+                validationService.isSnapchatValid(updatedUser.snapchat)
+            }
+
+            // validating the username
+            validationService.isUsernameValid(updatedUser.username)
+
+            // validating the discord
+            if (updatedUser.discord != ""){
+                validationService.isDiscordValid(updatedUser.discord)
+            }
+
+        } catch (e: Error.ValidationException){
             e.makeToast(context = context)
         }
-
+        // call the update function
         userRepository.updateUserByID(userId, updatedUser)
+        // updates the user
         user = userRepository.firestoreUser
     }
 }
