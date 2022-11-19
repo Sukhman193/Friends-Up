@@ -47,7 +47,7 @@ class UserViewModel(private val userRepository: FirestoreUserRepository): ViewMo
      * @param updatedUser - an object of the updated user's information
      */
     fun updateUserByID(userId: String, updatedUser: User){
-        //TODO CALL THE AVALIDATION SERVICE
+
         viewModelScope.launch {
             userRepository.updateUserByID(userId, updatedUser)
             user = userRepository.firestoreUser

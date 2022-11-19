@@ -20,13 +20,16 @@ class Constants {
 /**
  * ValidationService class - contains functions to validate
  */
-class ValidationService {
+class ValidationService{
     /**
      * isPhoneNumber - validates the phone number
      * @param data - The phone number given to the function
      */
-    fun isPhoneNumber(data: String): Boolean {
-            return Constants.Regex.PHONE_NUMBER.matches(data)
+    fun isPhoneNumber(data: String) {
+        val result = Constants.Regex.PHONE_NUMBER.matches(data)
+        if(!result){
+            throw Error.ValidationException("Phone number does not match")
+        }
     }
     // TODO GET INSTANCE
 //    companion object{
