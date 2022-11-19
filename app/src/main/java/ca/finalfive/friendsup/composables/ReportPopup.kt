@@ -50,11 +50,11 @@ fun ReportPopup(
         Card(
             modifier = Modifier
                 .width(308.dp)
-                    // The following tap gesture is added
-                    // because otherwise, clicking on the
-                    // card would close it, but instead
-                    // we want to close the popup
-                    // only when the user clicks outside
+                // The following tap gesture is added
+                // because otherwise, clicking on the
+                // card would close it, but instead
+                // we want to close the popup
+                // only when the user clicks outside
                 .pointerInput(Unit) {
                     detectTapGestures(
                         onTap = {}
@@ -88,19 +88,21 @@ fun ReportPopup(
                     fontSize = 9.sp
                 )
                 // Report button and cancel button
-                Column (
+                Column(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                        ) {
+                ) {
                     // Report button
                     Text(
                         text = stringResource(id = R.string.button_report),
                         color = MaterialTheme.colors.error,
                         fontSize = 14.sp,
                         style = MaterialTheme.typography.body2,
-                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp).clickable {
-                           gameViewModel.isReportScreenOpened = true
-                        }
+                        modifier = Modifier
+                            .padding(horizontal = 20.dp, vertical = 10.dp)
+                            .clickable {
+                                gameViewModel.isReportScreenOpened = true
+                            }
                     )
                     // Cancel button
                     Text(

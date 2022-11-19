@@ -10,11 +10,11 @@ import androidx.compose.ui.unit.dp
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.queuescreen.OffsetCard
 
+/**
+ * Description for the endgame screen
+ * This is a static value, meaning that it will never change
+ */
 @Composable
-        /**
-         * Description for the endgame screen
-         * This is a static value, meaning that it will never change
-         */
 fun EndGameDescription() {
     // Adding decorations to the screen
     Column {

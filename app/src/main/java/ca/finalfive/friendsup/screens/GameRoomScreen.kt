@@ -1,6 +1,8 @@
 package ca.finalfive.friendsup.screens
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -16,7 +18,10 @@ import ca.finalfive.friendsup.models.GameMode
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 @Composable
-fun GameRoomScreen(navController: NavController, gameViewModel: GameViewModel) {
+fun GameRoomScreen(
+    navController: NavController,
+    gameViewModel: GameViewModel
+) {
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState())
     ) {

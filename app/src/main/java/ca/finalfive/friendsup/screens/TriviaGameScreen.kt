@@ -14,6 +14,10 @@ import ca.finalfive.friendsup.composables.GameScreen
 import ca.finalfive.friendsup.composables.QuestionOption
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
+/**
+ * Screen for the trivia game
+ * @param gameViewModel view model for the game controls
+ */
 @Composable
 fun TriviaGameScreen(gameViewModel: GameViewModel) {
     // Array of options for the user

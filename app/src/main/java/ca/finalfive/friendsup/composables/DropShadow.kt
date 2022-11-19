@@ -27,7 +27,7 @@ fun DropShadowText(
     fontWeight: FontWeight = FontWeight.Normal,
     color: Color = colorResource(id = R.color.white)
 ) {
-    Box(){
+    Box() {
         //this creates the shadow
         Text(
             modifier = modifier
@@ -46,7 +46,7 @@ fun DropShadowText(
             text = text,
             fontWeight = fontWeight,
 
-        )
+            )
     }
 }
 
@@ -58,7 +58,7 @@ fun DropShadowIcon(
     Icon: Int,
 ) {
     //using a box so we can layer the two icons on top of each other
-    Box(){
+    Box() {
         //this creates the 'shadow'
         Icon(
             painter = painterResource(id = Icon),

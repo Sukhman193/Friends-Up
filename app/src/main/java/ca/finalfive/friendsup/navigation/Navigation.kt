@@ -34,7 +34,7 @@ sealed class Route(val route: String) {
     object AuthScreen : Route("auth")
 
     // Route for the queue screen
-    object QueueScreen : Route("Queue")
+    object GameScreen : Route("gameScreen")
 }
 
 // https://medium.com/geekculture/bottom-navigation-in-jetpack-compose-android-9cd232a8b16
@@ -73,7 +73,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
     // Define navigation host an set the initial screen
     NavHost(
         navController = navController,
-        startDestination = Route.AuthScreen.route
+        startDestination = startingScreen
     ) {
 
         // Navigation for the Game room screen
@@ -124,14 +124,13 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
             AuthScreen(
                 authViewModel = authViewModel,
                 navController = navController,
-                gameViewModel = gameViewModel
             )
         }
 
         // In game composable
         // It will handle the different games content
         composable(
-            route = Route.QueueScreen.route
+            route = Route.GameScreen.route
         ) {
             /**
              * Route of the current screen
@@ -145,14 +144,14 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
             // if any error occurs while playing the game, I.E. Network error leave the game
             if (gameViewModel.errorMessage != null || !gameViewModel.createGameRoomCalled) {
                 // if the current route it the game than pop back a screen
-                if (currentRoute == Route.QueueScreen.route) {
+                if (currentRoute == Route.GameScreen.route) {
                     navController.popBackStack()
                 }
             }
             // This statement will handle removing the user from the database
             // Whenever the user clicks on the back button while they are either
             // waiting in the queue, or in a game
-            if (currentRoute != Route.QueueScreen.route && currentRoute != null && gameViewModel.game != null) {
+            if (currentRoute != Route.GameScreen.route && currentRoute != null && gameViewModel.game != null) {
                 // Check if the game has been created or not
                 // Remove the game
                 gameViewModel.removeUserFromGame()
@@ -194,7 +193,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                     }
                     // Playing Prompt game
                     GameMode.PROMPT -> {
-                       PromptGameScreen(gameViewModel)
+                        PromptGameScreen(gameViewModel)
                     }
                     // Playing Would you rather game
                     GameMode.WOULD_YOU_RATHER -> {
@@ -202,7 +201,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                     }
                     // Playing Cards against humanity game
                     GameMode.CARDS_AGAINST_HUMANITY -> {
-                       CAHScreen(gameViewModel)
+                        CAHScreen(gameViewModel)
                     }
                 }
                 // If the game has ended or a user leaves in the middle of the game display the
@@ -217,7 +216,7 @@ fun Navigation(gameViewModel: GameViewModel, authViewModel: AuthViewModel) {
                 // The game queue screen will show up for a split second
                 // so we check if the current screen route matches the game screen route
                 // Reason is that there is a time when the current route is null
-                if (currentRoute == Route.QueueScreen.route) {
+                if (currentRoute == Route.GameScreen.route) {
                     GameQueueScreen(navController = navController)
                 }
             }

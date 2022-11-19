@@ -27,13 +27,13 @@ import ca.finalfive.friendsup.R
  * Profile Page
  */
 @Composable
-fun ProfilePage(){
+fun ProfilePage() {
     // saves the state of Focus Request for the keyboard
     val requester = remember {
         FocusRequester()
     }
     // States of keyboard
-    var isKeyboardShown by remember { mutableStateOf(false)}
+    var isKeyboardShown by remember { mutableStateOf(false) }
 
     // username of the user && the setter to change the username
     val (usernameText, setUsernameText) = rememberSaveable { mutableStateOf("") }
@@ -63,17 +63,17 @@ fun ProfilePage(){
         // The title depending on the keyboard
         ScreenTitle(
             title =
-            if(isKeyboardShown){
-                 R.string.edit_title
+            if (isKeyboardShown) {
+                R.string.edit_title
             }
             // if the keyboard is disabled then show the title as Profile
             else {
-                 R.string.profile_title
+                R.string.profile_title
             },
         )
         // if the keyboard is disabled then show the description of the profile page
-        if (!isKeyboardShown){
-            Box(modifier = Modifier.padding(start = 20.dp)){
+        if (!isKeyboardShown) {
+            Box(modifier = Modifier.padding(start = 20.dp)) {
                 Text(
                     text = stringResource(id = R.string.profile_description),
                     color = Color.White,
@@ -103,7 +103,7 @@ fun ProfilePage(){
             // the customized TextField to show the user's snapchat account
             CustomTextField(
                 value = snapchatText,
-                setValue = setSnapchatText ,
+                setValue = setSnapchatText,
                 label = stringResource(id = R.string.profile_snapchat),
                 iconID = R.drawable.snapchat_icon,
                 modifier = Modifier
@@ -113,8 +113,8 @@ fun ProfilePage(){
             // the customized TextField to show the user's instagram account
             CustomTextField(
                 value = instagramText,
-                setValue = setInstagramText ,
-                label = stringResource(id = R.string.profile_instagram) ,
+                setValue = setInstagramText,
+                label = stringResource(id = R.string.profile_instagram),
                 iconID = R.drawable.instagram_icon,
                 modifier = Modifier
                     .focusRequester(requester)
@@ -123,7 +123,7 @@ fun ProfilePage(){
             // the customized TextField to show the user's discord account
             CustomTextField(
                 value = discordText,
-                setValue = setDiscordText ,
+                setValue = setDiscordText,
                 label = stringResource(id = R.string.profile_discord),
                 iconID = R.drawable.discord_icon,
                 modifier = Modifier
@@ -133,8 +133,8 @@ fun ProfilePage(){
             // the customized TextField to show the user's phone number
             CustomTextField(
                 value = phoneText,
-                setValue = setPhoneText ,
-                label = stringResource(id = R.string.profile_phone_number) ,
+                setValue = setPhoneText,
+                label = stringResource(id = R.string.profile_phone_number),
                 iconID = R.drawable.phone_icon,
                 modifier = Modifier
                     .focusRequester(requester)
@@ -154,7 +154,8 @@ fun ProfilePage(){
             // cancel button to resets the data
             Button(
                 onClick = { /*TODO*/ },
-                colors = ButtonDefaults.buttonColors(backgroundColor =
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor =
                     colorResource(
                         id = R.color.cancelRed
                     ),
@@ -165,7 +166,8 @@ fun ProfilePage(){
                 Text(text = "Cancel")
             }
             // save button to update the new data
-            Button(onClick = { /*TODO*/ },
+            Button(
+                onClick = { /*TODO*/ },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = colorResource(
                         id = R.color.saveGreen

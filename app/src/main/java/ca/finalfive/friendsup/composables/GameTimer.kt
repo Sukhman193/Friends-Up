@@ -20,7 +20,12 @@ import kotlinx.coroutines.delay
  * @param totalQuestions The total amount of questions in the lobby
  */
 @Composable
-fun GameTimer(totalTime: Float, prompt: Int, currentQuestion: Int, totalQuestions: Int) {
+fun GameTimer(
+    totalTime: Float,
+    prompt: Int,
+    currentQuestion: Int,
+    totalQuestions: Int
+) {
     // Number on the timer
     var currentTime by remember {
         mutableStateOf(totalTime)
@@ -34,20 +39,25 @@ fun GameTimer(totalTime: Float, prompt: Int, currentQuestion: Int, totalQuestion
         }
     }
 
-    Box(modifier = Modifier
-        .fillMaxWidth()) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
         // This is a side effect which is run in a Coroutine Scope
         // which will subtract the currentTime by 1 every second
         ProgressBar(totalTime = totalTime)
 
         // Row containing the current question number and the timer animation
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 15.dp)
-            .padding(horizontal = 30.dp)) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 15.dp)
+                .padding(horizontal = 30.dp)
+        ) {
 
             // Current question number
-            Text(text = stringResource(id = prompt, currentQuestion, totalQuestions),
+            Text(
+                text = stringResource(id = prompt, currentQuestion, totalQuestions),
                 color = Color.White,
                 style = MaterialTheme.typography.h3,
                 fontSize = 18.sp,
@@ -55,16 +65,21 @@ fun GameTimer(totalTime: Float, prompt: Int, currentQuestion: Int, totalQuestion
                     .padding(top = 6.dp)
             )
 
-            Spacer(modifier = Modifier
-                .weight(1f))
-
-            Box(contentAlignment = Alignment.CenterEnd,
+            Spacer(
                 modifier = Modifier
-                    .size(45.dp)) {
+                    .weight(1f)
+            )
+
+            Box(
+                contentAlignment = Alignment.CenterEnd,
+                modifier = Modifier
+                    .size(45.dp)
+            ) {
                 // Start the circle timer animation
                 TimerAnimation(totalTime)
                 // Contains the timer number which is counting down on lines 36-41
-                Text(text = (String.format("%.0f", currentTime)).replace("-", ""),
+                Text(
+                    text = (String.format("%.0f", currentTime)).replace("-", ""),
                     color = Color.White,
                     style = MaterialTheme.typography.h3,
                     fontSize = 18.sp,

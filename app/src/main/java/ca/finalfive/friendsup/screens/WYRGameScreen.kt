@@ -15,6 +15,10 @@ import ca.finalfive.friendsup.composables.GameScreen
 import ca.finalfive.friendsup.composables.QuestionOption
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
+/**
+ * Screen for the Would you rather game
+ * @param gameViewModel view model for the games
+ */
 @Composable
 fun WYRGameScreen(gameViewModel: GameViewModel) {
     // Array of options for the user
