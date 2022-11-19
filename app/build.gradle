@@ -50,9 +50,9 @@ android {
 }
 
 dependencies {
+    // Firebase Implementation
+    implementation(platform("com.google.firebase:firebase-bom:31.0.2"))
 
-    // Firebase Bom for getting firebase versions automatically
-    implementation(platform("com.google.firebase:firebase-bom:28.2.0"))
     // Firebase Authentication Implementation
     implementation("com.google.firebase:firebase-auth")
     // Dependency for Firebase Firestore
@@ -81,6 +81,9 @@ dependencies {
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
     // Jetpack Compose Integration
     implementation "androidx.navigation:navigation-compose:$nav_version"
+    // LottieSDK Integration
+    def lottieVersion = "5.2.0"
+    implementation "com.airbnb.android:lottie-compose:$lottieVersion"
 
     // Apollo graphql runtime dependency
     implementation("com.apollographql.apollo3:apollo-runtime:3.7.0")
