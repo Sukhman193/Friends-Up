@@ -25,10 +25,41 @@ class ValidationService{
      * isPhoneNumber - validates the phone number
      * @param data - The phone number given to the function
      */
-    fun isPhoneNumber(data: String) {
+
+    fun isPhoneNumber(data: String): Boolean {
         val result = Constants.Regex.PHONE_NUMBER.matches(data)
         if(!result){
             throw Error.ValidationException("Phone number does not match")
+        }
+        return true
+    }
+
+    /**
+     * isDiscordValid - validates the phone number
+     * @param data - The discord username given to the function
+     */
+    fun isDiscordValid(data: String): Boolean{
+        return Constants.Regex.DISCORD_USERNAME.matches(data)
+    }
+
+
+
+    companion object {
+        /**
+         * Singleton for the class
+         */
+        private var INSTANCE: ValidationService? = null
+
+        /**
+         * Get instance for the game firestore repository
+         */
+        fun getInstance(): ValidationService {
+            // Check if an instance already exists
+            if(INSTANCE == null) {
+                INSTANCE = ValidationService()
+            }
+            // return the instance
+            return INSTANCE!!
         }
     }
     // TODO GET INSTANCE
