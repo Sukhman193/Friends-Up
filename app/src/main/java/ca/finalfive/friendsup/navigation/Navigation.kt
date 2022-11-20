@@ -1,6 +1,4 @@
 package ca.finalfive.friendsup.navigation
-
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
@@ -241,7 +239,6 @@ fun Navigation(
                 EndGameScreen(gameViewModel = gameViewModel)
                 // If none of the above are true than display the game queue screen
             } else {
-                Log.d("LLAMA", gameViewModel.game.toString())
                 // There is a bug in which when the user goes back from the game screen
                 // The game queue screen will show up for a split second
                 // so we check if the current screen route matches the game screen route
