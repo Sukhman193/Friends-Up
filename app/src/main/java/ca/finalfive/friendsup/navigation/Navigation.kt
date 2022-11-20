@@ -1,5 +1,4 @@
 package ca.finalfive.friendsup.navigation
-
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator

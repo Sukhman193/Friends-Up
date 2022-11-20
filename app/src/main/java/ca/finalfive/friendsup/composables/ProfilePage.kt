@@ -166,7 +166,7 @@ fun ProfilePage(userViewModel: UserViewModel) {
             // if the keyboard is disabled then show the title as Profile
             else {
                 R.string.profile_title
-            },
+            }
         )
         // if the keyboard is disabled then show the description of the profile page
         if (!isKeyboardShown) {

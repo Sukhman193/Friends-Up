@@ -68,9 +68,9 @@ class UserViewModel(private val userRepository: FirestoreUserRepository): ViewMo
             if (updatedUser.discord != ""){
                 validationService.isDiscordValid(updatedUser.discord)
             }
-
         } catch (e: Error.ValidationException){
             e.makeToast(context = context)
+            return
         }
         // call the update function
         userRepository.updateUserByID(userId, updatedUser)
