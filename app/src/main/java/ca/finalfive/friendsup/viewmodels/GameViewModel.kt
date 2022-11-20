@@ -118,7 +118,6 @@ class GameViewModel : ViewModel() {
                     gameMode = gameMode
                 ).collect {
                     // Assign the game
-                    Log.d("LLAMA -> game data", it.data.toString())
                     game = it.data as Game?
                 }
 
