@@ -2,24 +2,30 @@ package ca.finalfive.friendsup.screens
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ca.finalfive.friendsup.composables.FriendButton
 
+/**
+ * This screen displays a list of friends for the user
+ * @param navController is the navigation controller of the application
+ * @param friends is a list of friends that the user has
+ */
 @Composable
-fun FriendsScreen(navController: NavController) {
-    val friends = arrayOf("Sukhman", "Sahand", "Kelsey", "Lorenz")
-
-    Column {
+fun FriendsScreen(navController: NavController, friends: List<String>) {
+    Column(modifier = Modifier
+        .verticalScroll(rememberScrollState())) {
         Row {
             Column(modifier = Modifier) {
                 Text(
@@ -64,15 +70,16 @@ fun FriendsScreen(navController: NavController) {
                     )
                 }
 
-                Spacer(modifier = Modifier
-                    .padding(bottom = 20.dp))
+                Text(text = "Get in contact with your friends",
+                    fontSize = 19.sp,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(vertical = 40.dp))
 
-                Text("Get in contact with your friends")
-
+                // Calls the FriendButton composable for each friend the user has
                 for (friend in friends) {
                     FriendButton(friendName = friend)
                 }
-
             }
         }
     }

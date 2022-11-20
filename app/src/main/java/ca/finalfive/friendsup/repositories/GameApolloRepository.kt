@@ -22,10 +22,12 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
      * Game id of the currently joined game
      */
     var gameID: String? by mutableStateOf(null)
+
     /**
      * Token of the current user
      */
     private var token: String? by mutableStateOf(null)
+
     /**
      * Username of the user in the database
      */
@@ -82,7 +84,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
         // Get the token
         this.getUserAccessToken()
         // Check if there is a game id
-        if(this.gameID != null) {
+        if (this.gameID != null) {
             // Create apollo server request
             val apolloRequest = RemoveUserMutation(
                 memberName = username,
@@ -107,7 +109,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
                 return
             }
             // If the user is deleted successfully remove the user
-            if(response.data?.removeUser?.success == true) {
+            if (response.data?.removeUser?.success == true) {
                 // Set game id to null
                 this.gameID = null
             }
@@ -125,7 +127,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
         // Get a new token
         this.getUserAccessToken()
         // check if the game id is not null
-        if(this.gameID != null) {
+        if (this.gameID != null) {
             // apollo request for the end game
             val apolloRequest = EndGameMutation(
                 access = token!!,
@@ -135,15 +137,12 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
             // Execute the apollo request
             val response = this.apolloClient.mutation(apolloRequest).execute()
             // Check if there are any errors
-            if(response.errors != null) {
+            if (response.errors != null) {
                 // if there is an authentication error than call this function again but instead get a new token
                 // If a user stays on the app for too long the token might expire
                 if (response.errors?.get(0)?.message == "User token is invalid") {
                     token = null
                     this.endGame(gameMode)
-                } else {
-                    // throw any errors sent by the apollo server
-                    throw ApolloException(response.errors?.get(0)?.message.toString())
                 }
             }
         }
@@ -159,7 +158,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
         // Get a new token
         this.getUserAccessToken()
         // check if the the game id is not null
-        if(this.gameID != null) {
+        if (this.gameID != null) {
             // apollo request for the end game
             val apolloRequest = ReportUserMutation(
                 access = token!!,
@@ -169,7 +168,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
             )
             // Execute the apollo request
             val response = this.apolloClient.mutation(apolloRequest).execute()
-            if(response.errors != null) {
+            if (response.errors != null) {
                 // if there is an authentication error than call this function again but instead get a new token
                 // If a user stays on the app for too long the token might expire
                 if (response.errors?.get(0)?.message == "User token is invalid") {
@@ -196,7 +195,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
         // Get the access token
         this.getUserAccessToken()
         // Check if the game id is not null
-        if(this.gameID != null) {
+        if (this.gameID != null) {
             // apollo request for update friend queue list
             val apolloRequest = UpdateAddUserFriendMutation(
                 access = token!!,
@@ -206,7 +205,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
             // Execute the apollo request
             val response = this.apolloClient.mutation(apolloRequest).execute()
             // Check if there are any errors
-            if(response.errors != null) {
+            if (response.errors != null) {
                 // if there is an authentication error than call this function again but instead get a new token
                 // If a user stays on the app for too long the token might expire
                 if (response.errors?.get(0)?.message == "User token is invalid") {
@@ -225,8 +224,8 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
      * @throws NetworkErrorException thrown if there is a network error like
      * no network connection
      */
-    private suspend fun getUserAccessToken(){
-        if(this.token == null) {
+    private suspend fun getUserAccessToken() {
+        if (this.token == null) {
             // Ask for a token
             try {
                 val tokenRes = Firebase.auth.currentUser
@@ -245,6 +244,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
          * Singleton for the repository
          */
         private var INSTANCE: GameApolloRepository? = null
+
         /**
          * Get instance of the repository
          * @return instance of the game apollo repository
@@ -254,7 +254,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
             if (INSTANCE == null) {
                 val apolloClient = ApolloClient.Builder()
                     // TODO: Change the url below
-                    .serverUrl("https://a1a6-75-157-118-144.ngrok.io/dev/graphql")
+                    .serverUrl("https://6c8a-75-157-118-144.ngrok.io/dev/graphql")
                     .build()
                 INSTANCE = GameApolloRepository(apolloClient)
             }

@@ -9,17 +9,17 @@ import androidx.compose.ui.unit.dp
 import ca.finalfive.friendsup.ui.theme.darkPurple
 import ca.finalfive.friendsup.ui.theme.mediumPurple
 
+/**
+ * Card with offset
+ * @param content Content of the card
+ * @param modifier Modifier must contain the width and height of the card
+ * @param containerModifier Modifier for the container
+ */
 @Composable
-        /**
-         * Card with offset
-         * @param content Content of the card
-         * @param modifier Modifier must contain the width and height of the card
-         * @param containerModifier Modifier for the container
-         */
 fun OffsetCard(
-    modifier: Modifier =  Modifier,
+    modifier: Modifier = Modifier,
     containerModifier: Modifier = Modifier,
-    content: @Composable ()->Unit,
+    content: @Composable () -> Unit,
 ) {
     // Container
     Box(
@@ -31,7 +31,7 @@ fun OffsetCard(
             backgroundColor = mediumPurple,
             modifier = modifier
                 // Set offset of the card
-                .offset(x = (-5).dp,y = 5.dp)
+                .offset(x = (-5).dp, y = 5.dp)
         ) {}
         // Main card to display the user
         Card(
@@ -39,6 +39,7 @@ fun OffsetCard(
             shape = RoundedCornerShape(30.dp),
             backgroundColor = darkPurple
         ) {
+            // Content of the card
             content()
         }
     }

@@ -21,8 +21,9 @@ import ca.finalfive.friendsup.ui.theme.titleBackgroundShade
  */
 @Composable
 fun ScreenTitle(
-            title: Int,
-            modifier: Modifier = Modifier) {
+    title: Int,
+    modifier: Modifier = Modifier
+) {
 
     // Container of the screen
     Column {
@@ -32,7 +33,8 @@ fun ScreenTitle(
             ScreenTitleText(
                 title = title,
                 modifier = modifier.offset(4.dp, 4.dp),
-                color = titleBackgroundShade)
+                color = titleBackgroundShade
+            )
             // Display the Screen title text
             ScreenTitleText(title = title, modifier = modifier)
 
@@ -41,9 +43,11 @@ fun ScreenTitle(
         Canvas(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 140.dp)) {
+                .padding(start = 140.dp)
+        ) {
             // Get max width for the screen
             val maxWidth = 650f
+
             /**
              * Draw a horizontal white line with width of 5
              * @param start x value of the Offset for the line

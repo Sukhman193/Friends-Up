@@ -9,16 +9,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
 import ca.finalfive.friendsup.R
+import kotlinx.coroutines.delay
 
 /**
  * The progress bar above the amount of questions left and the timer animation
  * @param totalTime is the total amount of time for the progressBar
  */
 @Composable
-fun ProgressBar(totalTime: Float) {
+fun ProgressBar(totalTime: Float, updateValue: Int) {
+    // Color for the progress bar
+    val progressColor = colorResource(id = R.color.light_purple)
     // The progress, color and a boolean of whether it's complete or not
     // for the first bar
     var bar1Progress by remember {
@@ -26,7 +29,7 @@ fun ProgressBar(totalTime: Float) {
     }
     // The color of the first bar, which will be changed to transparent when it's done
     var bar1Color by remember {
-        mutableStateOf(Color(R.color.light_purple))
+        mutableStateOf(progressColor)
     }
     // Checks to see if the first bar is done
     var bar1Done by remember {
@@ -38,7 +41,7 @@ fun ProgressBar(totalTime: Float) {
     }
     // The color of the second bar, which will be changed to transparent when it's done
     var bar2Color by remember {
-        mutableStateOf(Color(R.color.light_purple))
+        mutableStateOf(progressColor)
     }
     // Checks to see if the second bar is done
     var bar2Done by remember {
@@ -50,7 +53,7 @@ fun ProgressBar(totalTime: Float) {
     }
     // The color of the third bar, which will be changed to transparent when it's done
     var bar3Color by remember {
-        mutableStateOf(Color(R.color.light_purple))
+        mutableStateOf(progressColor)
     }
     // Checks to see if the third bar is done
     var bar3Done by remember {
@@ -114,6 +117,23 @@ fun ProgressBar(totalTime: Float) {
                 bar1Color = Color.Transparent
             }
         }
+    }
+
+    // every time the update value changes reset the progress bar
+    LaunchedEffect(key1 = updateValue) {
+        // reset the timer
+        currentTime = totalTime
+        // reset the values for bars being done
+        bar2Done = false
+        bar3Done = false
+        // Reset all the progress of the bars
+        bar1Progress = 1f
+        bar2Progress = 1f
+        bar3Progress = 1f
+        // Reset the colors
+        bar1Color = progressColor
+        bar2Color = progressColor
+        bar3Color = progressColor
     }
 
     // A canvas containing all the lines

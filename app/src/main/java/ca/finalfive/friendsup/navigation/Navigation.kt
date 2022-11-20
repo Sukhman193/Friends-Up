@@ -1,5 +1,4 @@
 package ca.finalfive.friendsup.navigation
-
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
@@ -14,12 +13,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.NavigationContainer
+import ca.finalfive.friendsup.factories.UserViewModelFactory
 import ca.finalfive.friendsup.models.GameMode
+import ca.finalfive.friendsup.repositories.FirestoreUserRepository
 import ca.finalfive.friendsup.screens.*
 import ca.finalfive.friendsup.viewmodels.AuthViewModel
 import ca.finalfive.friendsup.viewmodels.GameViewModel
-import ca.finalfive.friendsup.factories.UserViewModelFactory
-import ca.finalfive.friendsup.repositories.FirestoreUserRepository
 import ca.finalfive.friendsup.viewmodels.UserViewModel
 
 /**
@@ -43,7 +42,7 @@ sealed class Route(val route: String) {
     object AuthScreen : Route("auth")
 
     // Route for the queue screen
-    object QueueScreen : Route("Queue")
+    object GameScreen : Route("gameScreen")
 }
 
 // https://medium.com/geekculture/bottom-navigation-in-jetpack-compose-android-9cd232a8b16
@@ -86,7 +85,7 @@ fun Navigation(
     // Define navigation host an set the initial screen
     NavHost(
         navController = navController,
-        startDestination = Route.AuthScreen.route
+        startDestination = startingScreen
     ) {
 
         // Navigation for the Game room screen
@@ -108,7 +107,7 @@ fun Navigation(
         ) {
             // Friends Screen with bottom navigation
             NavigationContainer(navController = navController) {
-                FriendsScreen(navController = navController)
+                FriendsScreen(navController = navController, friends = listOf("Friend 1", "Friend 2", "Friend 3", "Friend 4", "Friend 5", "Friend 6", "Friend 7"))
             }
         }
 
@@ -117,10 +116,10 @@ fun Navigation(
             route = Route.ProfileScreen.route,
         ) {
             // Profile screen with bottom navigation
-            if (authViewModel.user != null){
-                userViewModel.getUser(authViewModel.user!!.email!!.replace("@gmail.com",""))
+            if (authViewModel.user != null) {
+                userViewModel.getUser(authViewModel.user!!.email!!.replace("@gmail.com", ""))
             }
-            if(userViewModel.user != null){
+            if (userViewModel.user != null) {
                 // Profile screen with bottom navigation
                 NavigationContainer(navController = navController) {
                     ProfileScreen(
@@ -129,9 +128,11 @@ fun Navigation(
                 }
             } else {
                 NavigationContainer(navController = navController) {
-                    CircularProgressIndicator(modifier = Modifier
-                        .fillMaxSize()
-                        .padding(90.dp))
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(90.dp)
+                    )
                 }
             }
         }
@@ -151,7 +152,6 @@ fun Navigation(
             AuthScreen(
                 authViewModel = authViewModel,
                 navController = navController,
-                gameViewModel = gameViewModel,
                 userViewModel = userViewModel
             )
         }
@@ -159,7 +159,7 @@ fun Navigation(
         // In game composable
         // It will handle the different games content
         composable(
-            route = Route.QueueScreen.route
+            route = Route.GameScreen.route
         ) {
             /**
              * Route of the current screen
@@ -173,14 +173,14 @@ fun Navigation(
             // if any error occurs while playing the game, I.E. Network error leave the game
             if (gameViewModel.errorMessage != null || !gameViewModel.createGameRoomCalled) {
                 // if the current route it the game than pop back a screen
-                if (currentRoute == Route.QueueScreen.route) {
+                if (currentRoute == Route.GameScreen.route) {
                     navController.popBackStack()
                 }
             }
             // This statement will handle removing the user from the database
             // Whenever the user clicks on the back button while they are either
             // waiting in the queue, or in a game
-            if (currentRoute != Route.QueueScreen.route && currentRoute != null && gameViewModel.game != null) {
+            if (currentRoute != Route.GameScreen.route && currentRoute != null && gameViewModel.game != null) {
                 // Check if the game has been created or not
                 // Remove the game
                 gameViewModel.removeUserFromGame()
@@ -200,10 +200,7 @@ fun Navigation(
             ) {
                 // If both the friends have added each other show the screen for users added
                 if (gameViewModel.game?.addFriendList?.size == gameViewModel.game?.maxMembers) {
-                    // TODO: Add screen for both users are friends
-                    // TODO: Add animation for this screen, it will look nice
-                    // TODO: Add 5 seconds timer to pop back a screen
-                    Text(text = "YOU are now friends")
+                    FriendAddedScreen(navController = navController)
                 } else {
                     // Display the queue for adding a user as a friend
                     AddFriendQueueScreen(gameViewModel = gameViewModel)
@@ -222,7 +219,7 @@ fun Navigation(
                     }
                     // Playing Prompt game
                     GameMode.PROMPT -> {
-                       PromptGameScreen(gameViewModel)
+                        PromptGameScreen(gameViewModel)
                     }
                     // Playing Would you rather game
                     GameMode.WOULD_YOU_RATHER -> {
@@ -230,7 +227,7 @@ fun Navigation(
                     }
                     // Playing Cards against humanity game
                     GameMode.CARDS_AGAINST_HUMANITY -> {
-                       CAHScreen(gameViewModel)
+                        CAHScreen(gameViewModel)
                     }
                 }
                 // If the game has ended or a user leaves in the middle of the game display the
@@ -245,7 +242,7 @@ fun Navigation(
                 // The game queue screen will show up for a split second
                 // so we check if the current screen route matches the game screen route
                 // Reason is that there is a time when the current route is null
-                if (currentRoute == Route.QueueScreen.route) {
+                if (currentRoute == Route.GameScreen.route) {
                     GameQueueScreen(navController = navController)
                 }
             }

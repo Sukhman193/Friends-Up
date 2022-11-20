@@ -15,13 +15,13 @@ import ca.finalfive.friendsup.composables.queuescreen.SearchCardContent
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 import kotlinx.coroutines.delay
 
+/**
+ * Queue Screen for adding a friend
+ * The friend will automatically be added
+ * when the both the users in the game add each other
+ * @param gameViewModel view model for the game
+ */
 @Composable
-        /**
-         * Queue Screen for adding a friend
-         * The friend will automatically be added
-         * when the both the users in the game add each other
-         * @param gameViewModel view model for the game
-         */
 fun AddFriendQueueScreen(
     gameViewModel: GameViewModel
 ) {
@@ -48,7 +48,7 @@ fun AddFriendQueueScreen(
             gameViewModel.updateUserFriendQueue()
         }) {
         // Content of the search user
-        SearchCardContent(){
+        SearchCardContent {
             // content of the card
             Text(
                 text = stringResource(id = R.string.add_friend_description),

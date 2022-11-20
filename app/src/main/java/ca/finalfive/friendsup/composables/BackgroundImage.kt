@@ -36,7 +36,9 @@ fun BackgroundImage(showMoon: Boolean = false, darken: Boolean = false) {
     }
 
     // Black background color
-    Box(modifier = Modifier.fillMaxSize().background(Color.Black))
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.Black))
     // Display background image that fills the entire screen
     Image(
         painter = image,

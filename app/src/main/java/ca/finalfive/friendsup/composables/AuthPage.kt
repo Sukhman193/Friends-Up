@@ -22,7 +22,6 @@ import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.models.User
 import ca.finalfive.friendsup.navigation.Route
 import ca.finalfive.friendsup.viewmodels.AuthViewModel
-import ca.finalfive.friendsup.viewmodels.GameViewModel
 import ca.finalfive.friendsup.viewmodels.UserViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
@@ -42,9 +41,8 @@ import kotlinx.coroutines.tasks.await
 fun AuthPage(
     authViewModel: AuthViewModel,
     navController: NavController,
-    gameViewModel: GameViewModel,
     userViewModel: UserViewModel
-){
+) {
     // local context
     val context = LocalContext.current
     // Firebase Client Token
@@ -52,7 +50,6 @@ fun AuthPage(
     //val token = stringResource(R.string.default_web_client_id)
     // Coroutine Scope
     val scope = rememberCoroutineScope()
-
     // The Google Sign-in Launcher
     val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
         // returns a task for google sign in account
@@ -71,17 +68,15 @@ fun AuthPage(
                         username = authResult.user?.email!!.replace("@gmail.com","")
                     ),
                 )
-
                 // Route to the Game Screen if the sign in is successful
                 navController.navigate(Route.GameRoomScreen.route)
-
-                Toast.makeText(context, "Authentication Successful", Toast.LENGTH_SHORT).show()
             }
         } catch (e: ApiException) {
             // make a toast to notify the user that authentication was not successful
             Toast.makeText(context, "Authentication Failed", Toast.LENGTH_SHORT).show()
         }
     }
+
     // Container for the page
     Box {
         // Add Image background containing the moon
@@ -115,5 +110,4 @@ fun AuthPage(
             )
         }
     }
-
 }

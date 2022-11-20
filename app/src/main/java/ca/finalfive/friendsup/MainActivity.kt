@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-
+import androidx.core.view.WindowCompat
 import ca.finalfive.friendsup.composables.BackgroundImage
 import ca.finalfive.friendsup.navigation.Navigation
 import ca.finalfive.friendsup.ui.theme.StrangerCommonsTheme
@@ -18,12 +19,16 @@ import ca.finalfive.friendsup.viewmodels.AuthViewModel
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 import kotlinx.coroutines.delay
 
+// https://blog.canopas.com/keyboard-handling-in-jetpack-compose-all-you-need-to-know-3e6fddd30d9a
+
 class MainActivity : ComponentActivity() {
     // Game view model for the application
     lateinit var gameViewModel: GameViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Disable the keyboard effects
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         // initialize game view model
         gameViewModel = GameViewModel()
@@ -39,10 +44,15 @@ class MainActivity : ComponentActivity() {
                 gameViewModel.errorMessage = null
             }
 
-            StrangerCommonsTheme {
+            StrangerCommonsTheme(false) {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        // Add the status bar padding
+                        .statusBarsPadding()
+                        // Add the navigation bar padding
+                        .navigationBarsPadding(),
                     color = MaterialTheme.colors.background
                 ) {
                     // Display any in game error messages

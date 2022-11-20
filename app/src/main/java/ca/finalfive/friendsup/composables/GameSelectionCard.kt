@@ -16,18 +16,17 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ca.finalfive.friendsup.ui.theme.GameCardBackgroundColor
 import ca.finalfive.friendsup.R
-import ca.finalfive.friendsup.composables.buttons.playButton
-import ca.finalfive.friendsup.models.GameMode
+import ca.finalfive.friendsup.composables.buttons.PlayButton
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 @Composable
 fun GameSelectionCard(
-        gameName: String,
-        gameDesc: String,
-        gameViewModel: GameViewModel,
-        navController: NavController,
-        gameMode: String
-){
+    gameName: String,
+    gameDesc: String,
+    gameViewModel: GameViewModel,
+    navController: NavController,
+    gameMode: String
+) {
     Card(
         modifier = Modifier
             .width(470.dp)
@@ -36,12 +35,13 @@ fun GameSelectionCard(
         shape = RoundedCornerShape(8.dp),
         backgroundColor = GameCardBackgroundColor,
         elevation = 10.dp
-    ){
+    ) {
         Row(modifier = Modifier.padding(10.dp)) {
-            Column(modifier = Modifier
-                .background(color = Color.Transparent)
-                .width(275.dp)
-                .padding(horizontal = 10.dp)
+            Column(
+                modifier = Modifier
+                    .background(color = Color.Transparent)
+                    .width(275.dp)
+                    .padding(horizontal = 10.dp)
             ) {
                 DropShadowText(text = gameName, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 Image(
@@ -49,12 +49,17 @@ fun GameSelectionCard(
                     contentDescription = "underline",
                     modifier = Modifier.padding(start = 2.dp, top = 3.dp, bottom = 5.dp)
                 )
-                DropShadowText(text = gameDesc, fontSize = 12.sp, color = colorResource(id = R.color.gameCardDescFont))
+                DropShadowText(
+                    text = gameDesc,
+                    fontSize = 12.sp,
+                    color = colorResource(id = R.color.gameCardDescFont)
+                )
             }
-            Column(modifier = Modifier
-                .fillMaxWidth()
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
             ) {
-                playButton(gameViewModel, navController, gameMode)
+                PlayButton(gameViewModel, navController, gameMode)
             }
         }
 

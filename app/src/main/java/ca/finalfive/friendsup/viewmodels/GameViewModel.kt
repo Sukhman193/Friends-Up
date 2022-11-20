@@ -1,5 +1,6 @@
 package ca.finalfive.friendsup.viewmodels
 
+import android.accounts.NetworkErrorException
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,7 +18,7 @@ import java.util.*
 /**
  * Game view model to control actions related to the game
  */
-class GameViewModel: ViewModel() {
+class GameViewModel : ViewModel() {
     /**
      * Id of the game to be joined
      */
@@ -33,7 +34,7 @@ class GameViewModel: ViewModel() {
     /**
      * Random user profile picture
      */
-    private var profilePicture by mutableStateOf("https://picsum.photos/seed/${ UUID.randomUUID() }/200")
+    private var profilePicture by mutableStateOf("https://picsum.photos/seed/${UUID.randomUUID()}/200")
 
     /**
      * Game object for the gameplay
@@ -86,7 +87,7 @@ class GameViewModel: ViewModel() {
      */
     fun joinGame(gameMode: String = this.gameMode) {
         // Reassign the game mode in case the user changes it
-        if(this.gameMode != gameMode) {
+        if (this.gameMode != gameMode) {
             this.gameMode = gameMode
         }
 
@@ -108,7 +109,7 @@ class GameViewModel: ViewModel() {
                 // Set the savedUsername
                 savedUsername = gameApolloRepository.username
                 // If the game id is null than end the function
-                if(gameID == null) {
+                if (gameID == null) {
                     return@launch
                 }
                 // Get the game, and subscribe to the firestore changes the changes
@@ -117,7 +118,6 @@ class GameViewModel: ViewModel() {
                     gameMode = gameMode
                 ).collect {
                     // Assign the game
-                    Log.d("LLAMA -> game data", it.data.toString())
                     game = it.data as Game?
                 }
 
@@ -132,12 +132,12 @@ class GameViewModel: ViewModel() {
      * Handle sending a message to the user
      * @param content Content of the message
      */
-    fun sendMessage(content: String = "HELLOOO") {
+    fun sendMessage(content: String) {
         // TODO: ERROR CHECKING FOR THE MESSAGE TO SEND
         viewModelScope.launch {
             // When sending a message username and game will never be null
             // because they are being sent from within the game
-            if(savedUsername != null && game != null) {
+            if (savedUsername != null && game != null) {
                 // Call the repository to sent the message
                 gameFirestoreRepository.sendMessage(
                     username = savedUsername!!,
@@ -176,7 +176,7 @@ class GameViewModel: ViewModel() {
         viewModelScope.launch {
             // Username is always going to have a value since
             // it's assigned when the game is being created
-            if(savedUsername != null && tempGame != null) {
+            if (savedUsername != null && tempGame != null) {
                 try {
                     // Use the apollo server to remove the user
                     gameApolloRepository.removeUser(
@@ -212,7 +212,7 @@ class GameViewModel: ViewModel() {
         viewModelScope.launch {
             // Check if the game is not null
             // In this page the game is never going to be null
-            if(tempGame != null) {
+            if (tempGame != null) {
                 try {
                     gameApolloRepository.reportUser(
                         gameMode = tempGame.gameMode,
@@ -222,8 +222,8 @@ class GameViewModel: ViewModel() {
                     // In case of errors set the error message to be here
                     errorMessage = error.message
                 }
-            // Remove the user from the game
-            removeUserFromGame()
+                // Remove the user from the game
+                removeUserFromGame()
             } else {
                 Log.e("ERROR", "GameViewModel.reportUser()")
             }
@@ -234,19 +234,17 @@ class GameViewModel: ViewModel() {
      * End user's game when all the questions have ended
      * This function will route the users to the end Game Screen
      */
-    fun endGame() {
+    private fun endGame() {
+        // If game is null than exit the function
+        if(game == null) return
+
         viewModelScope.launch {
-            // Check if game is not null
-            if(game != null) {
-                try {
-                    // End the game
-                    gameApolloRepository.endGame(gameMode = game!!.gameMode)
-                } catch (error: java.lang.Exception) {
-                    // In case of errors set the error message to be here
-                    errorMessage = error.message
-                }
-            } else {
-                Log.e("ERROR", "GameViewModel.endGame()")
+            try {
+                // end the game
+                gameApolloRepository.endGame(gameMode = game!!.gameMode)
+            } catch (error: NetworkErrorException) {
+                // catch the thrown error
+                errorMessage = error.message
             }
         }
     }
@@ -261,7 +259,7 @@ class GameViewModel: ViewModel() {
         this.isAddAsFriendScreenOpened = !this.isAddAsFriendScreenOpened
         viewModelScope.launch {
             // check if game is not null
-            if(game != null) {
+            if (game != null) {
                 try {
                     // call update user friend queue
                     gameApolloRepository.updateUserFriendQueue(game!!.gameMode)
@@ -282,7 +280,7 @@ class GameViewModel: ViewModel() {
      */
     fun handleAnswerGameOption(gameOption: GameQuestionOption) {
         // Check if the question has already been answered
-        if(!this.questionAnswered) {
+        if (!this.questionAnswered) {
             // Set the question answered variable to be true
             this.questionAnswered = true
             viewModelScope.launch {
@@ -310,27 +308,27 @@ class GameViewModel: ViewModel() {
      * This will route to the next question
      */
     fun handleGameProgress() {
-        // Update the game progress game question progress only if the
-        // game is not at the last question
-        if(game!= null && game!!.gameProgress != (game!!.gameContent.size -1)) {
-            // set the question answered to false
-            this.questionAnswered = false
-            viewModelScope.launch {
-                // Check if the game is not null
-                // This will never happen because the game has to exist to move forward
-                if (game != null) {
-                    // game to update
-                    gameFirestoreRepository.handleGameProgress(
-                        gameProgress = game!!.gameProgress + 1,
-                        gameMode = gameMode,
-                        gameID = gameID!!
-                    )
-                } else {
-                    Log.e("ERROR", "GameViewModel.handleGameProgress()")
-                }
-            }
-        } else {
-            Log.d("LLAMA", "GameViewModel.handleGameProgress()")
+
+        // Game should never be null when this function is called
+        if (game == null) {
+            return
+        }
+        // Check if it's the last question that is being answered
+        if (game!!.gameContent.size - 1 == game!!.gameProgress) {
+            // end the game if the timer of the last question reaches 0
+            this.endGame()
+            return
+        }
+
+        // set the question answered to false
+        this.questionAnswered = false
+        viewModelScope.launch {
+            // Update the game
+            gameFirestoreRepository.handleGameProgress(
+                gameProgress = game!!.gameProgress + 1,
+                gameMode = gameMode,
+                gameID = gameID!!
+            )
         }
     }
 }

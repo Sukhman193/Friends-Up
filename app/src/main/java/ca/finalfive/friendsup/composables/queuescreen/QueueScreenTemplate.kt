@@ -19,22 +19,22 @@ import ca.finalfive.friendsup.composables.BackgroundImage
 import ca.finalfive.friendsup.composables.ScreenTitle
 import ca.finalfive.friendsup.ui.theme.redSubmitButton
 
+/**
+ * Queue Screen Template
+ * @param timer current timer in seconds
+ * @param screenTitleText title of the screen
+ * @param submitButtonContent content of the submit button,
+ * integer which refers to the value in the `string.xml`
+ * @param submitAction action taken by clicking the submit button
+ * @param cardContent content of the card
+ */
 @Composable
-        /**
-         * Queue Screen Template
-         * @param timer current timer in seconds
-         * @param screenTitleText title of the screen
-         * @param submitButtonContent content of the submit button,
-         * integer which refers to the value in the `string.xml`
-         * @param submitAction action taken by clicking the submit button
-         * @param cardContent content of the card
-         */
 fun QueueScreenTemplate(
     timer: Int,
     screenTitleText: Int,
     submitButtonContent: Int,
-    submitAction: ()->Unit,
-    cardContent: @Composable ()->Unit
+    submitAction: () -> Unit,
+    cardContent: @Composable () -> Unit
 ) {
     /**
      * Get the remaining time in a user friendly format
@@ -42,13 +42,13 @@ fun QueueScreenTemplate(
      */
     fun getTimerFormatted(seconds: Int): String {
         // Get how many minutes are in the time
-        val min = seconds/60
+        val min = seconds / 60
         // Get the remaining seconds
         val remainingSeconds = seconds % 60
         // if the seconds are single digits add a 0 value
-        val addZero = if(remainingSeconds.toString().length == 1) {
+        val addZero = if (remainingSeconds.toString().length == 1) {
             "0"
-        }else {
+        } else {
             ""
         }
         // Return formatted timer
@@ -69,10 +69,11 @@ fun QueueScreenTemplate(
             ) {
                 // Queue search for players card
                 OffsetCard(
-                    modifier =  Modifier
+                    modifier = Modifier
                         .size(width = 340.dp, height = 75.dp),
                     containerModifier = Modifier.padding(top = 40.dp)
                 ) {
+                    // Content of the card
                     cardContent()
                 }
 
@@ -85,12 +86,13 @@ fun QueueScreenTemplate(
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically
-                    ){
+                    ) {
                         // Timer
                         Text(
                             text = getTimerFormatted(timer),
                             style = MaterialTheme.typography.caption,
-                            fontSize = 20.sp)
+                            fontSize = 20.sp
+                        )
                     }
                 }
             }
@@ -100,7 +102,8 @@ fun QueueScreenTemplate(
             Image(
                 painter = painterResource(id = R.drawable.timer),
                 contentDescription = null,
-                modifier = Modifier.size(210.dp))
+                modifier = Modifier.size(210.dp)
+            )
 
             // Add space
             Spacer(modifier = Modifier.height(50.dp))
@@ -117,7 +120,8 @@ fun QueueScreenTemplate(
                     text = stringResource(id = submitButtonContent),
                     style = MaterialTheme.typography.h3,
                     modifier = Modifier
-                        .padding(horizontal = 40.dp, vertical = 5.dp),)
+                        .padding(horizontal = 40.dp, vertical = 5.dp),
+                )
             }
         }
     }

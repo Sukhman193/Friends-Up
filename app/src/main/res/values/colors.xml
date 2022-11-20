@@ -6,13 +6,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <!--  Light purple color  -->
-    <color name="light_purple_1">#FF605BD4</color>
+    <color name="light_purple">#FF605BD4</color>
     <!-- Color of Cancel Button -->
     <color name="cancelRed">#B3FF6262</color>
     <!-- Color of Save Button -->
     <color name="saveGreen">#E6008000</color>
     <!--  Light purple color  -->
-    <color name="light_purple">#FF5C56DE</color>
+    <color name="light_purple_1">#FF5C56DE</color>
     <!--  Dark purple color  -->
     <color name="dark_purple">#FF47458F</color>
     <!--  Light grey color -->

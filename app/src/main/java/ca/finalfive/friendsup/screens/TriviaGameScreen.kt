@@ -14,20 +14,30 @@ import ca.finalfive.friendsup.composables.GameScreen
 import ca.finalfive.friendsup.composables.QuestionOption
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
+/**
+ * Screen for the trivia game
+ * @param gameViewModel view model for the game controls
+ */
 @Composable
 fun TriviaGameScreen(gameViewModel: GameViewModel) {
-    // Array of options for the user
-    /* TODO: Make the options randomly generated depending on the question */
-    val answers = arrayOf("Option 1", "Option 2", "Option 3", "Option 4")
+    // Game being played
+    val game = gameViewModel.game!!
+    // Index of the game being played
+    val currentGameIndex = game.gameProgress
+    // Question of the current trivia being played
+    val question = game.gameContent[currentGameIndex].mainQuestion
+    // Answers of the current trivia being played
+    val answers = game.gameContent[currentGameIndex].questionOptions
 
     GameScreen(
         gameTitle = R.string.game_trivia_title,
         gameType = R.string.game_trivia_type,
-        titleFontSize = 60.sp) {
+        titleFontSize = 60.sp,
+        gameViewModel = gameViewModel
+    ) {
         // Question for the user
         Text(
-            /* TODO: Make the question randomly generated along with the options */
-            text = "Which one of these is a fruit?",
+            text = question,
             color = Color.White,
             style = MaterialTheme.typography.h3,
             fontSize = 26.sp,
@@ -43,7 +53,10 @@ fun TriviaGameScreen(gameViewModel: GameViewModel) {
 
         // A for loop containing 4 button options
         for (answer in answers) {
-            QuestionOption(option = answer)
+            QuestionOption(option = answer){
+                // Handle the option being selected
+                gameViewModel.handleAnswerGameOption(answer)
+            }
         }
     }
 }

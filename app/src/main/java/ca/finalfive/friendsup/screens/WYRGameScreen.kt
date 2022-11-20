@@ -9,24 +9,32 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.GameScreen
 import ca.finalfive.friendsup.composables.QuestionOption
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
+/**
+ * Screen for the Would you rather game
+ * @param gameViewModel view model for the games
+ */
 @Composable
 fun WYRGameScreen(gameViewModel: GameViewModel) {
-    // Array of options for the user
-    /* TODO: Make the options randomly generated */
-    val options = arrayOf("Option 1", "Option 2")
+    // Game being played
+    val game = gameViewModel.game!!
+    // Index of the game being played
+    val currentGameIndex = game.gameProgress
+    // Answers of the current trivia being played
+    val options = game.gameContent[currentGameIndex].questionOptions
 
     // Game content which includes the topBar, gameTimer and
     // the question if there is one
     GameScreen(
         gameTitle = R.string.game_would_you_rather_title,
         gameType = R.string.game_would_you_rather_type,
-        titleFontSize = 40.sp) {
+        titleFontSize = 40.sp,
+        gameViewModel = gameViewModel
+    ) {
             // Question for the user
             Text(
                 text = "Would you rather...",
@@ -44,7 +52,10 @@ fun WYRGameScreen(gameViewModel: GameViewModel) {
 
             // A for loop containing 4 button options
             for (option in options) {
-                QuestionOption(option = option)
+                QuestionOption(option = option) {
+                    // handle the selection button
+                    gameViewModel.handleAnswerGameOption(option)
+                }
             }
         }
     }

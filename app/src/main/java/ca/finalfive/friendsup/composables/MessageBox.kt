@@ -19,7 +19,7 @@ import ca.finalfive.friendsup.R
  * on the bottom of the games
  */
 @Composable
-fun MessageBox() {
+fun MessageBox(modifier: Modifier = Modifier) {
     // Text string for the text field
     var text by remember {
         mutableStateOf(TextFieldValue(""))
@@ -29,17 +29,23 @@ fun MessageBox() {
     TextField(
         value = text,
         onValueChange = { text = it },
-        placeholder = { Text(
-            text = "Type message here",
-            color = Color.White)
+        placeholder = {
+            Text(
+                text = "Type message here",
+                color = Color.White
+            )
         },
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color(R.color.light_grey).copy(alpha = 0.2F),
             focusedIndicatorColor = Color.Transparent
         ),
         textStyle = TextStyle(Color.White),
-        trailingIcon = { SendButton() },
-        modifier = Modifier
+        trailingIcon = {
+            SendButton {
+
+            }
+        },
+        modifier = modifier
             .fillMaxWidth()
             .height(55.dp)
             .padding(horizontal = 20.dp)
