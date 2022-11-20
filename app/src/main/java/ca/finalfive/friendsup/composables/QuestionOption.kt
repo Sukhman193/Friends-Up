@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.R
@@ -34,15 +35,15 @@ fun QuestionOption(
             .padding(horizontal = 30.dp)
             .height(70.dp)
             .clip(RoundedCornerShape(25.dp))
-            .background(Color(R.color.dark_purple))
             .clickable { onClick() }
+            .background(colorResource(R.color.dark_purple))
     ) {
         // Lighter color on the left of the button
         Box(
             modifier = Modifier
                 .fillMaxHeight()
                 .width(50.dp)
-                .background(Color(R.color.light_purple))
+                .background(colorResource(R.color.light_purple))
         )
 
         // Text inside the button

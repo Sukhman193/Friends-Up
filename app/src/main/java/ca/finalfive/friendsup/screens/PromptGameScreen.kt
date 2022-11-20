@@ -18,7 +18,7 @@ import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 /**
- * Screen for the prompt game
+ * The game screen for "Prompt"
  */
 @Composable
 fun PromptGameScreen(gameViewModel: GameViewModel) {

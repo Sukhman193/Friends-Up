@@ -13,12 +13,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.NavigationContainer
+import ca.finalfive.friendsup.factories.UserViewModelFactory
 import ca.finalfive.friendsup.models.GameMode
+import ca.finalfive.friendsup.repositories.FirestoreUserRepository
 import ca.finalfive.friendsup.screens.*
 import ca.finalfive.friendsup.viewmodels.AuthViewModel
 import ca.finalfive.friendsup.viewmodels.GameViewModel
-import ca.finalfive.friendsup.factories.UserViewModelFactory
-import ca.finalfive.friendsup.repositories.FirestoreUserRepository
 import ca.finalfive.friendsup.viewmodels.UserViewModel
 
 /**
@@ -107,7 +107,7 @@ fun Navigation(
         ) {
             // Friends Screen with bottom navigation
             NavigationContainer(navController = navController) {
-                FriendsScreen(navController = navController)
+                FriendsScreen(navController = navController, friends = listOf("Friend 1", "Friend 2", "Friend 3", "Friend 4", "Friend 5", "Friend 6", "Friend 7"))
             }
         }
 
@@ -116,10 +116,10 @@ fun Navigation(
             route = Route.ProfileScreen.route,
         ) {
             // Profile screen with bottom navigation
-            if (authViewModel.user != null){
-                userViewModel.getUser(authViewModel.user!!.email!!.replace("@gmail.com",""))
+            if (authViewModel.user != null) {
+                userViewModel.getUser(authViewModel.user!!.email!!.replace("@gmail.com", ""))
             }
-            if(userViewModel.user != null){
+            if (userViewModel.user != null) {
                 // Profile screen with bottom navigation
                 NavigationContainer(navController = navController) {
                     ProfileScreen(
@@ -128,9 +128,11 @@ fun Navigation(
                 }
             } else {
                 NavigationContainer(navController = navController) {
-                    CircularProgressIndicator(modifier = Modifier
-                        .fillMaxSize()
-                        .padding(90.dp))
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(90.dp)
+                    )
                 }
             }
         }
@@ -198,10 +200,7 @@ fun Navigation(
             ) {
                 // If both the friends have added each other show the screen for users added
                 if (gameViewModel.game?.addFriendList?.size == gameViewModel.game?.maxMembers) {
-                    // TODO: Add screen for both users are friends
-                    // TODO: Add animation for this screen, it will look nice
-                    // TODO: Add 5 seconds timer to pop back a screen
-                    Text(text = "YOU are now friends")
+                    FriendAddedScreen(navController = navController)
                 } else {
                     // Display the queue for adding a user as a friend
                     AddFriendQueueScreen(gameViewModel = gameViewModel)

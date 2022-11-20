@@ -39,7 +39,6 @@ fun ProfilePage(userViewModel: UserViewModel) {
     }
     // States of keyboard
     var isKeyboardShown by remember { mutableStateOf(false) }
-
     // username of the user && the setter to change the username
     val (usernameText, setUsernameText) = rememberSaveable {
         if (userViewModel.user != null) {

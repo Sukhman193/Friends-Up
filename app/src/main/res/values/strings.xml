@@ -56,7 +56,7 @@
     <string name="game_cards_against_humanity_description">Play the game with another player and collaborate to agree on the best answers!</string>
     <!--  Would you rather game counter description -->
     <string name="game_cards_against_humanity_type">Game %1$d of %2$d</string>
-    s
+
     <!--  Report Popup  -->
     <!--  Report popup title  -->
     <string name="report_popup_title">Report User</string>
@@ -76,6 +76,8 @@
     <string name="add_friend_title">Add Friend</string>
     <!--  Add friend description  -->
     <string name="add_friend_description">Waiting for user to add you as a friend</string>
+    <!--  Friend added screen text  -->
+    <string name="friend_added_content">Congratulations, you are now friends</string>
 
     <!--  Report user screen  -->
     <!--  Report user title  -->

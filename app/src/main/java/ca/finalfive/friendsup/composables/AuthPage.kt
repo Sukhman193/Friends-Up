@@ -42,7 +42,7 @@ fun AuthPage(
     authViewModel: AuthViewModel,
     navController: NavController,
     userViewModel: UserViewModel
-){
+) {
     // local context
     val context = LocalContext.current
     // Firebase Client Token
@@ -50,7 +50,6 @@ fun AuthPage(
     //val token = stringResource(R.string.default_web_client_id)
     // Coroutine Scope
     val scope = rememberCoroutineScope()
-
     // The Google Sign-in Launcher
     val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
         // returns a task for google sign in account
