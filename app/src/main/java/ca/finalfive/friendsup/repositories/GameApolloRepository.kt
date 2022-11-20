@@ -50,10 +50,8 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
                 gameMode = gameMode,
                 access = token!!
             )
-        Log.d("LLAMA", apolloRequest.toString())
         // Make the request to the endpoint
         val response = this.apolloClient.mutation(apolloRequest).execute()
-        Log.d("LLAMA", response.toString())
         // check if there is any error
         if (!response.errors.isNullOrEmpty()) {
             // if there is an authentication error than call this function again but instead get a new token
