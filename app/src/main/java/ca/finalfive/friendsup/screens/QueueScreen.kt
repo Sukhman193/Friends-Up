@@ -15,6 +15,10 @@ import kotlinx.coroutines.delay
 
 // https://www.geeksforgeeks.org/how-to-create-a-timer-using-jetpack-compose-in-android/
 
+/**
+ * Screen for queue for entering a game
+ * @param navController Navigation controller for the application
+ */
 @Composable
 fun GameQueueScreen(
     navController: NavController

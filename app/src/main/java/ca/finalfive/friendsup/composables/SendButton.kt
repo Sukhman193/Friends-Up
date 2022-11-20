@@ -19,9 +19,12 @@ import ca.finalfive.friendsup.R
 
 /**
  * This component is for the send button in the MessageBox composable
+ * @param sendMessage Send message action
  */
 @Composable
-fun SendButton() {
+fun SendButton(
+    sendMessage: () -> Unit
+) {
     // Box with the gradient color inside
     Box(modifier = Modifier
         .size(55.dp)

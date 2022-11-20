@@ -29,16 +29,20 @@ fun MessageBox() {
     TextField(
         value = text,
         onValueChange = { text = it },
-        placeholder = { Text(
-            text = "Type message here",
-            color = Color.White)
+        placeholder = {
+            Text(
+                text = "Type message here",
+                color = Color.White
+            )
         },
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color(R.color.light_grey).copy(alpha = 0.2F),
             focusedIndicatorColor = Color.Transparent
         ),
         textStyle = TextStyle(Color.White),
-        trailingIcon = { SendButton() },
+        trailingIcon = {
+            SendButton {}
+        },
         modifier = Modifier
             .fillMaxWidth()
             .height(55.dp)

@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                 gameViewModel.errorMessage = null
             }
 
-            StrangerCommonsTheme {
+            StrangerCommonsTheme(false) {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),

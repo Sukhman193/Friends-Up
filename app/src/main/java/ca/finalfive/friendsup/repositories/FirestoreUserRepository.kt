@@ -1,15 +1,13 @@
 package ca.finalfive.friendsup.repositories
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import ca.finalfive.friendsup.helpers.Error
 import ca.finalfive.friendsup.models.User
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.toObject
-import ca.finalfive.friendsup.helpers.Error
 
 /**
  * Constants Class - holds the USERS field from collection

@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -64,8 +63,10 @@ fun FriendsScreen(navController: NavController) {
                     )
                 }
 
-                Spacer(modifier = Modifier
-                    .padding(bottom = 20.dp))
+                Spacer(
+                    modifier = Modifier
+                        .padding(bottom = 20.dp)
+                )
 
                 Text("Get in contact with your friends")
 

@@ -53,6 +53,8 @@ fun QuestionOption(option: String) {
         )
     }
     // Spacer between the options
-    Spacer(modifier = Modifier
-        .padding(bottom = 12.dp))
+    Spacer(
+        modifier = Modifier
+            .padding(bottom = 12.dp)
+    )
 }

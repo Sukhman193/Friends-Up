@@ -18,13 +18,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.R
 
+/**
+ * Red Report button, used inside the end game screen
+ * @param action Action taken by the button click
+ */
 @Composable
-        /**
-         * Red Report button, used inside the end game screen
-         * @param action Action taken by the button click
-         */
 fun ReportButtonRed(
-    action: ()->Unit
+    action: () -> Unit
 ) {
     // The card is going to be used as a button
     Card(
@@ -36,29 +36,27 @@ fun ReportButtonRed(
         backgroundColor = colorResource(id = R.color.cancelRed)
     ) {
         // Put the text and icon in a row
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 40.dp, vertical = 10.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
-                ) {
+        ) {
             // Report text of the button
             Text(
                 text = stringResource(id = R.string.button_report_user),
                 fontSize = 12.sp,
                 style = MaterialTheme.typography.caption,
                 fontWeight = FontWeight.Bold
-                )
+            )
             // Flag icon for the report button
             Icon(
                 painter = painterResource(id = R.drawable.flag),
                 contentDescription = null,
                 tint = colorResource(id = R.color.white),
                 modifier = Modifier.size(18.dp),
-
             )
         }
-
     }
 }

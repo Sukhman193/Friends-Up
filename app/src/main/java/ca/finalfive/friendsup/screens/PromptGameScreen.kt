@@ -17,6 +17,9 @@ import ca.finalfive.friendsup.composables.GameScreen
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
+/**
+ * Screen for the prompt game
+ */
 @Composable
 fun PromptGameScreen(gameViewModel: GameViewModel) {
     // Game content which includes the topBar, gameTimer and the question
@@ -24,7 +27,8 @@ fun PromptGameScreen(gameViewModel: GameViewModel) {
     GameScreen(
         gameTitle = R.string.game_prompt_title,
         gameType = R.string.game_prompt_type,
-        titleFontSize = 60.sp) {
+        titleFontSize = 60.sp
+    ) {
         // The only purpose of this box is to make a bottom alignment
         // for the skip button
         Box(

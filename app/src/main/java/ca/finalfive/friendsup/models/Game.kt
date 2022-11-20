@@ -58,7 +58,7 @@ data class Game(
     val gameProgress: Int = 0
 ) {
     // Constructor required by the firestore deserialization
-    constructor(): this(null)
+    constructor() : this(null)
 }
 
 /**

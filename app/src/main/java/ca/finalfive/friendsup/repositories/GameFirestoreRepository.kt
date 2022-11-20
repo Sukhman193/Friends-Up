@@ -41,7 +41,7 @@ class GameFirestoreRepository {
 
                         // Convert the snapshot to a game object
                         game = gameSnapshot.toObject<Game>()
-                        // TODO: ASK YUDHVIR Y THIS IS NOT WORKIN
+                        // TODO: ASK YUDHVIR Y THIS IS NOT WORKING
                         game?.isGameEnded = gameSnapshot.get("isGameEnded").toString() == "true"
                         game?.isGameStarted = gameSnapshot.get("isGameStarted").toString() == "true"
                     }
@@ -55,10 +55,10 @@ class GameFirestoreRepository {
                 this.trySend(response).isSuccess
             }
 
-            // Remove the snapshot listener
-            awaitClose {
-                gameDocumentSnapshot.remove()
-            }
+        // Remove the snapshot listener
+        awaitClose {
+            gameDocumentSnapshot.remove()
+        }
     }
 
     /**
@@ -69,7 +69,13 @@ class GameFirestoreRepository {
      * @param gameID game id of the game
      * @param gameMode Game mode of the current game
      */
-    fun sendMessage(username: String, icon: String, content: String, gameID: String, gameMode: String ) {
+    fun sendMessage(
+        username: String,
+        icon: String,
+        content: String,
+        gameID: String,
+        gameMode: String
+    ) {
         // Get the collection name
         val collectionName = GameMode.getGameCollection(gameMode)
         // Get game document reference
@@ -82,16 +88,18 @@ class GameFirestoreRepository {
             val game: Game? = snapshot.toObject()
             // Check if game is not null
             // This is never going to be false
-            if(game != null) {
+            if (game != null) {
                 // get the chat list already there
                 val chatList: MutableList<Chat> = game.chatRoom.toMutableList()
                 // add the new chat to the list
-                chatList.add(Chat(
-                    id = UUID.randomUUID().toString(),
-                    sentBy = username,
-                    icon = icon,
-                    content = content,
-                ))
+                chatList.add(
+                    Chat(
+                        id = UUID.randomUUID().toString(),
+                        sentBy = username,
+                        icon = icon,
+                        content = content,
+                    )
+                )
                 // Update the document
                 transaction.update(docRef, "chatRoom", chatList.toList())
             }
@@ -107,7 +115,12 @@ class GameFirestoreRepository {
      * @param gameMode Game mode of the current game
      * @param gameOption game option's answer to add the user to
      */
-    fun sendAnswerSelected(username: String, gameID: String, gameMode: String, gameOption: GameQuestionOption) {
+    fun sendAnswerSelected(
+        username: String,
+        gameID: String,
+        gameMode: String,
+        gameOption: GameQuestionOption
+    ) {
         // Get the collection name
         val collectionName = GameMode.getGameCollection(gameMode)
         // Get game document reference
@@ -122,15 +135,18 @@ class GameFirestoreRepository {
             // Get the list of the game content
             val gameContentList: List<GameModeContent> = game.gameContent
             // Get the games options for the current question
-            val gameOptions: List<GameQuestionOption> = game.gameContent[game.gameProgress].questionOptions
+            val gameOptions: List<GameQuestionOption> =
+                game.gameContent[game.gameProgress].questionOptions
             // Get the index of the selected option
-            val optionSelectedIndex = gameOptions.indexOfFirst { it.optionText == gameOption.optionText }
+            val optionSelectedIndex =
+                gameOptions.indexOfFirst { it.optionText == gameOption.optionText }
             // get the list of the selected by list of the option selected
             val selectedBy = gameOptions[optionSelectedIndex].selectedBy.toMutableList()
             // add the username to the list
             selectedBy.add(username)
             // Update the gameContent
-            gameContentList[game.gameProgress].questionOptions[optionSelectedIndex].selectedBy = selectedBy
+            gameContentList[game.gameProgress].questionOptions[optionSelectedIndex].selectedBy =
+                selectedBy
             // Update the document
             transaction.update(docRef, "gameContent", gameContentList)
         }
@@ -171,7 +187,7 @@ class GameFirestoreRepository {
          */
         fun getInstance(): GameFirestoreRepository {
             // Check if an instance already exists
-            if(INSTANCE == null) {
+            if (INSTANCE == null) {
                 INSTANCE = GameFirestoreRepository()
             }
             // return the instance

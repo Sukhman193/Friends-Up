@@ -25,7 +25,8 @@ import androidx.compose.ui.unit.dp
 fun CustomRadioButton(
     text: Int,
     selectedOption: Int,
-    setOptionSelected: (Int)->Unit) {
+    setOptionSelected: (Int) -> Unit
+) {
     // Container for the radio buttons
     Row(
         modifier = Modifier

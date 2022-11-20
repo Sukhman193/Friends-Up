@@ -15,14 +15,12 @@ import ca.finalfive.friendsup.viewmodels.UserViewModel
 fun AuthScreen(
     authViewModel : AuthViewModel,
     navController: NavController,
-    gameViewModel: GameViewModel,
     userViewModel: UserViewModel
 ){
     // Routing to Authentication Page
     AuthPage(
         authViewModel = authViewModel,
         navController = navController,
-        gameViewModel = gameViewModel,
         userViewModel = userViewModel
     )
 }
