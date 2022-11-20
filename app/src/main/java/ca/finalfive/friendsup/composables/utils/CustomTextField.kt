@@ -21,11 +21,11 @@ import ca.finalfive.friendsup.ui.theme.OutlineTextFieldColor
 @Composable
 fun CustomTextField(
     value: String,
-    setValue: (String)->Unit,
+    setValue: (String) -> Unit,
     label: String,
     iconID: Int,
     modifier: Modifier = Modifier
-){
+) {
     // text field
     TextField(
         // value of the text field

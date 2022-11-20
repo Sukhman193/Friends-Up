@@ -24,8 +24,7 @@ import ca.finalfive.friendsup.R
  * @param friendName represents the name that will be displayed on the button
  */
 @Composable
-fun FriendButton(friendName: String)
-{
+fun FriendButton(friendName: String) {
     // The entire button size (with the darker color as the background)
     Card(
         // Darker part of the button

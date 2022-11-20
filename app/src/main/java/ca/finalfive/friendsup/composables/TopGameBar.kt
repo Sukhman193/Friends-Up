@@ -35,7 +35,7 @@ fun TopGameBar(gameTitle: Int, fontSize: TextUnit = 60.sp) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-                // TODO: Change this to colorResource
+            // TODO: Change this to colorResource
             .background(containerColor)
     ) {
         // Trivia text on top

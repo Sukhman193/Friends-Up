@@ -34,10 +34,11 @@ class GameMode {
             if (gameMode == TRIVIA ||
                 gameMode == PROMPT ||
                 gameMode == WOULD_YOU_RATHER ||
-                gameMode == CARDS_AGAINST_HUMANITY) {
+                gameMode == CARDS_AGAINST_HUMANITY
+            ) {
                 // Return the game which looks like `Trivia_Game`
                 return "${gameMode.lowercase().replaceFirstChar { char -> char.uppercase() }}_Game"
-            // if game is neither of them than throw an error
+                // if game is neither of them than throw an error
             } else {
                 throw IllegalArgumentException("Game mode is invalid")
             }

@@ -4,6 +4,8 @@ buildscript {
         nav_version = "2.5.3"// Kotlin
         kotlin_coroutine_version = "1.6.4" // coroutine version
         coil_version = "2.2.1" // coil version
+        lottieVersion = "5.2.0" // Lottie version
+
     }
     dependencies {
         classpath 'com.google.gms:google-services:4.3.14'

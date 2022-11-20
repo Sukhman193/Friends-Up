@@ -12,12 +12,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ca.finalfive.friendsup.composables.FriendButton
 
+/**
+ * This screen displays a list of friends for the user
+ * @param navController is the navigation controller of the application
+ * @param friends is a list of friends that the user has
+ */
 @Composable
 fun FriendsScreen(navController: NavController, friends: List<String>) {
     Column(modifier = Modifier
@@ -72,10 +76,10 @@ fun FriendsScreen(navController: NavController, friends: List<String>) {
                         .align(Alignment.CenterHorizontally)
                         .padding(vertical = 40.dp))
 
+                // Calls the FriendButton composable for each friend the user has
                 for (friend in friends) {
                     FriendButton(friendName = friend)
                 }
-
             }
         }
     }

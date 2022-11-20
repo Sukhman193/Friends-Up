@@ -5,6 +5,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!--  Light purple color  -->
+    <color name="light_purple_1">#FF605BD4</color>
     <!-- Color of Cancel Button -->
     <color name="cancelRed">#B3FF6262</color>
     <!-- Color of Save Button -->
@@ -19,4 +21,6 @@
     <color name="light_blue">#FF5275CF</color>
     <!-- Light purple for sending the message -->
     <color name="button_light_purple">#FF6B66DC</color>
+    <!-- Game card description font color -->
+    <color name="gameCardDescFont">#FFC0C0C0</color>
 </resources>

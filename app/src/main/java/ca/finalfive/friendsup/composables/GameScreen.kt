@@ -14,18 +14,22 @@ import androidx.compose.ui.unit.dp
  * @param gameTitle is the title at the Top bar
  * @param gameType is the variable beside the numbers in the timer animation
  *      for example "<Question> 1 of 5". gameType being the word Question
- * @param isWYR checks to see if the game is Would You Rather so that it'll
- *      reduce the font for the title since it's such a long name
+ * @param titleFontSize font size for the title
  */
 @Composable
-fun GameScreen(gameTitle: Int, gameType: Int, titleFontSize: TextUnit, gameContent: @Composable () -> Unit) {
+fun GameScreen(
+    gameTitle: Int,
+    gameType: Int,
+    titleFontSize: TextUnit,
+    gameContent: @Composable () -> Unit
+) {
     // Keeps track of what question the user is on
-    var currentQuestion by remember {
+    val currentQuestion by remember {
         mutableStateOf(1)
     }
     // The total amount of questions in the game, made it a mutableState
     // just in case we would ever need to change it
-    var totalQuestions by remember {
+    val totalQuestions by remember {
         mutableStateOf(5)
     }
 
@@ -38,16 +42,20 @@ fun GameScreen(gameTitle: Int, gameType: Int, titleFontSize: TextUnit, gameConte
 
     // Column containing all the elements you currently see, this is used to
     // arrange the MessageBox to the bottom
-    Column(modifier = Modifier
-        .fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceBetween) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
         // Column containing all the elements except the MessageBox
-        Column(modifier = Modifier
+        Column(
+            modifier = Modifier
         ) {
             // Container at the top which includes the title of the mini-game
             TopGameBar(
                 gameTitle = gameTitle,
-                fontSize = titleFontSize)
+                fontSize = titleFontSize
+            )
             // Space between the 3 lines and the top bar
             Spacer(
                 modifier = Modifier
@@ -74,8 +82,10 @@ fun GameScreen(gameTitle: Int, gameType: Int, titleFontSize: TextUnit, gameConte
                     .padding(bottom = 12.dp)
             )
         }
-        Box(modifier = Modifier
-            .padding(bottom = 12.dp)) {
+        Box(
+            modifier = Modifier
+                .padding(bottom = 12.dp)
+        ) {
             MessageBox()
         }
     }

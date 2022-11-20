@@ -12,12 +12,14 @@ import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.GameScreen
 import ca.finalfive.friendsup.composables.QuestionOption
+import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 /**
- * The game screen for "Trivia"
+ * Screen for the trivia game
+ * @param gameViewModel view model for the game controls
  */
 @Composable
-fun TriviaGameScreen() {
+fun TriviaGameScreen(gameViewModel: GameViewModel) {
     // Array of options for the user
     /* TODO: Make the options randomly generated depending on the question */
     val answers = arrayOf("Option 1", "Option 2", "Option 3", "Option 4")

@@ -15,18 +15,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.composables.GameScreen
 import ca.finalfive.friendsup.R
+import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 /**
  * The game screen for "Prompt"
  */
 @Composable
-fun PromptGameScreen() {
+fun PromptGameScreen(gameViewModel: GameViewModel) {
     // Game content which includes the topBar, gameTimer and the question
     // if there is one
     GameScreen(
         gameTitle = R.string.game_prompt_title,
         gameType = R.string.game_prompt_type,
-        titleFontSize = 60.sp) {
+        titleFontSize = 60.sp
+    ) {
         // The only purpose of this box is to make a bottom alignment
         // for the skip button
         Box(
@@ -64,7 +66,6 @@ fun PromptGameScreen() {
                         .align(Alignment.Center)
                         .padding(bottom = 5.dp)
                 )
-
             }
         }
     }
