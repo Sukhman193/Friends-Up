@@ -14,6 +14,9 @@ import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.GameScreen
 import ca.finalfive.friendsup.composables.QuestionOption
 
+/**
+ * The game screen for "Would You Rather"
+ */
 @Composable
 fun WYRGameScreen(navController: NavController) {
     // Array of options for the user

@@ -13,6 +13,9 @@ import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.GameScreen
 import ca.finalfive.friendsup.composables.QuestionOption
 
+/**
+ * The game screen for "Trivia"
+ */
 @Composable
 fun TriviaGameScreen() {
     // Array of options for the user

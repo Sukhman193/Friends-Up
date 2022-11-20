@@ -2,9 +2,12 @@ package ca.finalfive.friendsup.screens
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -16,10 +19,9 @@ import androidx.navigation.NavController
 import ca.finalfive.friendsup.composables.FriendButton
 
 @Composable
-fun FriendsScreen(navController: NavController) {
-    val friends = arrayOf("Sukhman", "Sahand", "Kelsey", "Lorenz")
-
-    Column {
+fun FriendsScreen(navController: NavController, friends: List<String>) {
+    Column(modifier = Modifier
+        .verticalScroll(rememberScrollState())) {
         Row {
             Column(modifier = Modifier) {
                 Text(
@@ -64,10 +66,11 @@ fun FriendsScreen(navController: NavController) {
                     )
                 }
 
-                Spacer(modifier = Modifier
-                    .padding(bottom = 20.dp))
-
-                Text("Get in contact with your friends")
+                Text(text = "Get in contact with your friends",
+                    fontSize = 19.sp,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(vertical = 40.dp))
 
                 for (friend in friends) {
                     FriendButton(friendName = friend)
