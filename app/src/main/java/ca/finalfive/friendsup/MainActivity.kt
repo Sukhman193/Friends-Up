@@ -67,11 +67,10 @@ class MainActivity : ComponentActivity() {
                     }
                     // Background image
                     BackgroundImage()
-                    FriendDetailScreen()
-//                    Navigation(
-//                        gameViewModel = gameViewModel,
-//                        authViewModel = authViewModel
-//                    )
+                    Navigation(
+                        gameViewModel = gameViewModel,
+                        authViewModel = authViewModel
+                    )
                 }
             }
         }

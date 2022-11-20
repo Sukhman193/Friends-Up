@@ -33,7 +33,8 @@ fun TriviaGameScreen(gameViewModel: GameViewModel) {
         gameTitle = R.string.game_trivia_title,
         gameType = R.string.game_trivia_type,
         titleFontSize = 60.sp,
-        gameViewModel = gameViewModel
+        gameViewModel = gameViewModel,
+        gameTimer = 10f
     ) {
         // Question for the user
         Text(

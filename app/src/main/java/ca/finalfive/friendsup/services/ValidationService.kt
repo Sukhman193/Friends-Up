@@ -99,6 +99,16 @@ class ValidationService {
         }
     }
 
+    /**
+     * Validate the length of a text message
+     * @param
+     */
+    fun isMessageValid(text: String, minLength: Int = 3, maxLength: Int = 30) {
+        if(minLength > text.length || maxLength < text.length) {
+            throw Error.ValidationException("Message must be between $minLength and $maxLength characters")
+        }
+    }
+
 
     companion object {
         /**

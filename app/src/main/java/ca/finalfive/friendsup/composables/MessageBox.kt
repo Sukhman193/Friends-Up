@@ -9,21 +9,25 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import ca.finalfive.friendsup.R
+import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 /**
  * The MessageBox composable is the TextField for people to message in
  * on the bottom of the games
  */
 @Composable
-fun MessageBox(modifier: Modifier = Modifier) {
+fun MessageBox(gameViewModel: GameViewModel, modifier: Modifier = Modifier) {
     // Text string for the text field
     var text by remember {
-        mutableStateOf(TextFieldValue(""))
+        mutableStateOf("")
     }
+
+    // Local context of the application
+    val context = LocalContext.current
 
     // Text field for the user to type in
     TextField(
@@ -35,14 +39,18 @@ fun MessageBox(modifier: Modifier = Modifier) {
                 color = Color.White
             )
         },
+        // Set the colors of the message box
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color(R.color.light_grey).copy(alpha = 0.2F),
-            focusedIndicatorColor = Color.Transparent
+            backgroundColor = Color(R.color.light_grey).copy(alpha = 0.8F),
+            focusedIndicatorColor = Color.Transparent,
+            textColor = colorResource(id = R.color.white)
         ),
-        textStyle = TextStyle(Color.White),
         trailingIcon = {
             SendButton {
-
+                // Send the message
+                gameViewModel.sendMessage(text, context)
+                // reset the value of text
+                text = ""
             }
         },
         modifier = modifier

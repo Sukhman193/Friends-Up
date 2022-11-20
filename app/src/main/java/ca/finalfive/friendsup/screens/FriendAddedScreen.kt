@@ -5,6 +5,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -16,21 +17,31 @@ import androidx.navigation.NavController
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.BackgroundImage
 import ca.finalfive.friendsup.composables.ScreenTitle
+import com.airbnb.lottie.LottieComposition
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieAnimatable
 import com.airbnb.lottie.compose.rememberLottieComposition
 import kotlinx.coroutines.delay
 
+/**
+ * Screen which is displayed after two users
+ * clicked on the add friends screen
+ * @param navController Navigation controller of the application
+ */
 @Composable
 fun FriendAddedScreen(navController: NavController) {
     // Composition for the animation
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.congratulation))
+    val composition by rememberLottieComposition(
+        LottieCompositionSpec.RawRes(R.raw.congratulation)
+    )
 
     // Pop back a screen after one second
     LaunchedEffect(key1 = composition) {
         delay(3000)
         navController.popBackStack()
     }
+
 
     // Container of the screen
     Box {
@@ -50,7 +61,6 @@ fun FriendAddedScreen(navController: NavController) {
                 color = colorResource(id = R.color.white),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(horizontal = 30.dp),
-
                 )
             // Animation to display
             LottieAnimation(

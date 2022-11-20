@@ -29,7 +29,7 @@ fun SendButton(
     Box(modifier = Modifier
         .size(55.dp)
         .clip(RoundedCornerShape(5.dp))
-        .clickable {/* TODO */ }
+        .clickable { sendMessage() }
         .background(
             brush = Brush.linearGradient(
                 colors = listOf(
