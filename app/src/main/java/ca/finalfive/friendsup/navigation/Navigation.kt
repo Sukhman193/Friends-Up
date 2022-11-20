@@ -108,7 +108,7 @@ fun Navigation(
         ) {
             // Friends Screen with bottom navigation
             NavigationContainer(navController = navController) {
-                FriendsScreen(navController = navController)
+                FriendsScreen(navController = navController, friends = listOf("Friend 1", "Friend 2", "Friend 3", "Friend 4", "Friend 5", "Friend 6", "Friend 7"))
             }
         }
 
