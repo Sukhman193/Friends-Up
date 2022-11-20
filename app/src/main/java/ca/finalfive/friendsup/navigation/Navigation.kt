@@ -1,16 +1,18 @@
 package ca.finalfive.friendsup.navigation
+
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.NavigationContainer
 import ca.finalfive.friendsup.factories.UserViewModelFactory
@@ -20,6 +22,16 @@ import ca.finalfive.friendsup.screens.*
 import ca.finalfive.friendsup.viewmodels.AuthViewModel
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 import ca.finalfive.friendsup.viewmodels.UserViewModel
+
+/**
+ * Arguments for the dynamic routing
+ */
+class RouteArgs {
+    companion object {
+        const val USER_ID = "userID"
+    }
+}
+
 
 /**
  * Screens for possible navigation
@@ -107,9 +119,64 @@ fun Navigation(
         ) {
             // Friends Screen with bottom navigation
             NavigationContainer(navController = navController) {
-                FriendsScreen(navController = navController, friends = listOf("Friend 1", "Friend 2", "Friend 3", "Friend 4", "Friend 5", "Friend 6", "Friend 7"))
+                FriendsScreen(
+                    navController = navController,
+                    friends = listOf(
+                        "Friend 1",
+                        "Friend 2",
+                        "Friend 3",
+                        "Friend 4",
+                        "Friend 5",
+                        "Friend 6",
+                        "Friend 7"
+                    )
+                )
             }
         }
+
+
+        // Navigation for the friends detail screen
+        composable(
+            route = Route.FriendsScreen.route + "{${RouteArgs.USER_ID}}",
+            arguments = listOf(
+                navArgument(RouteArgs.USER_ID) {
+                    type = NavType.StringType
+                }
+            )
+        ) { navBackStackEntry ->
+            /*
+            // Get the user id of the friend
+            val userID = navBackStackEntry.arguments?.getString(RouteArgs.USER_ID)
+            // Get the friend from the user
+            userViewModel.getFriend(userID)
+            var friend = userViewModel.friend
+            // Check if the friend has been found or not
+            val friendFound = userViewModel.friendFound
+
+            // if the friend is not found than pop back a screen
+            if(friendFound == false) {
+                navController.popBackStack()
+            }
+
+            // if the friend is being found, display a progress bar
+            if(friendFound == null) {
+                NavigationContainer(navController = navController) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(90.dp)
+                    )
+                }
+            } else {
+            // If the friend is found than display the friend
+                FriendDetailScreen(
+                    userViewModel = userViewModel,
+                    friend = friend!!
+                )
+            }
+            */
+        }
+
 
         // Navigation for the profile screen
         composable(
