@@ -2,7 +2,6 @@ package ca.finalfive.friendsup.navigation
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -13,12 +12,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.NavigationContainer
+import ca.finalfive.friendsup.factories.AuthViewModelFactory
 import ca.finalfive.friendsup.factories.UserViewModelFactory
 import ca.finalfive.friendsup.models.GameMode
 import ca.finalfive.friendsup.repositories.FirestoreUserRepository
 import ca.finalfive.friendsup.screens.*
 import ca.finalfive.friendsup.viewmodels.AuthViewModel
 import ca.finalfive.friendsup.viewmodels.GameViewModel
+import ca.finalfive.friendsup.repositories.FirebaseAuthRepository
 import ca.finalfive.friendsup.viewmodels.UserViewModel
 
 /**
@@ -67,7 +68,7 @@ sealed class BottomNavItem(var title: String, var icon: Int, var route: String) 
 @Composable
 fun Navigation(
     gameViewModel: GameViewModel,
-    authViewModel: AuthViewModel,
+    authViewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory(FirebaseAuthRepository())),
     userViewModel: UserViewModel = viewModel(factory = UserViewModelFactory(FirestoreUserRepository()))
 ) {
 

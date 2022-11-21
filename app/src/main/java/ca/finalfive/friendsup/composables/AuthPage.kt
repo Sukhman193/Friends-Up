@@ -25,6 +25,7 @@ import ca.finalfive.friendsup.viewmodels.AuthViewModel
 import ca.finalfive.friendsup.viewmodels.UserViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -52,9 +53,9 @@ fun AuthPage(
     val scope = rememberCoroutineScope()
     // The Google Sign-in Launcher
     val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
-        // returns a task for google sign in account
-        val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
         try {
+            // returns a task for google sign in account
+            val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
             // returns the google sign in account
             val account = task.getResult(ApiException::class.java)!!
             // the Google Authentication credentials
@@ -62,10 +63,12 @@ fun AuthPage(
             scope.launch {
                 // this async Firebase Function will use the credentials to sign in and returns the result
                 val authResult = Firebase.auth.signInWithCredential(credential).await()
+                authViewModel.user = authResult.user
                 // Adding the user with the user's email and its default username to the database
                 userViewModel.addUser(
-                    User(email = authResult.user?.email!!,
-                        username = authResult.user?.email!!.replace("@gmail.com","")
+                    User(
+                        email = authResult.user?.email!!,
+                        username = authResult.user?.email!!.replace("@gmail.com", "")
                     ),
                 )
                 // Route to the Game Screen if the sign in is successful
@@ -74,6 +77,8 @@ fun AuthPage(
         } catch (e: ApiException) {
             // make a toast to notify the user that authentication was not successful
             Toast.makeText(context, "Authentication Failed", Toast.LENGTH_SHORT).show()
+        } catch (error: FirebaseAuthInvalidUserException) {
+            Toast.makeText(context, error.message.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 

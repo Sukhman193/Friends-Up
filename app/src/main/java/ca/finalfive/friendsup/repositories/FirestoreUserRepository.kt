@@ -8,6 +8,8 @@ import ca.finalfive.friendsup.models.User
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.toObject
+import kotlinx.coroutines.tasks.await
+
 
 /**
  * Constants Class - holds the USERS field from collection
@@ -36,69 +38,43 @@ class FirestoreUserRepository() {
      * addUserHelper - if the user doesn't exist it adds the user to the database
      * @param user - User object
      */
-    private fun addUserHelper(user: User) = run {
+    private suspend fun addUserHelper(user: User){
         // id of the user which extracts from the first part of the gmail
         val userID = user.email.replace("@gmail.com", "")
         // creates a document with the userID in the collection
-        collection.document(userID).set(user, SetOptions.merge())
-            .addOnSuccessListener {
-                firestoreUser = user
-            }
-            .addOnFailureListener { e ->
-                throw Error.NotFoundException(e.message.toString())
-            }
+        collection.document(userID).set(user, SetOptions.merge()).await()
     }
 
     /**
      * getUserByID - get the user from the database
      * @param userId - id of the user
      */
-    fun getUserById(userId: String) = run {
+    suspend fun getUserById(userId: String) {
         // gets the user
-        collection.document(userId)
-            .get()
-            .addOnSuccessListener { document ->
-                // return if document does not exist
-                if (!document.exists()) {
-                    throw Error.NotFoundException(userId)
-                }
-                // stores to the user as an User Object
-                val user = document.toObject<User>()
-                // stores the user
-                firestoreUser = user
-                return@addOnSuccessListener
-            }
-            .addOnFailureListener { exception ->
-                throw Error.NotFoundException(exception.message.toString())
-            }
+        val document = collection.document(userId).get().await()
+        // return if document does not exist
+        if (!document.exists()) {
+            throw Error.NotFoundException(userId)
+        }
+        // stores to the user as an User Object
+        val user = document.toObject<User>()
+        // stores the user
+        firestoreUser = user
     }
 
     /**
      * addUser - Add the user to the database
      * @param user - User Object
      */
-    fun addUser(user: User) = run {
+    suspend fun addUser(user: User) {
         val userId = user.email.replace("@gmail.com", "")
         // asks for the user from the database
-        collection.document(userId).get()
-            .addOnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    throw Error.NotFoundException(userId)
-                }
-                // if the task is successful it saves the result
-                val document = task.result
-
-                if (document != null) {
-                    // if the user does not exist on database
-                    if (!document.exists()) {
-                        // we call the addUserHelper and pass the user to it
-                        addUserHelper(user)
-                    } else {
-                        // save the instance of the user if user exists
-                        firestoreUser = user
-                    }
-                }
-            }
+        val document = collection.document(userId).get().await()
+        // if the user does not exist on database
+        if (!document.exists()) {
+            // we call the addUserHelper and pass the user to it
+            addUserHelper(user)
+        }
     }
 
     /**
@@ -106,7 +82,7 @@ class FirestoreUserRepository() {
      * @param userId - Id of the user
      * @param updatedUser - A user object with the newest information
      */
-    fun updateUserByID(
+    suspend fun updateUserByID(
         userId: String,
         updatedUser: User
     ) {
@@ -120,8 +96,6 @@ class FirestoreUserRepository() {
                 "phone" to updatedUser.phone,
                 "discord" to updatedUser.discord
             )
-        ).addOnFailureListener{
-            throw Error.NotFoundException(userId)
-        }
+        ).await()
     }
 }

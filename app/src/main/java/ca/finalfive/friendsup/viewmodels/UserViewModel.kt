@@ -5,9 +5,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import ca.finalfive.friendsup.models.User
 import ca.finalfive.friendsup.repositories.FirestoreUserRepository
 import ca.finalfive.friendsup.services.ValidationService
+import kotlinx.coroutines.launch
 import ca.finalfive.friendsup.helpers.Error
 
 /**
@@ -18,13 +20,16 @@ class UserViewModel(private val userRepository: FirestoreUserRepository): ViewMo
     // saved the user's object
     var user: User? by mutableStateOf(userRepository.firestoreUser)
 
+    val validationService = ValidationService()
+
     /**
      * addUser - calls the add function in firestore user repository to add the user to database
      * @param newUser - User object
      */
     fun addUser(newUser: User){
-        userRepository.addUser(newUser)
-        user = newUser
+        viewModelScope.launch {
+            userRepository.addUser(newUser)
+        }
     }
 
     /**
@@ -32,8 +37,10 @@ class UserViewModel(private val userRepository: FirestoreUserRepository): ViewMo
      * @param userId - id of the user
      */
     fun getUser(userId: String){
-        userRepository.getUserById(userId)
-        user = userRepository.firestoreUser
+        viewModelScope.launch {
+            userRepository.getUserById(userId)
+            user = userRepository.firestoreUser
+        }
     }
 
     /**
@@ -41,11 +48,11 @@ class UserViewModel(private val userRepository: FirestoreUserRepository): ViewMo
      * @param userId - id of the user
      * @param updatedUser - an object of the updated user's information
      */
+
     fun updateUserByID(userId: String, updatedUser: User, context: Context){
         // Instance of Validation Service
         val validationService = ValidationService.getInstance()
         try {
-
             // validating the phone number
             if (updatedUser.phone != ""){
                 validationService.isPhoneNumber(updatedUser.phone)
@@ -68,13 +75,16 @@ class UserViewModel(private val userRepository: FirestoreUserRepository): ViewMo
             if (updatedUser.discord != ""){
                 validationService.isDiscordValid(updatedUser.discord)
             }
-        } catch (e: Error.ValidationException){
+        }catch (e : Error.ValidationException){
+            // make the toast and let the user know the message
             e.makeToast(context = context)
             return
         }
-        // call the update function
-        userRepository.updateUserByID(userId, updatedUser)
-        // updates the user
-        user = userRepository.firestoreUser
+        // if everything matches it will update the database
+        viewModelScope.launch {
+            userRepository.updateUserByID(userId, updatedUser)
+            user = userRepository.firestoreUser
+        }
+
     }
 }
