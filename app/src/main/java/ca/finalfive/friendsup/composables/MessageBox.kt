@@ -9,6 +9,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -36,7 +37,7 @@ fun MessageBox(modifier: Modifier = Modifier) {
             )
         },
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color(R.color.light_grey).copy(alpha = 0.2F),
+            backgroundColor = colorResource(R.color.light_grey).copy(alpha = 0.2F),
             focusedIndicatorColor = Color.Transparent
         ),
         textStyle = TextStyle(Color.White),

@@ -52,10 +52,7 @@ fun WYRGameScreen(gameViewModel: GameViewModel) {
 
             // A for loop containing 4 button options
             for (option in options) {
-                QuestionOption(option = option) {
-                    // handle the selection button
-                    gameViewModel.handleAnswerGameOption(option)
-                }
+                QuestionOption(option = option, gameViewModel = gameViewModel)
             }
         }
     }

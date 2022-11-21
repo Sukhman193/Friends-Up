@@ -33,7 +33,8 @@ fun TriviaGameScreen(gameViewModel: GameViewModel) {
         gameTitle = R.string.game_trivia_title,
         gameType = R.string.game_trivia_type,
         titleFontSize = 60.sp,
-        gameViewModel = gameViewModel
+        gameViewModel = gameViewModel,
+        gameTimer = 10f
     ) {
         // Question for the user
         Text(
@@ -53,10 +54,7 @@ fun TriviaGameScreen(gameViewModel: GameViewModel) {
 
         // A for loop containing 4 button options
         for (answer in answers) {
-            QuestionOption(option = answer){
-                // Handle the option being selected
-                gameViewModel.handleAnswerGameOption(answer)
-            }
+            QuestionOption(option = answer, gameViewModel = gameViewModel)
         }
     }
 }
