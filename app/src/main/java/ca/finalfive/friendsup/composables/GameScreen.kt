@@ -55,7 +55,7 @@ fun GameScreen(
             .background(Color.Black.copy(alpha = 0.5F))
     )
 
-    // scaffold used to put the game inside the game screen
+    // Scaffold used to put the game inside the game screen
     Scaffold(
         // The bottom bar will be the bottom text box for sending messages
         bottomBar = {
