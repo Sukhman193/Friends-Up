@@ -97,11 +97,15 @@
 
     <!--  Friends screen  -->
     <!--  Friend's screen title  -->
-    <string name="friends_title">Friends</string>
+    <string name="friends_title">Friend List</string>
     <!--  Friend's screen description  -->
     <string name="friends_description">Get in contact with your friends</string>
     <!--  Friend detail title screen  -->
     <string name="friend_detail_title">Friend Detail</string>
+    <!--  Display text for when the user is not sharing any social media  -->
+    <string name="friend_list_no_social_media">User is not sharing any social media</string>
+    <!--  Display text for when the user has no friends  -->
+    <string name="friend_list_no_friends">You currently have no friends</string>
 
     <!--  Info screen  -->
     <!--  Friend info title  -->

@@ -30,29 +30,34 @@ import ca.finalfive.friendsup.viewmodels.GameViewModel
 /**
  * The buttons options for Trivia and Would you Rather
  * @param option represents the name of the option
- * @param onClick handler for the button click
+ * @param gameViewModel view model of the game
  */
 @Composable
 fun QuestionOption(
     option: GameQuestionOption,
     gameViewModel: GameViewModel,
 ) {
+    // If the game is null than don't display anything
+    // The rest will be handled by the navigation bar
+    if(gameViewModel.game == null) {
+        return
+    }
+    // Height of the container
+    // In case the text overflows this will be changed
     var containerHeight by remember {
         mutableStateOf(70.dp)
     }
-
+    // States whether an option has been clicked
+    // this will allow the animation to start
     var isClicked by remember {
         mutableStateOf(false)
     }
-
     // Get the game
     val game = gameViewModel.game!!
-
     // Get the current option being displayed
     var currentOption by remember {
         mutableStateOf(option)
     }
-
     // Every time the game progress changes (goes to the next question)
     // Set the is Clicked to false
     // Set the value of currentOption to option
@@ -103,11 +108,13 @@ fun QuestionOption(
                 .width(50.dp)
                 .background(colorResource(R.color.light_purple))
         )
-
+        // Check if there should be an animation
+        // if yes, display the animation
         if (isClicked) {
             ButtonAnimation()
         }
 
+        // Container of the option card
         Row (
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxSize(),
@@ -132,8 +139,11 @@ fun QuestionOption(
 
             // Display image of user who selected this option
             Row {
+                // Iterate over all options of the current game
                 currentOption.selectedBy.forEach { selectedBy ->
+                    // Iterate over all the members
                     game.members.forEach {
+                        // display the icon of the member who matches
                         if(it.username == selectedBy) {
                             ProfileIcon(imageUrl = it.icon)
                         }

@@ -6,14 +6,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ca.finalfive.friendsup.helpers.Error
 import ca.finalfive.friendsup.models.User
 import ca.finalfive.friendsup.repositories.FirestoreUserRepository
 import ca.finalfive.friendsup.services.ValidationService
 import kotlinx.coroutines.launch
-import ca.finalfive.friendsup.helpers.Error
-import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.ktx.toObject
-import kotlinx.coroutines.tasks.await
 
 /**
  * UserViewModel - stores the and handles the user's functionality
@@ -22,13 +19,10 @@ import kotlinx.coroutines.tasks.await
 class UserViewModel(private val userRepository: FirestoreUserRepository): ViewModel() {
     // saved the user's object
     var user: User? by mutableStateOf(userRepository.firestoreUser)
-
-    val validationService = ValidationService()
-
     // friend user which by default is null
-    var friend: User? by mutableStateOf(userRepository.friend)
+    var friend: User? by mutableStateOf(null)
     // a boolean statement to see if the friend is found
-    var isFriendFound: Boolean? by mutableStateOf(userRepository.isFriendFound)
+    var isFindingFriend: Boolean by mutableStateOf(true)
 
     /**
      * addUser - calls the add function in firestore user repository to add the user to database
@@ -100,16 +94,19 @@ class UserViewModel(private val userRepository: FirestoreUserRepository): ViewMo
      * @param userId - id of the user's friend
      * @param context - local context
      */
-    suspend fun findFriendById(userId: String, context: Context) {
-        try {
-            // calling the findFriendById function to get the friend user
-            userRepository.findFriendById(userId = userId)
-            // updating the friend user
-            friend = userRepository.friend
-            isFriendFound = userRepository.isFriendFound
-        } catch (e: Exception){
-            // make a toast
-            Error.ValidationException(e.toString()).makeToast(context = context)
+    fun findFriendById(userId: String, context: Context) {
+        isFindingFriend = true
+        viewModelScope.launch {
+            try {
+                // calling the findFriendById function to get the friend user
+                userRepository.findFriendById(userId = userId)
+                // updating the friend user
+                friend = userRepository.friend
+            } catch (e: Exception){
+                isFindingFriend = false
+                // make a toast
+                Error.ValidationException(e.toString()).makeToast(context = context)
+            }
         }
     }
 
@@ -117,13 +114,15 @@ class UserViewModel(private val userRepository: FirestoreUserRepository): ViewMo
      * deleteFriendById - calls the deleteFriend function from user repository
      * @param context - local context
      */
-    suspend fun deleteFriend(context: Context) {
-        try {
-            // calling the findFriendById function to get the friend user
-            userRepository.deleteFriend()
-        } catch (e: Exception){
-            // make a toast
-            Error.ValidationException(e.toString()).makeToast(context = context)
+    fun deleteFriend(context: Context) {
+        viewModelScope.launch {
+            try {
+                // calling the findFriendById function to get the friend user
+                userRepository.deleteFriend()
+            } catch (e: Exception){
+                // make a toast
+                Error.ValidationException(e.toString()).makeToast(context = context)
+            }
         }
     }
 }

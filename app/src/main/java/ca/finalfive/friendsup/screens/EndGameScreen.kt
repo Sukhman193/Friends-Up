@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.BackgroundImage
-import ca.finalfive.friendsup.composables.ReportPopup
+import ca.finalfive.friendsup.composables.gamescreen.ReportPopup
 import ca.finalfive.friendsup.composables.ScreenTitle
 import ca.finalfive.friendsup.composables.buttons.EndGameSubmitButton
 import ca.finalfive.friendsup.composables.buttons.ReportButtonRed

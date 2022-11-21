@@ -1,4 +1,4 @@
-package ca.finalfive.friendsup.screens
+package ca.finalfive.friendsup.screens.games
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import ca.finalfive.friendsup.R
-import ca.finalfive.friendsup.composables.GameScreen
+import ca.finalfive.friendsup.composables.gamescreen.GameScreen
 import ca.finalfive.friendsup.composables.cah.WhiteCard
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 

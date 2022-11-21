@@ -1,4 +1,4 @@
-package ca.finalfive.friendsup.composables
+package ca.finalfive.friendsup.composables.gamescreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,9 +16,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import ca.finalfive.friendsup.R
-import ca.finalfive.friendsup.navigation.Route
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 /**

@@ -2,11 +2,13 @@ package ca.finalfive.friendsup.composables.buttons
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -20,7 +22,12 @@ import ca.finalfive.friendsup.composables.DropShadowText
 import ca.finalfive.friendsup.navigation.Route
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
-
+/**
+ * Play button for the select game screen
+ * @param gameViewModel view model for the game
+ * @param navController Navigation controller for the application
+ * @param gameMode game Mode being played
+ */
 @Composable
 fun PlayButton(gameViewModel: GameViewModel, navController: NavController, gameMode: String) {
     //this component makes the play button that appears on the main game screen
@@ -37,12 +44,14 @@ fun PlayButton(gameViewModel: GameViewModel, navController: NavController, gameM
         onClick = {
             gameViewModel.joinGame(gameMode = gameMode)
             navController.navigate(Route.GameScreen.route)
-        }) {
+        }
+    ) {
         //this is the inside of the whole button
         Column(
             modifier = Modifier
-                .padding(top = 5.dp)
-                .width(100.dp)
+                .fillMaxWidth()
+                .padding(top = 5.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             //custom text icons with a shadow
             DropShadowIcon(Icon = R.drawable.ic_play_arrow)

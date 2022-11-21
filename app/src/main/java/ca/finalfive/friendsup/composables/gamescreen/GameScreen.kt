@@ -1,12 +1,17 @@
-package ca.finalfive.friendsup.composables
+package ca.finalfive.friendsup.composables.gamescreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -16,6 +21,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import ca.finalfive.friendsup.composables.utils.MessageCard
+import ca.finalfive.friendsup.models.Chat
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 /**
@@ -36,7 +43,10 @@ fun GameScreen(
     gameViewModel: GameViewModel,
     gameContent: @Composable () -> Unit
 ) {
-
+    // Check if game is not null
+    if (gameViewModel.game == null) {
+        return
+    }
     // saves the state of Focus Request for the keyboard
     val requester = remember {
         FocusRequester()
@@ -48,6 +58,21 @@ fun GameScreen(
     // saves the state of the local focus
     val localFocusManager = LocalFocusManager.current
 
+    // Get the current game
+    val game = gameViewModel.game!!
+    // Get all the chats in the game
+    val chats = game.chatRoom
+    // Get the last item of the index
+    val lastIndex = chats.lastIndex
+    // get the current user of the game
+    val currentUsername = gameViewModel.savedUsername!!
+    // Get the five last messages
+    val displayChats: List<Chat> = if (lastIndex < 5) {
+        chats
+    } else {
+        chats.subList(lastIndex - 3, lastIndex + 1)
+    }
+
     // Black background over the background to make the background dimmer
     Box(
         modifier = Modifier
@@ -55,14 +80,41 @@ fun GameScreen(
             .background(Color.Black.copy(alpha = 0.5F))
     )
 
+    // Column containing all the elements you currently see, this is used to
+    // arrange the MessageBox to the bottom
+    Box (
+        modifier = Modifier.fillMaxSize()
+    ) {
+        // Display the messages
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                // add padding for the space of the text box
+                .padding(bottom = 100.dp)
+                .imePadding()
+                .align(Alignment.BottomCenter)
+        ) {
+            itemsIndexed(displayChats) { index, item ->
+                MessageCard(
+                    index = index,
+                    chat = item,
+                    isSender = item.sentBy == currentUsername,
+                    listCount = displayChats.size,
+                    isOpacityEnabled = isKeyboardShown.not()
+                )
+            }
+        }
+    }
+
     // Scaffold used to put the game inside the game screen
     Scaffold(
         // The bottom bar will be the bottom text box for sending messages
         bottomBar = {
-            BottomMessage(
+            MessageBox(
+                gameViewModel = gameViewModel,
                 requester = requester,
                 setKeyboardShown = setKeyboardShown,
-                gameViewModel = gameViewModel
+                localFocusManager = localFocusManager
             )
         },
         // The top bar will include the title of the game as well
@@ -143,26 +195,3 @@ fun Counter(
     }
 }
 
-/**
- * Message text box for the content
- * @param requester Focus requester for the keyboard
- * @param setKeyboardShown Set whether the key is shown or not
- */
-@Composable
-fun BottomMessage(
-    gameViewModel: GameViewModel,
-    requester: FocusRequester,
-    setKeyboardShown: (Boolean) -> Unit
-) {
-    Box(
-        modifier = Modifier
-            .padding(bottom = 12.dp)
-            .imePadding()
-    ) {
-        MessageBox(
-            gameViewModel = gameViewModel,
-            modifier = Modifier
-            .focusRequester(requester)
-            .onFocusChanged { setKeyboardShown(it.hasFocus) })
-    }
-}
