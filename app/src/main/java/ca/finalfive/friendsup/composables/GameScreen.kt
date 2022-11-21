@@ -1,6 +1,5 @@
 package ca.finalfive.friendsup.composables
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
@@ -39,7 +38,10 @@ fun GameScreen(
     gameViewModel: GameViewModel,
     gameContent: @Composable () -> Unit
 ) {
-
+    // Check if game is not null
+    if (gameViewModel.game == null) {
+        return
+    }
     // saves the state of Focus Request for the keyboard
     val requester = remember {
         FocusRequester()

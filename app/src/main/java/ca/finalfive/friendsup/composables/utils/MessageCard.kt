@@ -29,7 +29,7 @@ import coil.compose.rememberAsyncImagePainter
  * @param chat - User's chat content + profile picture + name
  * @param isSender - A boolean state to specify if the user is the sender or receiver
  * @param listCount - Total number of chats inside the list
- * @param isOpacityEnabled -
+ * @param isOpacityEnabled - states whether the opacity should be enabled or not
  */
 @Composable
 fun MessageCard(
@@ -67,7 +67,9 @@ fun MessageCard(
         ) {
             Image(
                 painter = rememberAsyncImagePainter(
+                    // set the model to the url
                     model = chat.icon,
+                    // set the content scale to be cropped
                     contentScale = ContentScale.Crop,
                 ),
                 contentDescription = null,

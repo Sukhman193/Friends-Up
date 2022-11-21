@@ -33,6 +33,7 @@ fun MessageBox(gameViewModel: GameViewModel, modifier: Modifier = Modifier) {
     TextField(
         value = text,
         onValueChange = { text = it },
+        singleLine = true,
         placeholder = {
             Text(
                 text = "Type message here",

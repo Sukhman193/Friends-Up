@@ -41,9 +41,6 @@ class GameFirestoreRepository {
 
                         // Convert the snapshot to a game object
                         game = gameSnapshot.toObject<Game>()
-                        // TODO: ASK YUDHVIR Y THIS IS NOT WORKING
-                        game?.isGameEnded = gameSnapshot.get("isGameEnded").toString() == "true"
-                        game?.isGameStarted = gameSnapshot.get("isGameStarted").toString() == "true"
                     }
                     // Value of the response
                     Resource.Success(game)

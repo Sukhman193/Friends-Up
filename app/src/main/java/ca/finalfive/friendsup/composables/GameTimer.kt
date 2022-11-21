@@ -25,6 +25,14 @@ fun GameTimer(
     prompt: Int,
     gameViewModel: GameViewModel
 ) {
+    // If game does not exist than return
+    // there is a small instance when game is
+    // null and the game is being used here
+    // other error checking is performed
+    // inside the navigation stack
+    if (gameViewModel.game == null) {
+        return
+    }
     // Content of the game
     val game = gameViewModel.game!!
     // Keeps track of what question the user is on
@@ -43,6 +51,25 @@ fun GameTimer(
             delay(200L)
             currentTime -= 0.2f
         } else {
+            // check if the answers have been given
+            // get the length of the options for the users
+            val questionOptions = game.gameContent[game.gameProgress].questionOptions
+            // Value which will count how many people answered the question
+            var answeredQuestion = 0
+            // Iterate over the question options to find the number of users who
+            // have answered
+            questionOptions.map {
+                answeredQuestion += it.selectedBy.size
+            }
+            // if not all the users responded, end the game
+            if(answeredQuestion != game.members.size ) {
+                // end the game
+                gameViewModel.errorMessage = "Game ended for user inactivity"
+            }
+            // allow only one user to progress
+            if(gameViewModel.savedUsername != game.members[0].username) {
+                return@LaunchedEffect
+            }
             // Go to the next question
             gameViewModel.handleGameProgress()
         }
