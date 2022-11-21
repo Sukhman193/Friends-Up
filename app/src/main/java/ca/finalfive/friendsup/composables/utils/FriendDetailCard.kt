@@ -18,6 +18,11 @@ import kotlinx.coroutines.delay
 
 // https://stackoverflow.com/questions/71985840/how-to-use-clipboard-service-in-jetpack-compose
 
+/**
+ * Friend detail card which will display the content of the
+ * details of the user's social media
+ * @param friendCardDetail content for the detail card
+ */
 @Composable
 fun FriendDetailCard(friendCardDetail: FriendCardDetail) {
     // mutable value for the icon, set to the copy icon
