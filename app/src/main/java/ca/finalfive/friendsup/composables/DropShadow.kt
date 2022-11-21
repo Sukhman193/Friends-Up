@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
@@ -33,7 +32,7 @@ fun DropShadowText(
     style: TextStyle = LocalTextStyle.current,
     textAlign: TextAlign? = null
 ) {
-    Box() {
+    Box {
         //this creates the shadow
         Text(
             modifier = modifier
@@ -67,7 +66,7 @@ fun DropShadowIcon(
     Icon: Int,
 ) {
     //using a box so we can layer the two icons on top of each other
-    Box() {
+    Box {
         //this creates the 'shadow'
         Icon(
             painter = painterResource(id = Icon),

@@ -2,6 +2,7 @@ package ca.finalfive.friendsup.repositories
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.result.ActivityResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -15,7 +16,7 @@ import com.google.firebase.ktx.Firebase
 /**
  * The Firebase Auth Repository
  */
-class FirebaseAuthRepository {
+class FirebaseAuthRepository() {
     // Google Sign-in Client variable
     private lateinit var googleSignInClient: GoogleSignInClient
     // Firebase Authentication Instance
@@ -26,9 +27,8 @@ class FirebaseAuthRepository {
      * @param token - Google Sign-In Token
      * @param context - The Context
      * @param launcher - The Activity Launcher
-     * @return Firebase User
      */
-    fun signIn(token: String, context: Context, launcher: ManagedActivityResultLauncher<Intent, ActivityResult> ): FirebaseUser? {
+    fun signIn(token: String, context: Context, launcher: ManagedActivityResultLauncher<Intent, ActivityResult> ) {
         // Building the Google Sign-in Options
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(token)
@@ -40,8 +40,6 @@ class FirebaseAuthRepository {
         auth = FirebaseAuth.getInstance()
         // call the launcher to launch the client
         launcher.launch(googleSignInClient.signInIntent)
-        // return the user
-        return Firebase.auth.currentUser
     }
 
 }

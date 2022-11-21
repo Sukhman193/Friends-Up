@@ -1,4 +1,4 @@
-package ca.finalfive.friendsup.composables
+package ca.finalfive.friendsup.composables.gamescreen
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,10 +30,6 @@ fun ProgressBar(totalTime: Float, updateValue: Int) {
     // The color of the first bar, which will be changed to transparent when it's done
     var bar1Color by remember {
         mutableStateOf(progressColor)
-    }
-    // Checks to see if the first bar is done
-    var bar1Done by remember {
-        mutableStateOf(false)
     }
     // The progress, color and a boolean for the second bar
     var bar2Progress by remember {
@@ -113,7 +109,6 @@ fun ProgressBar(totalTime: Float, updateValue: Int) {
 
             // If the time on the timer is = 0
             if (currentTime <= 0f) {
-                bar1Done = true
                 bar1Color = Color.Transparent
             }
         }

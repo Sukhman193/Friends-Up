@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.R
-import ca.finalfive.friendsup.composables.GameScreen
+import ca.finalfive.friendsup.composables.gamescreen.GameScreen
 import ca.finalfive.friendsup.composables.QuestionOption
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
@@ -54,10 +54,7 @@ fun TriviaGameScreen(gameViewModel: GameViewModel) {
 
         // A for loop containing 4 button options
         for (answer in answers) {
-            QuestionOption(option = answer){
-                // Handle the option being selected
-                gameViewModel.handleAnswerGameOption(answer)
-            }
+            QuestionOption(option = answer, gameViewModel = gameViewModel)
         }
     }
 }

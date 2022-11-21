@@ -1,4 +1,4 @@
-package ca.finalfive.friendsup.composables
+package ca.finalfive.friendsup.composables.gamescreen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -61,8 +61,8 @@ fun GameTimer(
             questionOptions.map {
                 answeredQuestion += it.selectedBy.size
             }
-            // if not all the users responded, end the game
-            if(answeredQuestion != game.members.size ) {
+            // if the game has options and not all the users responded, end the game
+            if(answeredQuestion != game.members.size && questionOptions.isNotEmpty()) {
                 // end the game
                 gameViewModel.errorMessage = "Game ended for user inactivity"
             }
@@ -117,7 +117,10 @@ fun GameTimer(
                     .size(45.dp)
             ) {
                 // Start the circle timer animation
-                TimerAnimation(totalTime)
+                if(currentTime < totalTime) {
+                    // Start the circle timer animation
+                    TimerAnimation(totalTime - 1f)
+                }
                 // Contains the timer number which is counting down on lines 36-41
                 Text(
                     text = (String.format("%.0f", currentTime)).replace("-", ""),

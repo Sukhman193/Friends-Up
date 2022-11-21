@@ -13,7 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ca.finalfive.friendsup.composables.GameScreen
+import ca.finalfive.friendsup.composables.gamescreen.GameScreen
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 

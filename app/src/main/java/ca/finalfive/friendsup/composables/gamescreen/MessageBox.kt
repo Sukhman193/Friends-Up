@@ -1,4 +1,4 @@
-package ca.finalfive.friendsup.composables
+package ca.finalfive.friendsup.composables.gamescreen
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,14 +18,18 @@ import ca.finalfive.friendsup.viewmodels.GameViewModel
 /**
  * The MessageBox composable is the TextField for people to message in
  * on the bottom of the games
+ * @param gameViewModel viewModel for the game
+ * @param modifier additional modifiers for the text field
  */
 @Composable
-fun MessageBox(gameViewModel: GameViewModel, modifier: Modifier = Modifier) {
+fun MessageBox(
+    gameViewModel: GameViewModel,
+    modifier: Modifier = Modifier
+) {
     // Text string for the text field
     var text by remember {
         mutableStateOf("")
     }
-
     // Local context of the application
     val context = LocalContext.current
 
@@ -42,10 +46,11 @@ fun MessageBox(gameViewModel: GameViewModel, modifier: Modifier = Modifier) {
         },
         // Set the colors of the message box
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color(R.color.light_grey).copy(alpha = 0.8F),
-            focusedIndicatorColor = Color.Transparent,
-            textColor = colorResource(id = R.color.white)
+            textColor = colorResource(id = R.color.white),
+            backgroundColor = colorResource(R.color.light_grey).copy(alpha = 0.2F),
+            focusedIndicatorColor = Color.Transparent
         ),
+        // button of the message component
         trailingIcon = {
             SendButton {
                 // Send the message
