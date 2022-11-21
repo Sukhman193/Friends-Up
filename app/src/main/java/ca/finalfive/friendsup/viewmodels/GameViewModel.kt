@@ -279,10 +279,8 @@ class GameViewModel : ViewModel() {
      * @param gameOption option of the game that the user selected
      */
     fun handleAnswerGameOption(gameOption: GameQuestionOption) {
-        Log.d("TEST HANDLE", "handleAnswerGameOption ran OUTSIDE")
         // Check if the question has already been answered
         if (!this.questionAnswered) {
-            Log.d("TEST HANDLE", "handleAnswerGameOption ran")
             // Set the question answered variable to be true
             this.questionAnswered = true
             viewModelScope.launch {
