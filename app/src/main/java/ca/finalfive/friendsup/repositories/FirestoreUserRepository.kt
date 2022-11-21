@@ -1,5 +1,6 @@
 package ca.finalfive.friendsup.repositories
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -30,6 +31,11 @@ class FirestoreUserRepository() {
 
     // get the collection of the Users
     private val collection = firestore.collection(Constants.USERS)
+
+    // friend user which by default is null
+    var friend: User? by mutableStateOf(null)
+    // a boolean statement to see if the friend is found
+    var isFriendFound: Boolean? by mutableStateOf(false)
 
     // firestore user which by default is null
     var firestoreUser: User? by mutableStateOf(null)
@@ -87,7 +93,7 @@ class FirestoreUserRepository() {
         updatedUser: User
     ) {
         // updates the document with the user's id
-        collection.document(userId).update(
+        collection.document(userId).set(
             // maps the new info to the user's fields
             mapOf(
                 "username" to updatedUser.username,
@@ -95,7 +101,72 @@ class FirestoreUserRepository() {
                 "instagram" to updatedUser.instagram,
                 "phone" to updatedUser.phone,
                 "discord" to updatedUser.discord
-            )
+            ),
+            SetOptions.merge()
         ).await()
+    }
+
+    /**
+     * findFriendById - finds the friend of the user
+     * @param userId - id of the user's friend
+     */
+    suspend fun findFriendById(userId: String) {
+        // gets the user
+        val document = collection.document(userId)
+        // start a transaction
+        firestore.runTransaction { transaction ->
+            // Access to the friend's field
+            val snapshot = transaction.get(document)
+            // retrieve the user object
+            val userFound = snapshot.toObject<User>()
+            // update the friend
+            friend = userFound
+            // check to see if the user has been found
+            if(friend == null){
+                throw Exception("User Was Not Found")
+            }
+            // sets the isFriendFound to true
+            isFriendFound = true
+        }.await()
+
+    }
+
+    /**
+     * deleteFriend - deletes the friend from the user and vice versa
+     */
+    suspend fun deleteFriend() {
+        // if the friend is null throw an error
+        if (friend == null || isFriendFound == true) {
+            throw Exception("The Friend does not exist")
+        }
+        // if the user is null throw an error
+        if (firestoreUser == null){
+            throw Exception("The User has been deleted or destroyed")
+        }
+
+        // updated user object
+        val updateUser = firestoreUser!!
+        // updated friend object
+        val updateFriend = friend!!
+
+        // returns a list that does not have the user's id in it
+        friend?.friendList = updateFriend.friendList.filter {
+            !updateUser.email.startsWith("$it@")
+        }
+        // returns a list that does not have the friend's id in it
+        firestoreUser?.friendList = updateUser.friendList.filter {
+            !updateFriend.email.startsWith("$it@")
+        }
+
+        // the current user's id
+        val currentUserId = updateUser.email.replace("@gmail.com", "")
+        // the friend's id
+        val friendId = updateFriend.email.replace("@gmail.com", "")
+
+        // updates the friend's database
+        collection.document(friendId).set(updateFriend, SetOptions.merge()).await()
+        // updates the user's database
+        collection.document(currentUserId).set(updateUser, SetOptions.merge()).await()
+
     }
 }
