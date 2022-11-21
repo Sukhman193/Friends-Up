@@ -1,4 +1,4 @@
-package ca.finalfive.friendsup.screens
+package ca.finalfive.friendsup.screens.games
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding

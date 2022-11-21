@@ -2,7 +2,6 @@ package ca.finalfive.friendsup.viewmodels
 
 import android.accounts.NetworkErrorException
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -106,11 +105,12 @@ class GameViewModel : ViewModel() {
                 gameApolloRepository.joinGame(
                     gameMode = gameMode,
                 )
-                // TODO: Everything that needs to be handled by the game start goes here
                 // Set the game id
                 gameID = gameApolloRepository.gameID
                 // Set the savedUsername
                 savedUsername = gameApolloRepository.username
+                // this will never happen because the gameApolloRepository
+                // will throw an error beforehand
                 // If the game id is null than end the function
                 if (gameID == null) {
                     return@launch
@@ -136,6 +136,17 @@ class GameViewModel : ViewModel() {
      * @param content Content of the message
      */
     fun sendMessage(content: String, context: Context) {
+        // Game cannot be null here
+        if(game == null) {
+            return
+        }
+        // Get the icon for the messages
+        // So that it matches the user icon
+        game!!.members.map {
+            if(it.username == this.savedUsername) {
+                this.profilePicture = it.icon
+            }
+        }
         // Get instance for the validation
         val validationInstance = ValidationService.getInstance()
         // Error check the the message
@@ -153,18 +164,17 @@ class GameViewModel : ViewModel() {
         viewModelScope.launch {
             // When sending a message username and game will never be null
             // because they are being sent from within the game
-            if (savedUsername != null && game != null) {
-                // Call the repository to sent the message
-                gameFirestoreRepository.sendMessage(
-                    username = savedUsername!!,
-                    icon = profilePicture,
-                    content = content,
-                    gameID = gameID!!,
-                    gameMode = game!!.gameMode
-                )
-            } else {
-                Log.e("ERROR", "GameViewModel.SendMessage()")
+            if (savedUsername == null || game == null) {
+                return@launch
             }
+            // Call the repository to sent the message
+            gameFirestoreRepository.sendMessage(
+                username = savedUsername!!,
+                icon = profilePicture,
+                content = content,
+                gameID = gameID!!,
+                gameMode = game!!.gameMode
+            )
         }
     }
 
@@ -192,22 +202,19 @@ class GameViewModel : ViewModel() {
         viewModelScope.launch {
             // Username is always going to have a value since
             // it's assigned when the game is being created
-            if (savedUsername != null && tempGame != null) {
-                try {
-                    // Use the apollo server to remove the user
-                    gameApolloRepository.removeUser(
-                        username = savedUsername!!,
-                        gameMode = tempGame.gameMode
-                    )
-                    //  TODO: Everything that needs to be handled by the game ends goes here
+            if (savedUsername == null || tempGame == null) {
+                return@launch
+            }
 
-                } catch (error: Exception) {
-                    // In case of errors set the error message to be here
-                    errorMessage = error.message
-                }
-            } else {
-                // This should never occur
-                Log.e("ERROR", "GameViewModel.removeUserFromGame()")
+            try {
+                // Use the apollo server to remove the user
+                gameApolloRepository.removeUser(
+                    username = savedUsername!!,
+                    gameMode = tempGame.gameMode
+                )
+            } catch (error: Exception) {
+                // In case of errors set the error message to be here
+                errorMessage = error.message
             }
         }
     }
@@ -218,31 +225,30 @@ class GameViewModel : ViewModel() {
      */
     fun reportUser(reportReason: String) {
         // Set the create Room called to false
-        createGameRoomCalled = false
+        this.createGameRoomCalled = false
         // Set the report screen open to false
-        isReportScreenOpened = false
+        this.isReportScreenOpened = false
         // Create a temporary game and reset the game
         // for faster user interaction
         val tempGame = game
-        game = null
+        this.game = null
         viewModelScope.launch {
             // Check if the game is not null
             // In this page the game is never going to be null
-            if (tempGame != null) {
-                try {
-                    gameApolloRepository.reportUser(
-                        gameMode = tempGame.gameMode,
-                        reportReason = reportReason
-                    )
-                } catch (error: Exception) {
-                    // In case of errors set the error message to be here
-                    errorMessage = error.message
-                }
-                // Remove the user from the game
-                removeUserFromGame()
-            } else {
-                Log.e("ERROR", "GameViewModel.reportUser()")
+            if (tempGame == null) return@launch
+
+            try {
+                // Make the apollo request
+                gameApolloRepository.reportUser(
+                    gameMode = tempGame.gameMode,
+                    reportReason = reportReason
+                )
+            } catch (error: Exception) {
+                // In case of errors set the error message to be here
+                errorMessage = error.message
             }
+            // Remove the user from the game
+            removeUserFromGame()
         }
     }
 
@@ -279,13 +285,10 @@ class GameViewModel : ViewModel() {
                 try {
                     // call update user friend queue
                     gameApolloRepository.updateUserFriendQueue(game!!.gameMode)
-
                 } catch (error: java.lang.Exception) {
                     // In case of errors set the error message to be here
                     errorMessage = error.message
                 }
-            } else {
-                Log.e("ERROR", "GameViewModel.updateUserFriendQueue()")
             }
         }
     }
@@ -310,12 +313,8 @@ class GameViewModel : ViewModel() {
                         gameMode = game!!.gameMode,
                         gameOption = gameOption
                     )
-                } else {
-                    Log.e("ERROR", "GameViewModel.handleAnswerGameOption()")
-                }
+                } 
             }
-        } else {
-            Log.d("LLAMA", "Cannot change response")
         }
     }
 
@@ -324,18 +323,14 @@ class GameViewModel : ViewModel() {
      * This will route to the next question
      */
     fun handleGameProgress() {
-
         // Game should never be null when this function is called
-        if (game == null) {
-            return
-        }
+        if (game == null) return
         // Check if it's the last question that is being answered
         if (game!!.gameContent.size - 1 == game!!.gameProgress) {
             // end the game if the timer of the last question reaches 0
             this.endGame()
             return
         }
-
         // set the question answered to false
         this.questionAnswered = false
         viewModelScope.launch {

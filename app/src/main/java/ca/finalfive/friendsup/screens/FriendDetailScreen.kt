@@ -12,11 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.BackgroundImage
 import ca.finalfive.friendsup.composables.DropShadowText
@@ -24,10 +26,16 @@ import ca.finalfive.friendsup.composables.ScreenTitle
 import ca.finalfive.friendsup.composables.utils.FriendDetailCard
 import ca.finalfive.friendsup.models.FriendCardDetail
 import ca.finalfive.friendsup.models.User
+import ca.finalfive.friendsup.navigation.Route
 import ca.finalfive.friendsup.viewmodels.UserViewModel
 
+/**
+ * Friend detail screen which displays all the details of a friend
+ * @param userViewModel view model of the user
+ * @param friend friend to display the details of
+ */
 @Composable
-fun FriendDetailScreen(userViewModel: UserViewModel, friend: User) {
+fun FriendDetailScreen(userViewModel: UserViewModel, friend: User, navController: NavController) {
     // Make a list for the friends details
     var friendDetails = listOf(
         FriendCardDetail("SnapChat", friend.snapchat, R.drawable.snapchat_icon),
@@ -36,6 +44,7 @@ fun FriendDetailScreen(userViewModel: UserViewModel, friend: User) {
         FriendCardDetail("Phone Number", friend.phone, R.drawable.phone_icon),
     )
 
+    val context = LocalContext.current
     // filter out all the friends details that are not filled out
     friendDetails = friendDetails.filter { it.value != "" }
 
@@ -55,7 +64,7 @@ fun FriendDetailScreen(userViewModel: UserViewModel, friend: User) {
                 style = MaterialTheme.typography.h3,
                 fontSize = 45.sp,
                 modifier = Modifier
-                    .padding(vertical = 30.dp)
+                    .padding(30.dp)
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
@@ -69,14 +78,24 @@ fun FriendDetailScreen(userViewModel: UserViewModel, friend: User) {
                 friendDetails.forEach {
                     FriendDetailCard(friendCardDetail = it)
                 }
+                // If the list is empty show a message
+                if(friendDetails.isEmpty()) {
+                    Text(
+                        text = stringResource(id = R.string.friend_list_no_social_media),
+                        style = MaterialTheme.typography.h3,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(horizontal = 30.dp)
+                    )
+                }
             }
         }
 
         // Remove friend button
         Button(
             onClick = {
-                      // TODO: MAKE THE BELOW FUNCTION
-//                userViewModel.removeFriend(friend.username)
+                userViewModel.deleteFriend(context = context)
+                navController.navigate(Route.GameRoomScreen.route)
             },
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = colorResource(id = R.color.cancelRed)

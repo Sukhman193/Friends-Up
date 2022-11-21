@@ -1,10 +1,13 @@
 package ca.finalfive.friendsup.navigation
 
+import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
@@ -23,6 +26,7 @@ import ca.finalfive.friendsup.screens.*
 import ca.finalfive.friendsup.viewmodels.AuthViewModel
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 import ca.finalfive.friendsup.repositories.FirebaseAuthRepository
+import ca.finalfive.friendsup.screens.games.GameNavigator
 import ca.finalfive.friendsup.viewmodels.UserViewModel
 
 /**
@@ -85,6 +89,7 @@ fun Navigation(
     userViewModel: UserViewModel = viewModel(factory = UserViewModelFactory(FirestoreUserRepository()))
 ) {
 
+    val context: Context = LocalContext.current
     // Navigation controller
     val navController = rememberNavController()
 
@@ -119,49 +124,61 @@ fun Navigation(
         composable(
             route = Route.FriendsScreen.route,
         ) {
-            // Friends Screen with bottom navigation
-            NavigationContainer(navController = navController) {
-                FriendsScreen(
-                    navController = navController,
-                    friends = listOf(
-                        "Friend 1",
-                        "Friend 2",
-                        "Friend 3",
-                        "Friend 4",
-                        "Friend 5",
-                        "Friend 6",
-                        "Friend 7"
+            // Profile screen with bottom navigation
+            if (authViewModel.user != null) {
+                userViewModel.getUser(authViewModel.user!!.email!!.replace("@gmail.com", ""))
+            }
+            if (userViewModel.user != null) {
+                // Friends Screen with bottom navigation
+                NavigationContainer(navController = navController) {
+                    FriendsScreen(
+                        navController = navController,
+                        friends = userViewModel.user!!.friendList)
+                }
+            } else {
+                NavigationContainer(navController = navController) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(90.dp)
                     )
-                )
+                }
             }
         }
 
 
         // Navigation for the friends detail screen
         composable(
-            route = Route.FriendsScreen.route + "{${RouteArgs.USER_ID}}",
+            route = Route.FriendsScreen.route + "/{${RouteArgs.USER_ID}}",
             arguments = listOf(
                 navArgument(RouteArgs.USER_ID) {
                     type = NavType.StringType
                 }
             )
         ) { navBackStackEntry ->
-            /*
+            Log.d("LLAMA", "HERE")
             // Get the user id of the friend
             val userID = navBackStackEntry.arguments?.getString(RouteArgs.USER_ID)
+            // If the user id is null, than go back one screen
+            if(userID == null) {
+                navController.popBackStack()
+            }
+            val friendID = userID!!
             // Get the friend from the user
-            userViewModel.getFriend(userID)
-            var friend = userViewModel.friend
+            userViewModel.findFriendById(
+                userId = friendID,
+                context = context)
+            val friend = userViewModel.friend
             // Check if the friend has been found or not
-            val friendFound = userViewModel.friendFound
+            val friendFound = userViewModel.isFindingFriend
 
             // if the friend is not found than pop back a screen
-            if(friendFound == false) {
+            if(!friendFound) {
                 navController.popBackStack()
             }
 
             // if the friend is being found, display a progress bar
-            if(friendFound == null) {
+            if(friend == null) {
                 NavigationContainer(navController = navController) {
                     CircularProgressIndicator(
                         modifier = Modifier
@@ -173,10 +190,11 @@ fun Navigation(
             // If the friend is found than display the friend
                 FriendDetailScreen(
                     userViewModel = userViewModel,
-                    friend = friend!!
+                    friend = friend,
+                    navController = navController
                 )
             }
-            */
+
         }
 
 
@@ -280,25 +298,8 @@ fun Navigation(
                 gameViewModel.game?.members?.size == gameViewModel.game?.maxMembers &&
                 gameViewModel.game?.isGameEnded == false
             ) {
-                // Check which game they are playing
-                when (gameViewModel.game?.gameMode) {
-                    // Playing trivia game
-                    GameMode.TRIVIA -> {
-                        TriviaGameScreen(gameViewModel)
-                    }
-                    // Playing Prompt game
-                    GameMode.PROMPT -> {
-                        PromptGameScreen(gameViewModel)
-                    }
-                    // Playing Would you rather game
-                    GameMode.WOULD_YOU_RATHER -> {
-                        WYRGameScreen(gameViewModel)
-                    }
-                    // Playing Cards against humanity game
-                    GameMode.CARDS_AGAINST_HUMANITY -> {
-                        CAHScreen(gameViewModel)
-                    }
-                }
+                // Use the game navigator to direct to the proper game
+                GameNavigator(gameViewModel = gameViewModel)
                 // If the game has ended or a user leaves in the middle of the game display the
                 // end game screen
             } else if (gameViewModel.game?.isGameEnded == true &&

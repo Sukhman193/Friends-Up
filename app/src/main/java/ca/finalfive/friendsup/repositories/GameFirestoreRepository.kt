@@ -8,6 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.tasks.await
 import java.util.*
 
 /**
@@ -66,7 +67,7 @@ class GameFirestoreRepository {
      * @param gameID game id of the game
      * @param gameMode Game mode of the current game
      */
-    fun sendMessage(
+    suspend fun sendMessage(
         username: String,
         icon: String,
         content: String,
@@ -82,27 +83,22 @@ class GameFirestoreRepository {
             // Get the game snapshot
             val snapshot = transaction.get(docRef)
             // convert game to game object
-            val game: Game? = snapshot.toObject()
-            // Check if game is not null
-            // This is never going to be false
-            if (game != null) {
-                // get the chat list already there
-                val chatList: MutableList<Chat> = game.chatRoom.toMutableList()
-                // add the new chat to the list
-                chatList.add(
-                    Chat(
-                        id = UUID.randomUUID().toString(),
-                        sentBy = username,
-                        icon = icon,
-                        content = content,
-                    )
+            // Return if the game is null
+            val game: Game = snapshot.toObject() ?: return@runTransaction
+            // get the chat list already there
+            val chatList: MutableList<Chat> = game.chatRoom.toMutableList()
+            // add the new chat to the list
+            chatList.add(
+                Chat(
+                    id = UUID.randomUUID().toString(),
+                    sentBy = username,
+                    icon = icon,
+                    content = content,
                 )
-                // Update the document
-                transaction.update(docRef, "chatRoom", chatList.toList())
-            }
-            // Success
-            null
-        }
+            )
+            // Update the document
+            transaction.update(docRef, "chatRoom", chatList.toList())
+        }.await()
     }
 
     /**
@@ -112,7 +108,7 @@ class GameFirestoreRepository {
      * @param gameMode Game mode of the current game
      * @param gameOption game option's answer to add the user to
      */
-    fun sendAnswerSelected(
+    suspend fun sendAnswerSelected(
         username: String,
         gameID: String,
         gameMode: String,
@@ -146,7 +142,7 @@ class GameFirestoreRepository {
                 selectedBy
             // Update the document
             transaction.update(docRef, "gameContent", gameContentList)
-        }
+        }.await()
     }
 
     /**
@@ -155,7 +151,7 @@ class GameFirestoreRepository {
      * @param gameMode current game mode being played
      * @param gameID id of the current game
      */
-    fun handleGameProgress(gameProgress: Int, gameMode: String, gameID: String) {
+    suspend fun handleGameProgress(gameProgress: Int, gameMode: String, gameID: String) {
         // Get the collection name
         val collectionName = GameMode.getGameCollection(gameMode)
         // Get game document reference
@@ -169,8 +165,7 @@ class GameFirestoreRepository {
             // Check if game is not null
             // This is never going to be false
             transaction.update(docRef, "gameProgress", gameProgress)
-
-        }
+        }.await()
     }
 
     companion object {

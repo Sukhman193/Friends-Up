@@ -1,7 +1,10 @@
 package ca.finalfive.friendsup.composables.utils
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -10,7 +13,6 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.models.FriendCardDetail
@@ -18,6 +20,11 @@ import kotlinx.coroutines.delay
 
 // https://stackoverflow.com/questions/71985840/how-to-use-clipboard-service-in-jetpack-compose
 
+/**
+ * Friend detail card which will display the content of the
+ * details of the user's social media
+ * @param friendCardDetail content for the detail card
+ */
 @Composable
 fun FriendDetailCard(friendCardDetail: FriendCardDetail) {
     // mutable value for the icon, set to the copy icon

@@ -78,7 +78,6 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
      * @param gameMode Game mode selected for the game
      * @throws NetworkErrorException thrown if there is a network error like
      * no network connection
-     * @throws ApolloException for any errors received by the apollo graphql server
      */
     suspend fun removeUser(username: String, gameMode: String) {
         // Get the token
@@ -101,18 +100,12 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
                 if (response.errors?.get(0)?.message == "User token is invalid") {
                     this.token = null
                     this.removeUser(username, gameMode)
-                } else {
-                    // If there is any other type of error, throw the content of the error message
-                    throw ApolloException(response.errors?.get(0)?.message.toString())
                 }
                 // Return in case there is any type of errors
                 return
             }
-            // If the user is deleted successfully remove the user
-            if (response.data?.removeUser?.success == true) {
-                // Set game id to null
-                this.gameID = null
-            }
+            // Set game id to null
+            this.gameID = null
         }
     }
 
@@ -213,7 +206,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
                     this.updateUserFriendQueue(gameMode)
                 } else {
                     // throw any error received by the apollo server
-                    throw ApolloException(response.errors?.get(0)?.message.toString())
+                    throw ApolloException("Error connecting to the server")
                 }
             }
         }
@@ -253,7 +246,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
             // If instance is null create a new gameApolloRepository
             if (INSTANCE == null) {
                 val apolloClient = ApolloClient.Builder()
-                    .serverUrl("https://t8gqkrufr2.execute-api.us-west-1.amazonaws.com/dev/graphql")
+                    .serverUrl(" https://95a9-75-157-118-144.ngrok.io/dev/graphql")
                     .build()
                 INSTANCE = GameApolloRepository(apolloClient)
             }

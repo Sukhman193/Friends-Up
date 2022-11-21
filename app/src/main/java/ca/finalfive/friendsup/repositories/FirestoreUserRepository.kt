@@ -34,8 +34,6 @@ class FirestoreUserRepository() {
 
     // friend user which by default is null
     var friend: User? by mutableStateOf(null)
-    // a boolean statement to see if the friend is found
-    var isFriendFound: Boolean? by mutableStateOf(false)
 
     // firestore user which by default is null
     var firestoreUser: User? by mutableStateOf(null)
@@ -94,14 +92,7 @@ class FirestoreUserRepository() {
     ) {
         // updates the document with the user's id
         collection.document(userId).set(
-            // maps the new info to the user's fields
-            mapOf(
-                "username" to updatedUser.username,
-                "snapchat" to updatedUser.snapchat,
-                "instagram" to updatedUser.instagram,
-                "phone" to updatedUser.phone,
-                "discord" to updatedUser.discord
-            ),
+            updatedUser,
             SetOptions.merge()
         ).await()
     }
@@ -125,8 +116,6 @@ class FirestoreUserRepository() {
             if(friend == null){
                 throw Exception("User Was Not Found")
             }
-            // sets the isFriendFound to true
-            isFriendFound = true
         }.await()
 
     }
@@ -136,19 +125,17 @@ class FirestoreUserRepository() {
      */
     suspend fun deleteFriend() {
         // if the friend is null throw an error
-        if (friend == null || isFriendFound == true) {
+        if (friend == null) {
             throw Exception("The Friend does not exist")
         }
         // if the user is null throw an error
         if (firestoreUser == null){
             throw Exception("The User has been deleted or destroyed")
         }
-
         // updated user object
         val updateUser = firestoreUser!!
         // updated friend object
         val updateFriend = friend!!
-
         // returns a list that does not have the user's id in it
         friend?.friendList = updateFriend.friendList.filter {
             !updateUser.email.startsWith("$it@")
@@ -157,16 +144,13 @@ class FirestoreUserRepository() {
         firestoreUser?.friendList = updateUser.friendList.filter {
             !updateFriend.email.startsWith("$it@")
         }
-
         // the current user's id
         val currentUserId = updateUser.email.replace("@gmail.com", "")
         // the friend's id
         val friendId = updateFriend.email.replace("@gmail.com", "")
-
         // updates the friend's database
         collection.document(friendId).set(updateFriend, SetOptions.merge()).await()
         // updates the user's database
         collection.document(currentUserId).set(updateUser, SetOptions.merge()).await()
-
     }
 }

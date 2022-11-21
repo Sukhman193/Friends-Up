@@ -84,12 +84,12 @@ fun GameScreen(
     // arrange the MessageBox to the bottom
     Box (
         modifier = Modifier.fillMaxSize()
-            ) {
+    ) {
         // Display the messages
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                    // add padding for the space of the text box
+                // add padding for the space of the text box
                 .padding(bottom = 100.dp)
                 .imePadding()
                 .align(Alignment.BottomCenter)
@@ -110,10 +110,11 @@ fun GameScreen(
     Scaffold(
         // The bottom bar will be the bottom text box for sending messages
         bottomBar = {
-            BottomMessage(
+            MessageBox(
                 gameViewModel = gameViewModel,
                 requester = requester,
-                setKeyboardShown = setKeyboardShown
+                setKeyboardShown = setKeyboardShown,
+                localFocusManager = localFocusManager
             )
         },
         // The top bar will include the title of the game as well
@@ -194,26 +195,3 @@ fun Counter(
     }
 }
 
-/**
- * Message text box for the content
- * @param requester Focus requester for the keyboard
- * @param setKeyboardShown Set whether the key is shown or not
- */
-@Composable
-fun BottomMessage(
-    gameViewModel: GameViewModel,
-    requester: FocusRequester,
-    setKeyboardShown: (Boolean) -> Unit
-) {
-    Box(
-        modifier = Modifier
-            .padding(bottom = 12.dp)
-            .imePadding()
-    ) {
-        MessageBox(
-            gameViewModel = gameViewModel,
-            modifier = Modifier
-            .focusRequester(requester)
-            .onFocusChanged { setKeyboardShown(it.hasFocus) })
-    }
-}
