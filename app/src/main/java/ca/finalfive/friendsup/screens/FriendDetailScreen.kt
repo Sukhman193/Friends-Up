@@ -26,6 +26,11 @@ import ca.finalfive.friendsup.models.FriendCardDetail
 import ca.finalfive.friendsup.models.User
 import ca.finalfive.friendsup.viewmodels.UserViewModel
 
+/**
+ * Friend detail screen which displays all the details of a friend
+ * @param userViewModel view model of the user
+ * @param friend friend to display the details of
+ */
 @Composable
 fun FriendDetailScreen(userViewModel: UserViewModel, friend: User) {
     // Make a list for the friends details
