@@ -31,6 +31,12 @@ class FirestoreUserRepository() {
     // get the collection of the Users
     private val collection = firestore.collection(Constants.USERS)
 
+//    Val friend: User? by ....
+//    Val isFriendFound: boolean? by ...
+    val friend: User? by mutableStateOf(null)
+
+    val isFriendFound: Boolean? by mutableStateOf(false)
+
     // firestore user which by default is null
     var firestoreUser: User? by mutableStateOf(null)
 
@@ -97,5 +103,13 @@ class FirestoreUserRepository() {
                 "discord" to updatedUser.discord
             )
         ).await()
+    }
+
+    suspend fun findFriendById(userId: String){
+        firestoreUser?.friendList?.find { it == userId }
+    }
+
+    suspend fun deleteFriendById(userId: String){
+
     }
 }
