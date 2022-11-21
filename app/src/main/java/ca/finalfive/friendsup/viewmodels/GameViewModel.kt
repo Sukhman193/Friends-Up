@@ -2,7 +2,6 @@ package ca.finalfive.friendsup.viewmodels
 
 import android.accounts.NetworkErrorException
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -163,7 +162,6 @@ class GameViewModel : ViewModel() {
                     gameMode = game!!.gameMode
                 )
             } else {
-                Log.e("ERROR", "GameViewModel.SendMessage()")
             }
         }
     }
@@ -205,9 +203,6 @@ class GameViewModel : ViewModel() {
                     // In case of errors set the error message to be here
                     errorMessage = error.message
                 }
-            } else {
-                // This should never occur
-                Log.e("ERROR", "GameViewModel.removeUserFromGame()")
             }
         }
     }
@@ -240,8 +235,6 @@ class GameViewModel : ViewModel() {
                 }
                 // Remove the user from the game
                 removeUserFromGame()
-            } else {
-                Log.e("ERROR", "GameViewModel.reportUser()")
             }
         }
     }
@@ -284,8 +277,6 @@ class GameViewModel : ViewModel() {
                     // In case of errors set the error message to be here
                     errorMessage = error.message
                 }
-            } else {
-                Log.e("ERROR", "GameViewModel.updateUserFriendQueue()")
             }
         }
     }
@@ -310,12 +301,8 @@ class GameViewModel : ViewModel() {
                         gameMode = game!!.gameMode,
                         gameOption = gameOption
                     )
-                } else {
-                    Log.e("ERROR", "GameViewModel.handleAnswerGameOption()")
-                }
+                } 
             }
-        } else {
-            Log.d("LLAMA", "Cannot change response")
         }
     }
 
