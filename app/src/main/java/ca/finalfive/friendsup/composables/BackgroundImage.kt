@@ -11,12 +11,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import ca.finalfive.friendsup.R
 
+/**
+ * This component represents the background image
+ * @param showMoon boolean that represents whether the moon is
+ * displayed or not
+ */
 @Composable
-        /**
-         * This component represents the background image
-         * @param showMoon boolean that represents whether the moon is
-         * displayed or not
-         */
 fun BackgroundImage(showMoon: Boolean = false, darken: Boolean = false) {
     val image = if (showMoon) {
         // If moon is being shown
@@ -36,7 +36,9 @@ fun BackgroundImage(showMoon: Boolean = false, darken: Boolean = false) {
     }
 
     // Black background color
-    Box(modifier = Modifier.fillMaxSize().background(Color.Black))
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.Black))
     // Display background image that fills the entire screen
     Image(
         painter = image,

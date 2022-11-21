@@ -9,10 +9,8 @@ import androidx.lifecycle.viewModelScope
 import ca.finalfive.friendsup.models.User
 import ca.finalfive.friendsup.repositories.FirestoreUserRepository
 import ca.finalfive.friendsup.services.ValidationService
-
 import kotlinx.coroutines.launch
 import ca.finalfive.friendsup.helpers.Error
-
 
 /**
  * UserViewModel - stores the and handles the user's functionality
@@ -55,14 +53,38 @@ class UserViewModel(private val userRepository: FirestoreUserRepository): ViewMo
         // Instance of Validation Service
         val validationService = ValidationService.getInstance()
         try {
-            validationService.isPhoneNumber(updatedUser.phone)
-        }catch (e : Error.ValidationException){
-            e.makeToast(context = context)
-        }
+            // validating the phone number
+            if (updatedUser.phone != ""){
+                validationService.isPhoneNumber(updatedUser.phone)
+            }
 
+            // validating the instagram
+            if (updatedUser.instagram != ""){
+                validationService.isInstagramValid(updatedUser.instagram)
+            }
+
+            // validating the snapchat
+            if (updatedUser.snapchat != ""){
+                validationService.isSnapchatValid(updatedUser.snapchat)
+            }
+
+            // validating the username
+            validationService.isUsernameValid(updatedUser.username)
+
+            // validating the discord
+            if (updatedUser.discord != ""){
+                validationService.isDiscordValid(updatedUser.discord)
+            }
+        }catch (e : Error.ValidationException){
+            // make the toast and let the user know the message
+            e.makeToast(context = context)
+            return
+        }
+        // if everything matches it will update the database
         viewModelScope.launch {
             userRepository.updateUserByID(userId, updatedUser)
             user = userRepository.firestoreUser
         }
+
     }
 }

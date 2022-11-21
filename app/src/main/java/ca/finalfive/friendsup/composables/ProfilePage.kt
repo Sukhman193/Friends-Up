@@ -21,10 +21,9 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ca.finalfive.friendsup.composables.utils.CustomTextField
 import ca.finalfive.friendsup.R
+import ca.finalfive.friendsup.composables.utils.CustomTextField
 import ca.finalfive.friendsup.models.User
-import ca.finalfive.friendsup.viewmodels.AuthViewModel
 import ca.finalfive.friendsup.viewmodels.UserViewModel
 
 /**
@@ -40,7 +39,6 @@ fun ProfilePage(userViewModel: UserViewModel) {
     }
     // States of keyboard
     var isKeyboardShown by remember { mutableStateOf(false) }
-
     // username of the user && the setter to change the username
     val (usernameText, setUsernameText) = rememberSaveable {
         if (userViewModel.user != null) {
@@ -163,12 +161,12 @@ fun ProfilePage(userViewModel: UserViewModel) {
         ScreenTitle(
             title =
             if (isKeyboardShown) {
-                stringResource(id = R.string.edit_title)
+                R.string.edit_title
             }
             // if the keyboard is disabled then show the title as Profile
             else {
-                stringResource(id = R.string.profile_title)
-            },
+                R.string.profile_title
+            }
         )
         // if the keyboard is disabled then show the description of the profile page
         if (!isKeyboardShown) {
@@ -248,7 +246,6 @@ fun ProfilePage(userViewModel: UserViewModel) {
                     .onFocusChanged { isKeyboardShown = it.hasFocus }
                     .fillMaxWidth()
             )
-
             // if the user changes any of the fields which are not equal to the database
             // it will popup the save or cancel buttons
             if (

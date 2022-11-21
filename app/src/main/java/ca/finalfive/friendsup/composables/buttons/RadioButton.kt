@@ -15,17 +15,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 
+/**
+ * Custom Radio Button
+ * @param text Text of the radio button
+ * @param selectedOption currently selected option of the radio buttons
+ * @param setOptionSelected change the currently selected option to the newly selected option
+ */
 @Composable
-        /**
-         * Custom Radio Button
-         * @param text Text of the radio button
-         * @param selectedOption currently selected option of the radio buttons
-         * @param setOptionSelected change the currently selected option to the newly selected option
-         */
 fun CustomRadioButton(
     text: Int,
     selectedOption: Int,
-    setOptionSelected: (Int)->Unit) {
+    setOptionSelected: (Int) -> Unit
+) {
     // Container for the radio buttons
     Row(
         modifier = Modifier

@@ -1,11 +1,5 @@
 package ca.finalfive.friendsup.models
 
-import com.google.type.DateTime
-import java.time.Instant
-import java.time.Instant.now
-import java.time.LocalDateTime
-import java.util.*
-
 /**
  * Chat of the users sent during the gameplay
  * @param sentBy username of the user who sent the message

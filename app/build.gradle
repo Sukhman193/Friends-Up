@@ -81,6 +81,8 @@ dependencies {
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
     // Jetpack Compose Integration
     implementation "androidx.navigation:navigation-compose:$nav_version"
+    // LottieSDK Integration
+    implementation "com.airbnb.android:lottie-compose:$lottieVersion"
 
     // Apollo graphql runtime dependency
     implementation("com.apollographql.apollo3:apollo-runtime:3.7.0")

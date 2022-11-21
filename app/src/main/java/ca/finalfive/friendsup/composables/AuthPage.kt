@@ -22,7 +22,6 @@ import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.models.User
 import ca.finalfive.friendsup.navigation.Route
 import ca.finalfive.friendsup.viewmodels.AuthViewModel
-import ca.finalfive.friendsup.viewmodels.GameViewModel
 import ca.finalfive.friendsup.viewmodels.UserViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
@@ -44,14 +43,14 @@ fun AuthPage(
     authViewModel: AuthViewModel,
     navController: NavController,
     userViewModel: UserViewModel
-){
+) {
     // local context
     val context = LocalContext.current
     // Firebase Client Token
     val token = stringResource(R.string.default_web_client_id)
+    //val token = stringResource(R.string.default_web_client_id)
     // Coroutine Scope
     val scope = rememberCoroutineScope()
-
     // The Google Sign-in Launcher
     val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
         try {
@@ -75,7 +74,7 @@ fun AuthPage(
                     )
                     // Route to the Game Screen if the sign in is successful
                     navController.navigate(Route.GameRoomScreen.route)
-                }catch (error: FirebaseAuthInvalidUserException) {
+                } catch (error: FirebaseAuthInvalidUserException) {
                     Toast.makeText(context, error.message.toString(), Toast.LENGTH_SHORT).show()
                 }
             }
@@ -84,6 +83,7 @@ fun AuthPage(
             Toast.makeText(context, "Authentication Failed", Toast.LENGTH_SHORT).show()
         }
     }
+
     // Container for the page
     Box {
         // Add Image background containing the moon
@@ -97,7 +97,7 @@ fun AuthPage(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Title of the page
-            ScreenTitle(title = stringResource(id = R.string.app_name))
+            ScreenTitle(title = R.string.app_name)
             // Description of the app
             Text(
                 text = stringResource(id = R.string.authentication_description),
@@ -117,5 +117,4 @@ fun AuthPage(
             )
         }
     }
-
 }

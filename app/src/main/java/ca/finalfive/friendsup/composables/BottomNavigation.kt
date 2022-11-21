@@ -17,7 +17,10 @@ import ca.finalfive.friendsup.navigation.BottomNavItem
 import ca.finalfive.friendsup.ui.theme.BottomNavBackgroundColor
 import ca.finalfive.friendsup.ui.theme.BottomNavSelectedColor
 
-
+/**
+ * Bottom navigation component for the application
+ * @param navController Navigation controller for the application
+ */
 @Composable
 fun BottomNavigation(navController: NavController) {
 
@@ -36,7 +39,7 @@ fun BottomNavigation(navController: NavController) {
         BottomNavItem.Profile
     )
 
-    //  https://johncodeos.com/how-to-create-bottom-navigation-bar-with-jetpack-compose/
+    // https://johncodeos.com/how-to-create-bottom-navigation-bar-with-jetpack-compose/
     // Bottom navigation
     BottomNavigation(
         modifier = Modifier.height(67.dp)
@@ -46,7 +49,7 @@ fun BottomNavigation(navController: NavController) {
             // Check if the current navigation item is selected or not
             val selected = currentRoute?.startsWith(item.route) ?: false
             // Background color for the navigation selection
-            val backgroundColor = if(selected) {
+            val backgroundColor = if (selected) {
                 BottomNavSelectedColor
             } else {
                 BottomNavBackgroundColor
@@ -78,7 +81,6 @@ fun BottomNavigation(navController: NavController) {
                     navController.navigate(item.route)
                 }
             )
-
         }
     }
 }

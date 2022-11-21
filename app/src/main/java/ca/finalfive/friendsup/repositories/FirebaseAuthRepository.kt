@@ -20,7 +20,7 @@ class FirebaseAuthRepository() {
     // Google Sign-in Client variable
     private lateinit var googleSignInClient: GoogleSignInClient
     // Firebase Authentication Instance
-    var auth = FirebaseAuth.getInstance()
+    private var auth = FirebaseAuth.getInstance()
 
     /**
      * Sign-In with Google function
