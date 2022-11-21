@@ -61,26 +61,24 @@ fun AuthPage(
             // the Google Authentication credentials
             val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
             scope.launch {
-                try {
-                    // this async Firebase Function will use the credentials to sign in and returns the result
-                    val authResult = Firebase.auth.signInWithCredential(credential).await()
-                    authViewModel.user = authResult.user
-                    // Adding the user with the user's email and its default username to the database
-                    userViewModel.addUser(
-                        User(
-                            email = authResult.user?.email!!,
-                            username = authResult.user?.email!!.replace("@gmail.com", "")
-                        ),
-                    )
-                    // Route to the Game Screen if the sign in is successful
-                    navController.navigate(Route.GameRoomScreen.route)
-                } catch (error: FirebaseAuthInvalidUserException) {
-                    Toast.makeText(context, error.message.toString(), Toast.LENGTH_SHORT).show()
-                }
+                // this async Firebase Function will use the credentials to sign in and returns the result
+                val authResult = Firebase.auth.signInWithCredential(credential).await()
+                authViewModel.user = authResult.user
+                // Adding the user with the user's email and its default username to the database
+                userViewModel.addUser(
+                    User(
+                        email = authResult.user?.email!!,
+                        username = authResult.user?.email!!.replace("@gmail.com", "")
+                    ),
+                )
+                // Route to the Game Screen if the sign in is successful
+                navController.navigate(Route.GameRoomScreen.route)
             }
         } catch (e: ApiException) {
             // make a toast to notify the user that authentication was not successful
             Toast.makeText(context, "Authentication Failed", Toast.LENGTH_SHORT).show()
+        } catch (error: FirebaseAuthInvalidUserException) {
+            Toast.makeText(context, error.message.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 
