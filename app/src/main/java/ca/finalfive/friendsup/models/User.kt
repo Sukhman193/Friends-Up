@@ -23,7 +23,7 @@ data class User(
     // phone number of the user
     val phone: String = "",
     // list of user's friends
-    val friendList: List<String> = listOf()
+    var friendList: List<String> = listOf()
 )
 {
     // Constructor required by the firestore deserialization

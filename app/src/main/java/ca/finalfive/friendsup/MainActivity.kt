@@ -18,7 +18,6 @@ import ca.finalfive.friendsup.models.FriendCardDetail
 import ca.finalfive.friendsup.navigation.Navigation
 import ca.finalfive.friendsup.screens.FriendDetailScreen
 import ca.finalfive.friendsup.ui.theme.StrangerCommonsTheme
-import ca.finalfive.friendsup.viewmodels.AuthViewModel
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 import kotlinx.coroutines.delay
 
@@ -35,9 +34,7 @@ class MainActivity : ComponentActivity() {
 
         // initialize game view model
         gameViewModel = GameViewModel()
-        // creating an instance of authViewModel
 
-        val authViewModel = AuthViewModel()
         setContent {
             // Every time there is an error message, set the error message to be null
             LaunchedEffect(key1 = gameViewModel.errorMessage) {
@@ -69,7 +66,6 @@ class MainActivity : ComponentActivity() {
                     BackgroundImage()
                     Navigation(
                         gameViewModel = gameViewModel,
-                        authViewModel = authViewModel
                     )
                 }
             }

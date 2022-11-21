@@ -117,7 +117,10 @@ fun GameTimer(
                     .size(45.dp)
             ) {
                 // Start the circle timer animation
-                TimerAnimation(totalTime)
+                if(currentTime < totalTime) {
+                    // Start the circle timer animation
+                    TimerAnimation(totalTime - 1f)
+                }
                 // Contains the timer number which is counting down on lines 36-41
                 Text(
                     text = (String.format("%.0f", currentTime)).replace("-", ""),

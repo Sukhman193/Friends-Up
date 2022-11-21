@@ -25,6 +25,7 @@ class Error {
      * @param reason - The reason of the Error
      */
     class ValidationException(private val reason: String): Exception() {
+
         // Making a toast to let the user know something went wrong!!
         fun makeToast(context: Context){
             Toast.makeText(context, reason, Toast.LENGTH_SHORT).show()

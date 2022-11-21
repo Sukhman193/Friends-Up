@@ -254,7 +254,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
             if (INSTANCE == null) {
                 val apolloClient = ApolloClient.Builder()
                     // TODO: Change the url below
-                    .serverUrl("https://t8gqkrufr2.execute-api.us-west-1.amazonaws.com/dev/graphql")
+                    .serverUrl("https://72c8-75-157-118-144.ngrok.io/dev/graphql")
                     .build()
                 INSTANCE = GameApolloRepository(apolloClient)
             }
