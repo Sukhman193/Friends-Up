@@ -60,8 +60,9 @@ fun GameScreen(
         // The bottom bar will be the bottom text box for sending messages
         bottomBar = {
             BottomMessage(
-                requester,
-                setKeyboardShown = setKeyboardShown
+                requester = requester,
+                setKeyboardShown = setKeyboardShown,
+                gameViewModel = gameViewModel
             )
         },
         // The top bar will include the title of the game as well
@@ -149,6 +150,7 @@ fun Counter(
  */
 @Composable
 fun BottomMessage(
+    gameViewModel: GameViewModel,
     requester: FocusRequester,
     setKeyboardShown: (Boolean) -> Unit
 ) {
@@ -157,7 +159,9 @@ fun BottomMessage(
             .padding(bottom = 12.dp)
             .imePadding()
     ) {
-        MessageBox(modifier = Modifier
+        MessageBox(
+            gameViewModel = gameViewModel,
+            modifier = Modifier
             .focusRequester(requester)
             .onFocusChanged { setKeyboardShown(it.hasFocus) })
     }

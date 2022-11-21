@@ -1,5 +1,7 @@
 package ca.finalfive.friendsup.models
 
+// https://firebase.google.com/docs/firestore/manage-data/add-data?hl=en&authuser=0
+
 /**
  * Game model for all the different games
  * @param id Id of the game
@@ -33,6 +35,7 @@ data class Game(
     /**
      * Boolean which defines whether the game has started or not
      */
+    @field:JvmField
     var isGameStarted: Boolean = false,
     // Cannot use Number because firebase does not support deserialization
     /**
@@ -46,6 +49,7 @@ data class Game(
     /**
      * States whether the game has ended or not
      */
+    @field:JvmField
     var isGameEnded: Boolean = false,
     /**
      * Friends added to the friendList queue

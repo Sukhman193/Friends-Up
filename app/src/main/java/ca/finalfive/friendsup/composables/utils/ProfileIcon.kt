@@ -10,6 +10,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 
+/**
+ * Display the profile icons on the game
+ * @param imageUrl url for the image to display
+ */
 @Composable
 fun ProfileIcon(imageUrl: String) {
     // image of the user
@@ -25,6 +29,6 @@ fun ProfileIcon(imageUrl: String) {
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop,
-            )
+        )
     }
 }

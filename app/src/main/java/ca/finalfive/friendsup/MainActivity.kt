@@ -13,7 +13,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import ca.finalfive.friendsup.composables.BackgroundImage
+import ca.finalfive.friendsup.composables.utils.FriendDetailCard
+import ca.finalfive.friendsup.models.FriendCardDetail
 import ca.finalfive.friendsup.navigation.Navigation
+import ca.finalfive.friendsup.screens.FriendDetailScreen
 import ca.finalfive.friendsup.ui.theme.StrangerCommonsTheme
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 import kotlinx.coroutines.delay

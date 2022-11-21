@@ -1,17 +1,19 @@
 package ca.finalfive.friendsup.viewmodels
 
 import android.accounts.NetworkErrorException
-import android.util.Log
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ca.finalfive.friendsup.helpers.Error
 import ca.finalfive.friendsup.models.Game
 import ca.finalfive.friendsup.models.GameMode
 import ca.finalfive.friendsup.models.GameQuestionOption
 import ca.finalfive.friendsup.repositories.GameApolloRepository
 import ca.finalfive.friendsup.repositories.GameFirestoreRepository
+import ca.finalfive.friendsup.services.ValidationService
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -132,8 +134,21 @@ class GameViewModel : ViewModel() {
      * Handle sending a message to the user
      * @param content Content of the message
      */
-    fun sendMessage(content: String) {
-        // TODO: ERROR CHECKING FOR THE MESSAGE TO SEND
+    fun sendMessage(content: String, context: Context) {
+        // Get instance for the validation
+        val validationInstance = ValidationService.getInstance()
+        // Error check the the message
+        try {
+            // Validate the text
+            validationInstance.isMessageValid(content)
+        } catch (e: Error.ValidationException) {
+            // In case of error, display the error to the user
+            e.makeToast(context)
+            // end the function
+            return
+        }
+
+        // If no errors occurred send the message
         viewModelScope.launch {
             // When sending a message username and game will never be null
             // because they are being sent from within the game
@@ -147,7 +162,6 @@ class GameViewModel : ViewModel() {
                     gameMode = game!!.gameMode
                 )
             } else {
-                Log.e("ERROR", "GameViewModel.SendMessage()")
             }
         }
     }
@@ -189,9 +203,6 @@ class GameViewModel : ViewModel() {
                     // In case of errors set the error message to be here
                     errorMessage = error.message
                 }
-            } else {
-                // This should never occur
-                Log.e("ERROR", "GameViewModel.removeUserFromGame()")
             }
         }
     }
@@ -224,8 +235,6 @@ class GameViewModel : ViewModel() {
                 }
                 // Remove the user from the game
                 removeUserFromGame()
-            } else {
-                Log.e("ERROR", "GameViewModel.reportUser()")
             }
         }
     }
@@ -268,8 +277,6 @@ class GameViewModel : ViewModel() {
                     // In case of errors set the error message to be here
                     errorMessage = error.message
                 }
-            } else {
-                Log.e("ERROR", "GameViewModel.updateUserFriendQueue()")
             }
         }
     }
@@ -294,12 +301,8 @@ class GameViewModel : ViewModel() {
                         gameMode = game!!.gameMode,
                         gameOption = gameOption
                     )
-                } else {
-                    Log.e("ERROR", "GameViewModel.handleAnswerGameOption()")
-                }
+                } 
             }
-        } else {
-            Log.d("LLAMA", "Cannot change response")
         }
     }
 
