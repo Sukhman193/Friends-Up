@@ -6,125 +6,102 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.GameScreen
+import ca.finalfive.friendsup.composables.cah.WhiteCard
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
+
+/**
+ * Screen for the CAH game
+ * @param gameViewModel game viewModel for the application
+ */
 @Composable
 fun CAHScreen(gameViewModel: GameViewModel) {
-    // Game being played
-    val game = gameViewModel.game!!
-    // Index of the game being played
-    val currentGameIndex = game.gameProgress
-    // Question of the current trivia being played
-    val blackCard = game.gameContent[currentGameIndex].mainQuestion
-    // Answers of the current trivia being played
-    val whiteCards = game.gameContent[currentGameIndex].questionOptions
+    if(gameViewModel.game == null) {
+        return
+    }
 
+    // Game being played
+    var game by remember {
+        mutableStateOf(gameViewModel.game!!)
+    }
+    // Index of the game being played
+    var currentGameIndex by remember {
+        mutableStateOf(game.gameProgress)
+    }
+    // Question of the current trivia being played
+    var blackCard by remember {
+        mutableStateOf(game.gameContent[currentGameIndex].mainQuestion)
+    }
+
+    // Every time the game progress changes update the data
+    LaunchedEffect(key1 = gameViewModel.game?.gameProgress) {
+        // update the game
+        game = gameViewModel.game!!
+        // update the current index
+        currentGameIndex = game.gameProgress
+        // Update the black card
+        blackCard = game.gameContent[currentGameIndex].mainQuestion
+        // set the question answered to false
+        gameViewModel.questionAnswered = false
+    }
+
+    // Container of the screen
     GameScreen(
         gameTitle = R.string.game_cards_against_humanity_title_short,
         gameType = R.string.game_cards_against_humanity_type,
         titleFontSize = 60.sp,
         gameViewModel = gameViewModel,
-        gameTimer = 10f
-    )
-    {
+        gameTimer = 15f
+    ) {
+        // Container of the game playing area
         Box(
             modifier = Modifier
                 .padding(20.dp)
                 .fillMaxWidth()
                 .height(400.dp)
         ) {
-
-            //answer card #1 -> top left of screen
-            Card(
-                modifier = Modifier
-                    .height(175.dp)
-                    .width(135.dp)
-                    .align(Alignment.TopStart)
-                    .verticalScroll(rememberScrollState()),
-                shape = RoundedCornerShape(8.dp),
-                backgroundColor = colorResource(id = R.color.white),
-                elevation = 10.dp
-            ) {
-                Text(
-                    text = whiteCards[0].optionText,
-                    modifier = Modifier.padding(20.dp),
-                    color = Color.Black,
-                    fontSize = 15.sp
-                )
-            }
-
-            //answer card #2 -> top right of screen
-            Card(
-                modifier = Modifier
-                    .height(175.dp)
-                    .width(135.dp)
-                    .align(Alignment.TopEnd)
-                    .verticalScroll(rememberScrollState()),
-
-                shape = RoundedCornerShape(8.dp),
-                backgroundColor = colorResource(id = R.color.white),
-                elevation = 10.dp
-            ) {
-                Text(
-                    text = whiteCards[1].optionText,
-                    modifier = Modifier.padding(20.dp),
-                    color = Color.Black,
-                    fontSize = 15.sp
-                )
-            }
-
-            //answer card #3 -> bottom left of screen
-            Card(
-                modifier = Modifier
-                    .height(175.dp)
-                    .width(135.dp)
-                    .align(Alignment.BottomStart)
-                    .verticalScroll(rememberScrollState()),
-                shape = RoundedCornerShape(8.dp),
-                backgroundColor = colorResource(id = R.color.white),
-                elevation = 10.dp
-            ) {
-                Text(
-                    text = whiteCards[2].optionText,
-                    modifier = Modifier.padding(20.dp),
-                    color = Color.Black,
-                    fontSize = 15.sp
-                )
-            }
-
-            //answer card #4 -> bottom right of screen
-            Card(
-                modifier = Modifier
-                    .height(175.dp)
-                    .width(135.dp)
-                    .align(Alignment.BottomEnd)
-                    .verticalScroll(rememberScrollState()),
-                shape = RoundedCornerShape(8.dp),
-                backgroundColor = colorResource(id = R.color.white),
-                elevation = 10.dp,
-            ) {
-                Text(
-                    text = whiteCards[3].optionText,
-                    modifier = Modifier.padding(20.dp),
-                    color = Color.Black,
-                    fontSize = 15.sp
-                )
-            }
+            // Add the first white card
+            WhiteCard(
+                gameViewModel = gameViewModel,
+                currentIndex = 0,
+                align = Alignment.TopStart,
+                currentGameIndex = currentGameIndex
+            )
+            // Add the second white card
+            WhiteCard(
+                gameViewModel = gameViewModel,
+                currentIndex = 1,
+                align = Alignment.TopEnd,
+                currentGameIndex = currentGameIndex
+            )
+            // Add the third white card
+            WhiteCard(
+                gameViewModel = gameViewModel,
+                currentIndex = 2,
+                align = Alignment.BottomStart,
+                currentGameIndex = currentGameIndex
+            )
+            // Add the fourth white card
+            WhiteCard(
+                gameViewModel = gameViewModel,
+                currentIndex = 3,
+                align = Alignment.BottomEnd,
+                currentGameIndex = currentGameIndex
+            )
 
             //the black question card that will display in the middle
             Card(
                 modifier = Modifier
-                    .zIndex(100F)
+                    .zIndex(100f)
                     .align(Alignment.Center)
                     .height(175.dp)
                     .width(120.dp)
@@ -133,6 +110,7 @@ fun CAHScreen(gameViewModel: GameViewModel) {
                 backgroundColor = colorResource(id = R.color.black),
                 elevation = 10.dp
             ) {
+                // Content of the white card
                 Text(
                     text = blackCard,
                     color = colorResource(id = R.color.white),
