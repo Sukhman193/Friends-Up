@@ -6,12 +6,12 @@ import ca.finalfive.friendsup.repositories.FirebaseAuthRepository
 import ca.finalfive.friendsup.viewmodels.AuthViewModel
 
 /**
- * UserViewModelFactory - factorize the userViewModel
- * @param userRepository - an instance of the FirestoreUserRepository
+ * AuthViewModelFactory - factorize the authRepository
+ * @param authRepository - an instance of the FirebaseAuthRepository
  */
 class AuthViewModelFactory(private val authRepository: FirebaseAuthRepository): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        // returns the userviewmodel instance
+        // returns the authviewmodel instance
         if (modelClass.isAssignableFrom(AuthViewModel::class.java)) {
             return AuthViewModel(authRepository) as T;
         }
