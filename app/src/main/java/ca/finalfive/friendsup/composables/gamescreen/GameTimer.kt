@@ -62,12 +62,12 @@ fun GameTimer(
                 answeredQuestion += it.selectedBy.size
             }
             // if the game has options and not all the users responded, end the game
-            if(answeredQuestion != game.members.size && questionOptions.isNotEmpty()) {
+            if (answeredQuestion != game.members.size && questionOptions.isNotEmpty()) {
                 // end the game
                 gameViewModel.errorMessage = "Game ended for user inactivity"
             }
             // allow only one user to progress
-            if(gameViewModel.savedUsername != game.members[0].username) {
+            if (gameViewModel.savedUsername != game.members[0].username) {
                 return@LaunchedEffect
             }
             // Go to the next question
@@ -117,7 +117,7 @@ fun GameTimer(
                     .size(45.dp)
             ) {
                 // Start the circle timer animation
-                if(currentTime < totalTime) {
+                if (currentTime < totalTime) {
                     // Start the circle timer animation
                     TimerAnimation(totalTime - 1f)
                 }

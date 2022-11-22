@@ -24,8 +24,7 @@ data class User(
     val phone: String = "",
     // list of user's friends
     var friendList: List<String> = listOf()
-)
-{
+) {
     // Constructor required by the firestore deserialization
-    constructor(): this("")
+    constructor() : this("")
 }

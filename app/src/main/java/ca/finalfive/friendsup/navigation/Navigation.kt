@@ -1,7 +1,6 @@
 package ca.finalfive.friendsup.navigation
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
@@ -17,16 +16,15 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import ca.finalfive.friendsup.R
-import ca.finalfive.friendsup.composables.NavigationContainer
+import ca.finalfive.friendsup.composables.navigation.NavigationContainer
 import ca.finalfive.friendsup.factories.AuthViewModelFactory
 import ca.finalfive.friendsup.factories.UserViewModelFactory
-import ca.finalfive.friendsup.models.GameMode
+import ca.finalfive.friendsup.repositories.FirebaseAuthRepository
 import ca.finalfive.friendsup.repositories.FirestoreUserRepository
 import ca.finalfive.friendsup.screens.*
+import ca.finalfive.friendsup.screens.games.GameNavigator
 import ca.finalfive.friendsup.viewmodels.AuthViewModel
 import ca.finalfive.friendsup.viewmodels.GameViewModel
-import ca.finalfive.friendsup.repositories.FirebaseAuthRepository
-import ca.finalfive.friendsup.screens.games.GameNavigator
 import ca.finalfive.friendsup.viewmodels.UserViewModel
 
 /**
@@ -124,18 +122,17 @@ fun Navigation(
         composable(
             route = Route.FriendsScreen.route,
         ) {
-            // Profile screen with bottom navigation
-            if (authViewModel.user != null) {
-                userViewModel.getUser(authViewModel.user!!.email!!.replace("@gmail.com", ""))
+            // User must always be authenticated
+            if (authViewModel.user == null) {
+                navController.popBackStack()
             }
-            if (userViewModel.user != null) {
-                // Friends Screen with bottom navigation
-                NavigationContainer(navController = navController) {
-                    FriendsScreen(
-                        navController = navController,
-                        friends = userViewModel.user!!.friendList)
-                }
-            } else {
+            // get the user information
+            userViewModel.getUser(
+                authViewModel.user!!.email!!.replace("@gmail.com", ""),
+                context = context
+            )
+            // if the user is null display a progress bar
+            if (userViewModel.user == null) {
                 NavigationContainer(navController = navController) {
                     CircularProgressIndicator(
                         modifier = Modifier
@@ -143,9 +140,17 @@ fun Navigation(
                             .padding(90.dp)
                     )
                 }
+
+            } else {
+                // Friends Screen with bottom navigation
+                NavigationContainer(navController = navController) {
+                    FriendsScreen(
+                        navController = navController,
+                        friends = userViewModel.user!!.friendList
+                    )
+                }
             }
         }
-
 
         // Navigation for the friends detail screen
         composable(
@@ -156,29 +161,29 @@ fun Navigation(
                 }
             )
         ) { navBackStackEntry ->
-            Log.d("LLAMA", "HERE")
             // Get the user id of the friend
             val userID = navBackStackEntry.arguments?.getString(RouteArgs.USER_ID)
             // If the user id is null, than go back one screen
-            if(userID == null) {
+            if (userID == null) {
                 navController.popBackStack()
             }
             val friendID = userID!!
             // Get the friend from the user
             userViewModel.findFriendById(
                 userId = friendID,
-                context = context)
+                context = context
+            )
+            // Get the friend
             val friend = userViewModel.friend
             // Check if the friend has been found or not
             val friendFound = userViewModel.isFindingFriend
 
             // if the friend is not found than pop back a screen
-            if(!friendFound) {
+            if (!friendFound) {
                 navController.popBackStack()
             }
-
             // if the friend is being found, display a progress bar
-            if(friend == null) {
+            if (friend == null) {
                 NavigationContainer(navController = navController) {
                     CircularProgressIndicator(
                         modifier = Modifier
@@ -187,7 +192,7 @@ fun Navigation(
                     )
                 }
             } else {
-            // If the friend is found than display the friend
+                // If the friend is found than display the friend
                 FriendDetailScreen(
                     userViewModel = userViewModel,
                     friend = friend,
@@ -203,22 +208,29 @@ fun Navigation(
             route = Route.ProfileScreen.route,
         ) {
             // Profile screen with bottom navigation
-            if (authViewModel.user != null) {
-                userViewModel.getUser(authViewModel.user!!.email!!.replace("@gmail.com", ""))
+            // User should always be authenticated when they are in the app
+            if (authViewModel.user == null) {
+                navController.popBackStack()
             }
-            if (userViewModel.user != null) {
-                // Profile screen with bottom navigation
-                NavigationContainer(navController = navController) {
-                    ProfileScreen(
-                        userViewModel = userViewModel
-                    )
-                }
-            } else {
+            // Get the user from the database
+            userViewModel.getUser(
+                authViewModel.user!!.email!!.replace("@gmail.com", ""),
+                context = context
+            )
+            // if the user is not found show a progress bar
+            if (userViewModel.user == null) {
                 NavigationContainer(navController = navController) {
                     CircularProgressIndicator(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(90.dp)
+                    )
+                }
+            } else {
+                // Profile screen with bottom navigation
+                NavigationContainer(navController = navController) {
+                    ProfileScreen(
+                        userViewModel = userViewModel
                     )
                 }
             }

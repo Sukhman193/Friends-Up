@@ -16,8 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ca.finalfive.friendsup.R
-import ca.finalfive.friendsup.composables.FriendButton
-import ca.finalfive.friendsup.composables.ScreenTitle
+import ca.finalfive.friendsup.composables.utils.buttons.FriendButton
+import ca.finalfive.friendsup.composables.utils.ScreenTitle
 import ca.finalfive.friendsup.navigation.Route
 
 /**
@@ -27,11 +27,12 @@ import ca.finalfive.friendsup.navigation.Route
  */
 @Composable
 fun FriendsScreen(navController: NavController, friends: List<String>) {
-    Column(modifier = Modifier
-        .verticalScroll(rememberScrollState())
+    Column(
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
     ) {
         // display the title of the screen
-       ScreenTitle(title = R.string.friends_title)
+        ScreenTitle(title = R.string.friends_title)
 
         // Add description to the screen
         Text(
@@ -44,7 +45,7 @@ fun FriendsScreen(navController: NavController, friends: List<String>) {
         )
 
         // Display a message if there are no friends
-        if(friends.isEmpty()) {
+        if (friends.isEmpty()) {
             Text(
                 text = stringResource(id = R.string.friend_list_no_friends),
                 modifier = Modifier

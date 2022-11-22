@@ -1,4 +1,5 @@
 package ca.finalfive.friendsup.services
+
 import ca.finalfive.friendsup.helpers.Error
 
 
@@ -15,16 +16,19 @@ class Constants {
     class Regex {
         companion object {
             // Phone Number Regex Pattern
-            val PHONE_NUMBER = Regex("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}\$")
+            val PHONE_NUMBER =
+                Regex("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}\$")
 
             // Discord Username Regex Pattern
             val DISCORD_USERNAME = Regex("^.{3,32}#[0-9]{4}\$")
 
             // Instagram Username Regex Pattern with maximum 30 characters
-            val INSTAGRAM_USERNAME = Regex("^(?!.*\\\\.\\\\.|.*\\\\.\$)[A-z0-9][\\\\w.]+[A-z0-9]{0,30}\$")
+            val INSTAGRAM_USERNAME =
+                Regex("^(?!.*\\\\.\\\\.|.*\\\\.\$)[A-z0-9][\\\\w.]+[A-z0-9]{0,30}\$")
 
             // Snapchat Username Regex Pattern with maximum 15 characters
-            val SNAPCHAT_USERNAME = Regex("^(?!.*\\\\.\\\\.|.*\\\\_\\\\_|.*\\\\-\\\\-)(?!.*\\\\.\$|.*\\\\_\$|.*\\\\-\$)(?!.*\\\\.\\\\-|.*\\\\-\\\\.|.*\\\\-\\\\_|.*\\\\_\\\\-|.*\\\\.\\\\_|.*\\\\_\\\\.)[a-zA-Z]+[\\\\w.-][0-9A-z]{0,15}\$")
+            val SNAPCHAT_USERNAME =
+                Regex("^(?!.*\\\\.\\\\.|.*\\\\_\\\\_|.*\\\\-\\\\-)(?!.*\\\\.\$|.*\\\\_\$|.*\\\\-\$)(?!.*\\\\.\\\\-|.*\\\\-\\\\.|.*\\\\-\\\\_|.*\\\\_\\\\-|.*\\\\.\\\\_|.*\\\\_\\\\.)[a-zA-Z]+[\\\\w.-][0-9A-z]{0,15}\$")
 
             // User's Username Regex Pattern from 5 to 20 characters
             val USERNAME = Regex("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]\$")
@@ -35,14 +39,14 @@ class Constants {
 /**
  * ValidationService class - contains functions to validate
  */
-class ValidationService{
+class ValidationService {
     /**
      * isPhoneNumber - validates the phone number
      * @param data - The phone number given to the function
      */
 
     fun isPhoneNumber(data: String) {
-        if (!Constants.Regex.PHONE_NUMBER.matches(data)){
+        if (!Constants.Regex.PHONE_NUMBER.matches(data)) {
             throw Error.ValidationException("Phone Number Does Not Match")
         }
     }
@@ -52,7 +56,7 @@ class ValidationService{
      * @param data - The discord username given to the function
      */
     fun isDiscordValid(data: String) {
-        if (!Constants.Regex.DISCORD_USERNAME.matches(data)){
+        if (!Constants.Regex.DISCORD_USERNAME.matches(data)) {
             throw Error.ValidationException("Discord Username Does Not Match")
         }
     }
@@ -62,7 +66,7 @@ class ValidationService{
      * @param data - The username given to the function
      */
     fun isUsernameValid(data: String) {
-        if (!Constants.Regex.USERNAME.matches(data)){
+        if (!Constants.Regex.USERNAME.matches(data)) {
             throw Error.ValidationException("Username Does Not Match (It must be between 3-10)")
         }
     }
@@ -72,7 +76,7 @@ class ValidationService{
      * @param data - The instagram username given to the function
      */
     fun isInstagramValid(data: String) {
-        if (!Constants.Regex.INSTAGRAM_USERNAME.matches(data)){
+        if (!Constants.Regex.INSTAGRAM_USERNAME.matches(data)) {
             throw Error.ValidationException("Instagram Username Does Not Match")
         }
     }
@@ -81,8 +85,8 @@ class ValidationService{
      * isSnapchatValid - validates the snapchat username
      * @param data - The snapchat username given to the function
      */
-    fun isSnapchatValid(data: String){
-        if (!Constants.Regex.SNAPCHAT_USERNAME.matches(data)){
+    fun isSnapchatValid(data: String) {
+        if (!Constants.Regex.SNAPCHAT_USERNAME.matches(data)) {
             throw Error.ValidationException("Snapchat Username Does Not Match")
         }
     }
@@ -92,7 +96,7 @@ class ValidationService{
      * @param
      */
     fun isMessageValid(text: String, minLength: Int = 3, maxLength: Int = 30) {
-        if(minLength > text.length || maxLength < text.length) {
+        if (minLength > text.length || maxLength < text.length) {
             throw Error.ValidationException("Message must be between $minLength and $maxLength characters")
         }
     }
@@ -108,7 +112,7 @@ class ValidationService{
          */
         fun getInstance(): ValidationService {
             // Check if an instance already exists
-            if(INSTANCE == null) {
+            if (INSTANCE == null) {
                 INSTANCE = ValidationService()
             }
             // return the instance

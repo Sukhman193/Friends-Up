@@ -6,12 +6,13 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.gamescreen.GameScreen
-import ca.finalfive.friendsup.composables.QuestionOption
+import ca.finalfive.friendsup.composables.gamescreen.QuestionOption
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 /**
@@ -35,24 +36,27 @@ fun WYRGameScreen(gameViewModel: GameViewModel) {
         titleFontSize = 40.sp,
         gameViewModel = gameViewModel
     ) {
-            // Question for the user
-            Text(
-                text = "Would you rather...",
-                color = Color.White,
-                style = MaterialTheme.typography.h3,
-                fontSize = 26.sp,
-                modifier = Modifier
-                    .padding(horizontal = 30.dp)
-            )
+        // Question for the user
+        Text(
+            text = "${stringResource(id = R.string.game_would_you_rather_title)}...",
+            color = colorResource(id = R.color.white),
+            style = MaterialTheme.typography.h3,
+            fontSize = 26.sp,
+            modifier = Modifier
+                .padding(horizontal = 30.dp)
+        )
 
-            Spacer(
-                modifier = Modifier
-                    .padding(bottom = 30.dp)
-            )
+        Spacer(
+            modifier = Modifier
+                .padding(bottom = 30.dp)
+        )
 
-            // A for loop containing 4 button options
-            for (option in options) {
-                QuestionOption(option = option, gameViewModel = gameViewModel)
-            }
+        // A for loop containing 4 button options
+        options.forEach { option ->
+            QuestionOption(
+                option = option,
+                gameViewModel = gameViewModel
+            )
         }
     }
+}

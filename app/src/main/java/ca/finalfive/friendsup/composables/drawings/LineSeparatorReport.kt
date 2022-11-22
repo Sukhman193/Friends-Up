@@ -21,9 +21,11 @@ fun LineSeparator(
     lineSpacing: Float = 40f,
 ) {
     // Draw decorative line
-    Canvas(modifier = Modifier
-        .fillMaxWidth()
-        .padding(top = 10.dp)) {
+    Canvas(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 10.dp)
+    ) {
         // Get the length of the starting line and the ending line
         val startLineLength = (size.width * 0.05).toFloat()
 

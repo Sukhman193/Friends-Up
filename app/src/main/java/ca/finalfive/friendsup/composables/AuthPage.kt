@@ -19,6 +19,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ca.finalfive.friendsup.R
+import ca.finalfive.friendsup.composables.utils.BackgroundImage
+import ca.finalfive.friendsup.composables.utils.ScreenTitle
 import ca.finalfive.friendsup.models.User
 import ca.finalfive.friendsup.navigation.Route
 import ca.finalfive.friendsup.viewmodels.AuthViewModel
@@ -52,35 +54,36 @@ fun AuthPage(
     // Coroutine Scope
     val scope = rememberCoroutineScope()
     // The Google Sign-in Launcher
-    val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
-        try {
-            // returns a task for google sign in account
-            val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
-            // returns the google sign in account
-            val account = task.getResult(ApiException::class.java)!!
-            // the Google Authentication credentials
-            val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
-            scope.launch {
-                // this async Firebase Function will use the credentials to sign in and returns the result
-                val authResult = Firebase.auth.signInWithCredential(credential).await()
-                authViewModel.user = authResult.user
-                // Adding the user with the user's email and its default username to the database
-                userViewModel.addUser(
-                    User(
-                        email = authResult.user?.email!!,
-                        username = authResult.user?.email!!.replace("@gmail.com", "")
-                    ),
-                )
-                // Route to the Game Screen if the sign in is successful
-                navController.navigate(Route.GameRoomScreen.route)
+    val launcher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
+            try {
+                // returns a task for google sign in account
+                val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
+                // returns the google sign in account
+                val account = task.getResult(ApiException::class.java)!!
+                // the Google Authentication credentials
+                val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
+                scope.launch {
+                    // this async Firebase Function will use the credentials to sign in and returns the result
+                    val authResult = Firebase.auth.signInWithCredential(credential).await()
+                    authViewModel.user = authResult.user
+                    // Adding the user with the user's email and its default username to the database
+                    userViewModel.addUser(
+                        User(
+                            email = authResult.user?.email!!,
+                            username = authResult.user?.email!!.replace("@gmail.com", "")
+                        ),
+                    )
+                    // Route to the Game Screen if the sign in is successful
+                    navController.navigate(Route.GameRoomScreen.route)
+                }
+            } catch (e: ApiException) {
+                // make a toast to notify the user that authentication was not successful
+                Toast.makeText(context, "Authentication Failed", Toast.LENGTH_SHORT).show()
+            } catch (error: FirebaseAuthInvalidUserException) {
+                Toast.makeText(context, error.message.toString(), Toast.LENGTH_SHORT).show()
             }
-        } catch (e: ApiException) {
-            // make a toast to notify the user that authentication was not successful
-            Toast.makeText(context, "Authentication Failed", Toast.LENGTH_SHORT).show()
-        } catch (error: FirebaseAuthInvalidUserException) {
-            Toast.makeText(context, error.message.toString(), Toast.LENGTH_SHORT).show()
         }
-    }
 
     // Container for the page
     Box {

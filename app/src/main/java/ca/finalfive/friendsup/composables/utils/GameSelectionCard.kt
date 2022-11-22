@@ -1,4 +1,4 @@
-package ca.finalfive.friendsup.composables
+package ca.finalfive.friendsup.composables.utils
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ca.finalfive.friendsup.ui.theme.GameCardBackgroundColor
 import ca.finalfive.friendsup.R
-import ca.finalfive.friendsup.composables.buttons.PlayButton
+import ca.finalfive.friendsup.composables.utils.buttons.PlayButton
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 @Composable

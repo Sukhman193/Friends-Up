@@ -27,7 +27,7 @@ fun Row(
     content: @Composable RowScope.() -> Unit,
 ) {
     // Get the layout direction for the row
-    val direction = if(reversed) LayoutDirection.Rtl else LayoutDirection.Ltr
+    val direction = if (reversed) LayoutDirection.Rtl else LayoutDirection.Ltr
     // Change the composition's layout direction
     CompositionLocalProvider(LocalLayoutDirection provides direction) {
         androidx.compose.foundation.layout.Row(

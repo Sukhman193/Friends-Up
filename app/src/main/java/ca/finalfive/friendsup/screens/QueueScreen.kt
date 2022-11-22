@@ -46,7 +46,7 @@ fun GameQueueScreen(
             navController.popBackStack()
         }) {
         // Content of the search user
-        SearchCardContent() {
+        SearchCardContent {
             Text(
                 text = stringResource(id = R.string.trivia_queue_search),
                 modifier = Modifier.padding(start = 10.dp),

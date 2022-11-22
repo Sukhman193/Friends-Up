@@ -12,10 +12,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ca.finalfive.friendsup.R
-import ca.finalfive.friendsup.composables.BackgroundImage
-import ca.finalfive.friendsup.composables.ScreenTitle
-import ca.finalfive.friendsup.composables.buttons.CustomRadioButton
-import ca.finalfive.friendsup.composables.buttons.ReportSubmitButton
+import ca.finalfive.friendsup.composables.utils.BackgroundImage
+import ca.finalfive.friendsup.composables.utils.ScreenTitle
+import ca.finalfive.friendsup.composables.utils.buttons.CustomRadioButton
+import ca.finalfive.friendsup.composables.utils.buttons.ReportSubmitButton
 import ca.finalfive.friendsup.composables.drawings.LineSeparator
 import ca.finalfive.friendsup.navigation.Route
 import ca.finalfive.friendsup.viewmodels.GameViewModel
@@ -43,7 +43,7 @@ fun ReportScreen(
     /**
      * Selection option of the current radio buttons
      */
-    val (selectedOption, setOptionSelected) = remember { mutableStateOf(radioOptions[3] ) }
+    val (selectedOption, setOptionSelected) = remember { mutableStateOf(radioOptions[3]) }
 
     val reportReasonString = stringResource(id = selectedOption)
     // Container of the page
@@ -93,7 +93,7 @@ fun ReportScreen(
                     gameViewModel.reportUser(reportReason = reportReasonString)
                     navController.navigate(Route.GameRoomScreen.route)
                 }
-                ReportSubmitButton(text = R.string.button_cancel)    {
+                ReportSubmitButton(text = R.string.button_cancel) {
                     gameViewModel.isReportScreenOpened = false
                 }
             }

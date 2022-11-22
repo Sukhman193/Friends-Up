@@ -246,7 +246,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
             // If instance is null create a new gameApolloRepository
             if (INSTANCE == null) {
                 val apolloClient = ApolloClient.Builder()
-                    .serverUrl(" https://95a9-75-157-118-144.ngrok.io/dev/graphql")
+                    .serverUrl("https://8221-75-157-118-144.ngrok.io/dev/graphql")
                     .build()
                 INSTANCE = GameApolloRepository(apolloClient)
             }

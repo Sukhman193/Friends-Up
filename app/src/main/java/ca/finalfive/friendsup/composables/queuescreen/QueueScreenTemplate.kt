@@ -15,8 +15,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.R
-import ca.finalfive.friendsup.composables.BackgroundImage
-import ca.finalfive.friendsup.composables.ScreenTitle
+import ca.finalfive.friendsup.composables.utils.ScreenTitle
+import ca.finalfive.friendsup.composables.utils.BackgroundImage
 import ca.finalfive.friendsup.ui.theme.redSubmitButton
 
 /**

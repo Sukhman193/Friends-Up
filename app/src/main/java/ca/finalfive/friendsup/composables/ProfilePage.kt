@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.utils.CustomTextField
+import ca.finalfive.friendsup.composables.utils.ScreenTitle
 import ca.finalfive.friendsup.models.User
 import ca.finalfive.friendsup.viewmodels.UserViewModel
 
@@ -118,7 +119,7 @@ fun ProfilePage(userViewModel: UserViewModel) {
         if (userId != null) {
             if (updatedUser != null) {
                 userViewModel.updateUserByID(userId, updatedUser, context)
-                userViewModel.getUser(userId)
+                userViewModel.getUser(userId, context)
             }
         }
 

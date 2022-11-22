@@ -111,9 +111,9 @@ class GameViewModel : ViewModel() {
                 savedUsername = gameApolloRepository.username
                 // this will never happen because the gameApolloRepository
                 // will throw an error beforehand
-                // If the game id is null than end the function
+                // If the game id is null than throw an error
                 if (gameID == null) {
-                    return@launch
+                    throw Exception("Error connecting to the server")
                 }
                 // Get the game, and subscribe to the firestore changes the changes
                 gameFirestoreRepository.getGame(
@@ -137,13 +137,13 @@ class GameViewModel : ViewModel() {
      */
     fun sendMessage(content: String, context: Context) {
         // Game cannot be null here
-        if(game == null) {
+        if (game == null) {
             return
         }
         // Get the icon for the messages
         // So that it matches the user icon
         game!!.members.map {
-            if(it.username == this.savedUsername) {
+            if (it.username == this.savedUsername) {
                 this.profilePicture = it.icon
             }
         }
@@ -258,7 +258,7 @@ class GameViewModel : ViewModel() {
      */
     private fun endGame() {
         // If game is null than exit the function
-        if(game == null) return
+        if (game == null) return
 
         viewModelScope.launch {
             try {
@@ -280,16 +280,18 @@ class GameViewModel : ViewModel() {
         // Set the add user screen to not the previous value
         this.isAddAsFriendScreenOpened = !this.isAddAsFriendScreenOpened
         viewModelScope.launch {
-            // check if game is not null
-            if (game != null) {
-                try {
-                    // call update user friend queue
-                    gameApolloRepository.updateUserFriendQueue(game!!.gameMode)
-                } catch (error: java.lang.Exception) {
-                    // In case of errors set the error message to be here
-                    errorMessage = error.message
-                }
+            // Game should never be null here
+            if (game == null) {
+                return@launch
             }
+            try {
+                // call update user friend queue
+                gameApolloRepository.updateUserFriendQueue(game!!.gameMode)
+            } catch (error: java.lang.Exception) {
+                // In case of errors set the error message to be here
+                errorMessage = error.message
+            }
+
         }
     }
 
@@ -305,15 +307,16 @@ class GameViewModel : ViewModel() {
             viewModelScope.launch {
                 // When updating the game option the will never be null
                 // because they cannot select an option without having the game
-                if (savedUsername != null && game != null) {
-                    // Call the repository to update the answer
-                    gameFirestoreRepository.sendAnswerSelected(
-                        username = savedUsername!!,
-                        gameID = gameID!!,
-                        gameMode = game!!.gameMode,
-                        gameOption = gameOption
-                    )
-                } 
+                if (savedUsername == null || game == null) {
+                    return@launch
+                }
+                // Call the repository to update the answer
+                gameFirestoreRepository.sendAnswerSelected(
+                    username = savedUsername!!,
+                    gameID = gameID!!,
+                    gameMode = game!!.gameMode,
+                    gameOption = gameOption
+                )
             }
         }
     }

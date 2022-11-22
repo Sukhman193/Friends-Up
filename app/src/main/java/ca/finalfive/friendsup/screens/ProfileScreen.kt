@@ -6,6 +6,7 @@ import ca.finalfive.friendsup.viewmodels.UserViewModel
 
 /**
  * Profile Screen - navigates to the Profile Page
+ * @param userViewModel view model for the user
  */
 @Composable
 fun ProfileScreen(userViewModel: UserViewModel) {

@@ -9,9 +9,10 @@ import ca.finalfive.friendsup.viewmodels.UserViewModel
  * UserViewModelFactory - factorize the userViewModel
  * @param userRepository - an instance of the FirestoreUserRepository
  */
-class UserViewModelFactory(private val userRepository: FirestoreUserRepository): ViewModelProvider.Factory {
+class UserViewModelFactory(private val userRepository: FirestoreUserRepository) :
+    ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        // returns the userviewmodel instance
+        // returns the userViewModel instance
         if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
             return UserViewModel(userRepository) as T;
         }
