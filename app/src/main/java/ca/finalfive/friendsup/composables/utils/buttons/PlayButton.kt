@@ -7,7 +7,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.compose.runtime.Composable
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -29,7 +30,14 @@ import ca.finalfive.friendsup.viewmodels.GameViewModel
  * @param gameMode game Mode being played
  */
 @Composable
-fun PlayButton(gameViewModel: GameViewModel, navController: NavController, gameMode: String) {
+fun PlayButton(
+    gameViewModel: GameViewModel,
+    navController: NavController,
+    gameMode: String
+) {
+    var isButtonEnabled by remember {
+        mutableStateOf(true)
+    }
     //this component makes the play button that appears on the main game screen
     Button(modifier = Modifier
         .background(shape = RoundedCornerShape(8.dp), color = Color.Transparent)
@@ -42,9 +50,16 @@ fun PlayButton(gameViewModel: GameViewModel, navController: NavController, gameM
         ),
         //when the button is clicked, we will send the user to the correct game that's passed in
         onClick = {
+            isButtonEnabled = false
             gameViewModel.joinGame(gameMode = gameMode)
             navController.navigate(Route.GameScreen.route)
-        }
+        },
+        enabled = isButtonEnabled,
+        // Set the default color for the button
+        colors = ButtonDefaults.buttonColors(
+            // when the button is disabled it should be transparent
+            disabledBackgroundColor = Color.Transparent
+        )
     ) {
         //this is the inside of the whole button
         Column(

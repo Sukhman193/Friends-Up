@@ -14,9 +14,9 @@ class AuthViewModelFactory(private val authRepository: FirebaseAuthRepository) :
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         // returns the authviewmodel instance
         if (modelClass.isAssignableFrom(AuthViewModel::class.java)) {
-            return AuthViewModel(authRepository) as T;
+            return AuthViewModel(authRepository) as T
         }
 
-        throw IllegalStateException();
+        throw IllegalStateException()
     }
 }

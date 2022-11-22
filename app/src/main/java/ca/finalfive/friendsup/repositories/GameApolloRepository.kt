@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import ca.finalfive.friendsup.*
 import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.api.ApolloResponse
 import com.apollographql.apollo3.exception.ApolloException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.ktx.auth
@@ -49,8 +50,17 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
                 gameMode = gameMode,
                 access = token!!
             )
-        // Make the request to the endpoint
-        val response = this.apolloClient.mutation(apolloRequest).execute()
+        // Response from apollo
+        val response: ApolloResponse<JoinGameMutation.Data>
+        // the only error that can occur from the following
+        // request is that the server is not available
+        try {
+            // Make the request to the endpoint
+            response = this.apolloClient.mutation(apolloRequest).execute()
+        } catch (error: Exception) {
+            throw Exception("Cannot currently connect to the server")
+        }
+
         // check if there is any error
         if (!response.errors.isNullOrEmpty()) {
             // if there is an authentication error than call this function again but instead get a new token
@@ -246,7 +256,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
             // If instance is null create a new gameApolloRepository
             if (INSTANCE == null) {
                 val apolloClient = ApolloClient.Builder()
-                    .serverUrl("https://8221-75-157-118-144.ngrok.io/dev/graphql")
+                    .serverUrl("https://t8gqkrufr2.execute-api.us-west-1.amazonaws.com/dev/graphql")
                     .build()
                 INSTANCE = GameApolloRepository(apolloClient)
             }

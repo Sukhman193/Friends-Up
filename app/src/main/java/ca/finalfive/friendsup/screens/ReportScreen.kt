@@ -87,14 +87,18 @@ fun ReportScreen(
                         )
                     }
                 }
-
-                // Report button
-                ReportSubmitButton(text = R.string.button_report) {
-                    gameViewModel.reportUser(reportReason = reportReasonString)
-                    navController.navigate(Route.GameRoomScreen.route)
-                }
-                ReportSubmitButton(text = R.string.button_cancel) {
-                    gameViewModel.isReportScreenOpened = false
+                // Container for the buttons
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    // Report button
+                    ReportSubmitButton(text = R.string.button_report) {
+                        gameViewModel.reportUser(reportReason = reportReasonString)
+                        navController.navigate(Route.GameRoomScreen.route)
+                    }
+                    ReportSubmitButton(text = R.string.button_cancel) {
+                        gameViewModel.isReportScreenOpened = false
+                    }
                 }
             }
         }

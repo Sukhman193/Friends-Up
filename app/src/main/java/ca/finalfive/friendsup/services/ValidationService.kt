@@ -2,9 +2,11 @@ package ca.finalfive.friendsup.services
 
 import ca.finalfive.friendsup.helpers.Error
 
-
-// https://github.com/sulealothman/sm-regex
 // https://stackoverflow.com/questions/16699007/regular-expression-to-match-standard-10-digit-phone-number
+// https://stackoverflow.com/questions/39819830/what-are-the-allowed-character-in-snapchat-username
+// https://regexr.com/3cg7r
+// https://ihateregex.io/expr/discord-username/
+// https://stackoverflow.com/questions/12018245/regular-expression-to-validate-username
 
 /**
  * Constants Class - contains a Regex Class
@@ -24,14 +26,14 @@ class Constants {
 
             // Instagram Username Regex Pattern with maximum 30 characters
             val INSTAGRAM_USERNAME =
-                Regex("^(?!.*\\\\.\\\\.|.*\\\\.\$)[A-z0-9][\\\\w.]+[A-z0-9]{0,30}\$")
+                Regex("^(?!.*\\.\\.)(?!.*\\.\$)[^\\W][\\w.]{0,29}\$")
 
             // Snapchat Username Regex Pattern with maximum 15 characters
             val SNAPCHAT_USERNAME =
-                Regex("^(?!.*\\\\.\\\\.|.*\\\\_\\\\_|.*\\\\-\\\\-)(?!.*\\\\.\$|.*\\\\_\$|.*\\\\-\$)(?!.*\\\\.\\\\-|.*\\\\-\\\\.|.*\\\\-\\\\_|.*\\\\_\\\\-|.*\\\\.\\\\_|.*\\\\_\\\\.)[a-zA-Z]+[\\\\w.-][0-9A-z]{0,15}\$")
+                Regex("^(?=\\S{3,15}\$)[a-zA-Z][a-zA-Z0-9]*(?:[_.-][a-zA-Z0-9]+)?\$")
 
             // User's Username Regex Pattern from 5 to 20 characters
-            val USERNAME = Regex("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]\$")
+            val USERNAME = Regex("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$")
         }
     }
 }

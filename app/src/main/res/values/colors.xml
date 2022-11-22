@@ -25,4 +25,6 @@
     <color name="gameCardDescFont">#FFC0C0C0</color>
     <!--  Color for the trivia wrong question  -->
     <color name="orange_trivia_wrong_question">#B3FFA500</color>
+    <!--  Background color of the game title  -->
+    <color name="purple_game_container">#333728A5</color>
 </resources>
