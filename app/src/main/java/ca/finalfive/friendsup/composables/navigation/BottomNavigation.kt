@@ -1,4 +1,4 @@
-package ca.finalfive.friendsup.composables
+package ca.finalfive.friendsup.composables.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.height

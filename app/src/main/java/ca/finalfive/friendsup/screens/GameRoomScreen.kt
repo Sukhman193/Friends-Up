@@ -12,11 +12,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ca.finalfive.friendsup.R
-import ca.finalfive.friendsup.composables.GameSelectionCard
-import ca.finalfive.friendsup.composables.ScreenTitle
+import ca.finalfive.friendsup.composables.utils.GameSelectionCard
+import ca.finalfive.friendsup.composables.utils.ScreenTitle
 import ca.finalfive.friendsup.models.GameMode
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
+/**
+ *  Selection game room screen for selecting the games
+ *  @param navController Navigation controller of the application
+ *  @param gameViewModel view model for the game
+ */
 @Composable
 fun GameRoomScreen(
     navController: NavController,

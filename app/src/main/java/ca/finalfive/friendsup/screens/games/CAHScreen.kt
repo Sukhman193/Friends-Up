@@ -25,7 +25,7 @@ import ca.finalfive.friendsup.viewmodels.GameViewModel
  */
 @Composable
 fun CAHScreen(gameViewModel: GameViewModel) {
-    if(gameViewModel.game == null) {
+    if (gameViewModel.game == null) {
         return
     }
 
@@ -42,6 +42,10 @@ fun CAHScreen(gameViewModel: GameViewModel) {
         mutableStateOf(game.gameContent[currentGameIndex].mainQuestion)
     }
 
+    var whiteCards by remember {
+        mutableStateOf(game.gameContent[currentGameIndex].questionOptions)
+    }
+
     // Every time the game progress changes update the data
     LaunchedEffect(key1 = gameViewModel.game?.gameProgress) {
         // update the game
@@ -50,8 +54,16 @@ fun CAHScreen(gameViewModel: GameViewModel) {
         currentGameIndex = game.gameProgress
         // Update the black card
         blackCard = game.gameContent[currentGameIndex].mainQuestion
+        // Update the white cards
+        whiteCards = game.gameContent[currentGameIndex].questionOptions
         // set the question answered to false
         gameViewModel.questionAnswered = false
+    }
+
+    // Every time a user selects a game the display
+    LaunchedEffect(key1 = gameViewModel.game?.gameContent?.get(currentGameIndex)) {
+        game = gameViewModel.game!!
+        whiteCards = game.gameContent[currentGameIndex].questionOptions
     }
 
     // Container of the screen
@@ -72,30 +84,30 @@ fun CAHScreen(gameViewModel: GameViewModel) {
             // Add the first white card
             WhiteCard(
                 gameViewModel = gameViewModel,
-                currentIndex = 0,
                 align = Alignment.TopStart,
-                currentGameIndex = currentGameIndex
+                whiteCard = whiteCards[0],
+                game = game
             )
             // Add the second white card
             WhiteCard(
                 gameViewModel = gameViewModel,
-                currentIndex = 1,
                 align = Alignment.TopEnd,
-                currentGameIndex = currentGameIndex
+                whiteCard = whiteCards[1],
+                game = game
             )
             // Add the third white card
             WhiteCard(
                 gameViewModel = gameViewModel,
-                currentIndex = 2,
+                whiteCard = whiteCards[2],
+                game = game,
                 align = Alignment.BottomStart,
-                currentGameIndex = currentGameIndex
             )
             // Add the fourth white card
             WhiteCard(
                 gameViewModel = gameViewModel,
-                currentIndex = 3,
+                whiteCard = whiteCards[3],
+                game = game,
                 align = Alignment.BottomEnd,
-                currentGameIndex = currentGameIndex
             )
 
             //the black question card that will display in the middle

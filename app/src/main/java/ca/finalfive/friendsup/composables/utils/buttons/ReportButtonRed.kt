@@ -1,4 +1,4 @@
-package ca.finalfive.friendsup.composables.buttons
+package ca.finalfive.friendsup.composables.utils.buttons
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

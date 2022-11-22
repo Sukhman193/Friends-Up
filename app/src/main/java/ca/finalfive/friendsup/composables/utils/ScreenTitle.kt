@@ -1,4 +1,4 @@
-package ca.finalfive.friendsup.composables
+package ca.finalfive.friendsup.composables.utils
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*

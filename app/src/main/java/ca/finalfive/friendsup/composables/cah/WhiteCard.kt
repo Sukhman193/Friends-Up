@@ -19,42 +19,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.utils.ProfileIcon
+import ca.finalfive.friendsup.models.Game
+import ca.finalfive.friendsup.models.GameQuestionOption
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
 
 /**
  * White card for the CAH game
  * @param gameViewModel game View model of the application
- * @param currentIndex index of the card, should range from 1-4
  * @param align alignment of the card
- * @param currentGameIndex index of the game currently being played
+ * @param whiteCard white card to be displayed
+ * @param game game to be displayed
  */
 @Composable
 fun WhiteCard(
     gameViewModel: GameViewModel,
-    currentIndex: Int,
     align: Alignment,
-    currentGameIndex: Int
+    whiteCard: GameQuestionOption,
+    game: Game
 ) {
-    // variable for the game
-    var game by remember {
-        mutableStateOf(gameViewModel.game!!)
-    }
-    // White cards to display
-    var whiteCards by remember {
-        mutableStateOf(game.gameContent[currentGameIndex].questionOptions)
-    }
-
-    // Every time the content of the game view model is updated and the game
-    // changes, update the white cards
-    // Needed to keep the users up to data on what the other person selected
-    LaunchedEffect(key1 = currentGameIndex, key2 = gameViewModel.game?.gameContent) {
-        // Reassign the updated game
-        game = gameViewModel.game!!
-        // Reassign the updated white cards
-        whiteCards = game.gameContent[currentGameIndex].questionOptions
-    }
-
     // Container for the white card
     Box(
         modifier = Modifier.fillMaxSize()
@@ -67,11 +50,11 @@ fun WhiteCard(
                 .align(align)
                 .clickable { }
                 // On double click the card is selected
-                .pointerInput(Unit) {
+                .pointerInput(whiteCard) {
                     detectTapGestures(
                         onDoubleTap = {
                             gameViewModel.handleAnswerGameOption(
-                                whiteCards[currentIndex]
+                                whiteCard
                             )
                         }
                     )
@@ -87,7 +70,7 @@ fun WhiteCard(
                 bottomBar = {
                     Row {
                         // iterate over the selected by list
-                        whiteCards[currentIndex].selectedBy.forEach { selectedBy ->
+                        whiteCard.selectedBy.forEach { selectedBy ->
                             // iterate over the game members list
                             game.members.forEach {
                                 // display the profile icon of the user
@@ -102,7 +85,7 @@ fun WhiteCard(
             ) { paddingValued ->
                 // Display image of user who selected this option
                 Text(
-                    text = whiteCards[currentIndex].optionText,
+                    text = whiteCard.optionText,
                     modifier = Modifier
                         .padding(paddingValues = paddingValued)
                         .padding(20.dp)

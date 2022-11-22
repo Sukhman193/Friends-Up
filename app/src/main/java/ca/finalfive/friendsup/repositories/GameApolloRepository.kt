@@ -1,6 +1,7 @@
 package ca.finalfive.friendsup.repositories
 
 import android.accounts.NetworkErrorException
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -205,8 +206,9 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
                     this.token = null
                     this.updateUserFriendQueue(gameMode)
                 } else {
+                    Log.d("LLAMA", response.errors?.get(0)?.message.toString())
                     // throw any error received by the apollo server
-                    throw ApolloException("Error connecting to the server")
+//                    throw ApolloException("Error connecting to the server")
                 }
             }
         }
@@ -246,7 +248,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
             // If instance is null create a new gameApolloRepository
             if (INSTANCE == null) {
                 val apolloClient = ApolloClient.Builder()
-                    .serverUrl("https://a75e-75-157-118-144.ngrok.io/dev/graphql")
+                    .serverUrl("https://8221-75-157-118-144.ngrok.io/dev/graphql")
                     .build()
                 INSTANCE = GameApolloRepository(apolloClient)
             }

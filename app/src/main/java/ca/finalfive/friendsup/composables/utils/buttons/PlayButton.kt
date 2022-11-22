@@ -1,4 +1,4 @@
-package ca.finalfive.friendsup.composables.buttons
+package ca.finalfive.friendsup.composables.utils.buttons
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ca.finalfive.friendsup.R
-import ca.finalfive.friendsup.composables.DropShadowIcon
-import ca.finalfive.friendsup.composables.DropShadowText
+import ca.finalfive.friendsup.composables.utils.DropShadowIcon
+import ca.finalfive.friendsup.composables.utils.DropShadowText
 import ca.finalfive.friendsup.navigation.Route
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 

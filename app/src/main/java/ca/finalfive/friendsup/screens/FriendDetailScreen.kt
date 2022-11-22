@@ -20,9 +20,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ca.finalfive.friendsup.R
-import ca.finalfive.friendsup.composables.BackgroundImage
-import ca.finalfive.friendsup.composables.DropShadowText
-import ca.finalfive.friendsup.composables.ScreenTitle
+import ca.finalfive.friendsup.composables.utils.BackgroundImage
+import ca.finalfive.friendsup.composables.utils.DropShadowText
+import ca.finalfive.friendsup.composables.utils.ScreenTitle
 import ca.finalfive.friendsup.composables.utils.FriendDetailCard
 import ca.finalfive.friendsup.models.FriendCardDetail
 import ca.finalfive.friendsup.models.User
@@ -79,7 +79,7 @@ fun FriendDetailScreen(userViewModel: UserViewModel, friend: User, navController
                     FriendDetailCard(friendCardDetail = it)
                 }
                 // If the list is empty show a message
-                if(friendDetails.isEmpty()) {
+                if (friendDetails.isEmpty()) {
                     Text(
                         text = stringResource(id = R.string.friend_list_no_social_media),
                         style = MaterialTheme.typography.h3,

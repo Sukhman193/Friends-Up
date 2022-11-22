@@ -12,7 +12,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
-import ca.finalfive.friendsup.composables.BackgroundImage
+import ca.finalfive.friendsup.composables.utils.BackgroundImage
 import ca.finalfive.friendsup.navigation.Navigation
 import ca.finalfive.friendsup.ui.theme.StrangerCommonsTheme
 import ca.finalfive.friendsup.viewmodels.GameViewModel
@@ -53,7 +53,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     // Display any in game error messages
-                    if(gameViewModel.errorMessage != null) {
+                    if (gameViewModel.errorMessage != null) {
                         // Get the error message
                         val errorMessage = gameViewModel.errorMessage!!
                         // Display the toast of the error message

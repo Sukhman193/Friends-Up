@@ -8,11 +8,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ca.finalfive.friendsup.R
-import ca.finalfive.friendsup.composables.BackgroundImage
+import ca.finalfive.friendsup.composables.utils.BackgroundImage
 import ca.finalfive.friendsup.composables.gamescreen.ReportPopup
-import ca.finalfive.friendsup.composables.ScreenTitle
-import ca.finalfive.friendsup.composables.buttons.EndGameSubmitButton
-import ca.finalfive.friendsup.composables.buttons.ReportButtonRed
+import ca.finalfive.friendsup.composables.utils.ScreenTitle
+import ca.finalfive.friendsup.composables.utils.buttons.EndGameSubmitButton
+import ca.finalfive.friendsup.composables.utils.buttons.ReportButtonRed
 import ca.finalfive.friendsup.composables.endgame.EndGameDescription
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
@@ -27,7 +27,7 @@ fun EndGameScreen(
     /**
      * Check whether the report popup should be open or not
      */
-    val (reportPopupOpen, setReportPopupOpen)  = remember {
+    val (reportPopupOpen, setReportPopupOpen) = remember {
         mutableStateOf(false)
     }
 
@@ -85,10 +85,11 @@ fun EndGameScreen(
         }
         // If reportPopupOpen is set to open than
         // display the report popup
-        if(reportPopupOpen) {
+        if (reportPopupOpen) {
             ReportPopup(
                 setReportPopup = setReportPopupOpen,
-                gameViewModel = gameViewModel)
+                gameViewModel = gameViewModel
+            )
         }
     }
 

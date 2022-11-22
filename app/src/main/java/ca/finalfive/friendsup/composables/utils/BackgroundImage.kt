@@ -1,4 +1,4 @@
-package ca.finalfive.friendsup.composables
+package ca.finalfive.friendsup.composables.utils
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

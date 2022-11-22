@@ -1,4 +1,4 @@
-package ca.finalfive.friendsup.composables.buttons
+package ca.finalfive.friendsup.composables.utils.buttons
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape

@@ -94,7 +94,7 @@ fun ProgressBar(totalTime: Float, updateValue: Int) {
                 // This line would look something like 0.36 / 0.36 at the start of the line
                 bar2Progress = (currentTimeDecimalValue / offsetValue)
             } // If 'The end point' * bar2Progress <= 'The starting point'
-            if (300f * bar2Progress <= 60f && !bar2Done){
+            if (300f * bar2Progress <= 60f && !bar2Done) {
                 bar2Done = true
                 offsetValue = currentTimeDecimalValue
             }

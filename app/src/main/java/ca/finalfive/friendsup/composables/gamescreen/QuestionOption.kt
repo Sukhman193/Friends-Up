@@ -1,4 +1,4 @@
-package ca.finalfive.friendsup.composables
+package ca.finalfive.friendsup.composables.gamescreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,11 +22,6 @@ import ca.finalfive.friendsup.composables.drawings.GameAnswerBackground
 import ca.finalfive.friendsup.composables.utils.ProfileIcon
 import ca.finalfive.friendsup.models.GameQuestionOption
 import ca.finalfive.friendsup.viewmodels.GameViewModel
-
-// There is a bug that I found in which the
-// game option will change the ui text
-// but inside the onclick It has the
-// Initial value of the game
 
 /**
  * The buttons options for Trivia and Would you Rather
