@@ -305,15 +305,16 @@ class GameViewModel : ViewModel() {
             viewModelScope.launch {
                 // When updating the game option the will never be null
                 // because they cannot select an option without having the game
-                if (savedUsername != null && game != null) {
-                    // Call the repository to update the answer
-                    gameFirestoreRepository.sendAnswerSelected(
-                        username = savedUsername!!,
-                        gameID = gameID!!,
-                        gameMode = game!!.gameMode,
-                        gameOption = gameOption
-                    )
-                } 
+                if (savedUsername == null && game == null) {
+                    return@launch
+                }
+                // Call the repository to update the answer
+                gameFirestoreRepository.sendAnswerSelected(
+                    username = savedUsername!!,
+                    gameID = gameID!!,
+                    gameMode = game!!.gameMode,
+                    gameOption = gameOption
+                )
             }
         }
     }

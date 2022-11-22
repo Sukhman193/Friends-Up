@@ -23,4 +23,6 @@
     <color name="button_light_purple">#FF6B66DC</color>
     <!-- Game card description font color -->
     <color name="gameCardDescFont">#FFC0C0C0</color>
+    <!--  Color for the trivia wrong question  -->
+    <color name="orange_trivia_wrong_question">#B3FFA500</color>
 </resources>

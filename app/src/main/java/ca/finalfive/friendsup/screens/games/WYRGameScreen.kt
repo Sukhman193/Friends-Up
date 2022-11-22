@@ -51,7 +51,7 @@ fun WYRGameScreen(gameViewModel: GameViewModel) {
             )
 
             // A for loop containing 4 button options
-            for (option in options) {
+            options.forEach { option ->
                 QuestionOption(option = option, gameViewModel = gameViewModel)
             }
         }

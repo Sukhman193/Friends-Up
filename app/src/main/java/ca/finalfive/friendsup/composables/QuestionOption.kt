@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.animations.ButtonAnimation
+import ca.finalfive.friendsup.composables.drawings.GameAnswerBackground
 import ca.finalfive.friendsup.composables.utils.ProfileIcon
 import ca.finalfive.friendsup.models.GameQuestionOption
 import ca.finalfive.friendsup.viewmodels.GameViewModel
@@ -31,15 +32,19 @@ import ca.finalfive.friendsup.viewmodels.GameViewModel
  * The buttons options for Trivia and Would you Rather
  * @param option represents the name of the option
  * @param gameViewModel view model of the game
+ * @param correctAnswer The correct answer if there is an answer
+ * @param displayCorrectAnswer States when to display the correct answer
  */
 @Composable
 fun QuestionOption(
     option: GameQuestionOption,
     gameViewModel: GameViewModel,
+    correctAnswer: GameQuestionOption? = null,
+    displayCorrectAnswer: Boolean = false
 ) {
     // If the game is null than don't display anything
     // The rest will be handled by the navigation bar
-    if(gameViewModel.game == null) {
+    if (gameViewModel.game == null) {
         return
     }
     // Height of the container
@@ -54,20 +59,16 @@ fun QuestionOption(
     }
     // Get the game
     val game = gameViewModel.game!!
-    // Get the current option being displayed
-    var currentOption by remember {
-        mutableStateOf(option)
-    }
+
     // Every time the game progress changes (goes to the next question)
     // Set the is Clicked to false
     // Set the value of currentOption to option
     LaunchedEffect(key1 = game.gameProgress) {
         gameViewModel.questionAnswered = false
         isClicked = false
-        currentOption = option
         // reset the current size when the game ends
         // We don't want to run this when the game first starts
-        if(game.gameProgress > 0) {
+        if (game.gameProgress > 0) {
             containerHeight = 70.dp
         }
     }
@@ -79,7 +80,7 @@ fun QuestionOption(
     // Set the value of currentOption to option
     LaunchedEffect(key1 = option) {
         isClicked = option.selectedBy.isNotEmpty()
-        currentOption = option
+
     }
 
     // The entire button size (with the darker color as the background)
@@ -90,12 +91,14 @@ fun QuestionOption(
             .padding(horizontal = 30.dp)
             .height(containerHeight)
             .clip(RoundedCornerShape(25.dp))
-            .clickable { }
-            .pointerInput(Unit) {
+            .clickable {
+                gameViewModel.handleAnswerGameOption(option)
+            }
+            .pointerInput(option) {
                 detectTapGestures(
                     onDoubleTap = {
                         // Handle the option being selected
-                        gameViewModel.handleAnswerGameOption(currentOption)
+                        gameViewModel.handleAnswerGameOption(option)
                     }
                 )
             }
@@ -114,15 +117,30 @@ fun QuestionOption(
             ButtonAnimation()
         }
 
-        // Container of the option card
-        Row (
+        // If all the users have responded
+        // than display the correct answer
+        if (displayCorrectAnswer) {
+            // Background for the game answer
+            // It will fill the container with the
+            // color desired
+            GameAnswerBackground(
+                option = option,
+                // if display correct answer
+                // is true than there must be a
+                // correct answer
+                correctAnswer = correctAnswer!!
+            )
+        }
+
+            // Container of the option card
+        Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxSize(),
             horizontalArrangement = Arrangement.SpaceBetween
-        ){
+        ) {
             // Text inside the button
             Text(
-                text = currentOption.optionText,
+                text = option.optionText,
                 color = Color.White,
                 style = MaterialTheme.typography.h3,
                 fontSize = 20.sp,
@@ -131,7 +149,7 @@ fun QuestionOption(
                     .padding(start = 65.dp)
                     .padding(bottom = 10.dp),
                 onTextLayout = {
-                    if(it.didOverflowHeight) {
+                    if (it.didOverflowHeight) {
                         containerHeight = it.size.height.dp - containerHeight
                     }
                 }
@@ -140,11 +158,11 @@ fun QuestionOption(
             // Display image of user who selected this option
             Row {
                 // Iterate over all options of the current game
-                currentOption.selectedBy.forEach { selectedBy ->
+                option.selectedBy.forEach { selectedBy ->
                     // Iterate over all the members
                     game.members.forEach {
                         // display the icon of the member who matches
-                        if(it.username == selectedBy) {
+                        if (it.username == selectedBy) {
                             ProfileIcon(imageUrl = it.icon)
                         }
                     }
