@@ -1,6 +1,5 @@
 package ca.finalfive.friendsup.repositories
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -60,12 +59,10 @@ class FirestoreUserRepository {
         if (!document.exists()) {
             throw Error.NotFoundException(userId)
         }
-        Log.d("LLAMA doc", document.toString())
         // stores to the user as an User Object
         val user = document.toObject<User>()
         // stores the user
         firestoreUser = user
-        Log.d("LLAMA", firestoreUser?.email.toString())
     }
 
     /**
@@ -125,7 +122,6 @@ class FirestoreUserRepository {
                 throw Exception("User Was Not Found")
             }
         }.await()
-        Log.d("LLAMA", friend?.email.toString())
     }
 
     /**
