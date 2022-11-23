@@ -120,7 +120,7 @@ fun QuestionOption(
             .height(containerHeight)
             .clip(RoundedCornerShape(25.dp))
             .clickable {
-                gameViewModel.handleAnswerGameOption(option)
+                gameViewModel.handleAnswerGameOption(option, context)
             }
             .shadow(elevation = containerElevation)
             .pointerInput(option) {
