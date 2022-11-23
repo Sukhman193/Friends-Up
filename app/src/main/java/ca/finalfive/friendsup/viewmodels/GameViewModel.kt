@@ -167,14 +167,19 @@ class GameViewModel : ViewModel() {
             if (savedUsername == null || game == null) {
                 return@launch
             }
-            // Call the repository to sent the message
-            gameFirestoreRepository.sendMessage(
-                username = savedUsername!!,
-                icon = profilePicture,
-                content = content,
-                gameID = gameID!!,
-                gameMode = game!!.gameMode
-            )
+            try {
+                // Call the repository to sent the message
+                gameFirestoreRepository.sendMessage(
+                    username = savedUsername!!,
+                    icon = profilePicture,
+                    content = content,
+                    gameID = gameID!!,
+                    gameMode = game!!.gameMode
+                )
+            } catch (error: Exception) {
+                errorMessage = error.message
+            }
+
         }
     }
 
@@ -298,8 +303,9 @@ class GameViewModel : ViewModel() {
     /**
      * Handle the user selecting a game option answer
      * @param gameOption option of the game that the user selected
+     * @param context current context of the application
      */
-    fun handleAnswerGameOption(gameOption: GameQuestionOption) {
+    fun handleAnswerGameOption(gameOption: GameQuestionOption, context: Context) {
         // Check if the question has already been answered
         if (!this.questionAnswered) {
             // Set the question answered variable to be true
@@ -310,13 +316,18 @@ class GameViewModel : ViewModel() {
                 if (savedUsername == null || game == null) {
                     return@launch
                 }
-                // Call the repository to update the answer
-                gameFirestoreRepository.sendAnswerSelected(
-                    username = savedUsername!!,
-                    gameID = gameID!!,
-                    gameMode = game!!.gameMode,
-                    gameOption = gameOption
-                )
+                try {
+                    // Call the repository to update the answer
+                    gameFirestoreRepository.sendAnswerSelected(
+                        username = savedUsername!!,
+                        gameID = gameID!!,
+                        gameMode = game!!.gameMode,
+                        gameOption = gameOption
+                    )
+                } catch (error: Error.ValidationException) {
+                    error.makeToast(context = context)
+                }
+
             }
         }
     }
@@ -325,7 +336,7 @@ class GameViewModel : ViewModel() {
      * Handle game progress,
      * This will route to the next question
      */
-    fun handleGameProgress() {
+    fun handleGameProgress(context: Context) {
         // Game should never be null when this function is called
         if (game == null) return
         // Check if it's the last question that is being answered
@@ -337,12 +348,16 @@ class GameViewModel : ViewModel() {
         // set the question answered to false
         this.questionAnswered = false
         viewModelScope.launch {
-            // Update the game
-            gameFirestoreRepository.handleGameProgress(
-                gameProgress = game!!.gameProgress + 1,
-                gameMode = gameMode,
-                gameID = gameID!!
-            )
+            try {
+                // Update the game
+                gameFirestoreRepository.handleGameProgress(
+                    gameProgress = game!!.gameProgress + 1,
+                    gameMode = gameMode,
+                    gameID = gameID!!
+                )
+            } catch (error: Error.ValidationException) {
+                error.makeToast(context)
+            }
         }
     }
 }

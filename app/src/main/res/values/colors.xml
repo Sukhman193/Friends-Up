@@ -25,6 +25,8 @@
     <color name="gameCardDescFont">#FFC0C0C0</color>
     <!--  Color for the trivia wrong question  -->
     <color name="orange_trivia_wrong_question">#B3FFA500</color>
+    <!--  Background color of the game title  -->
+    <color name="purple_game_container">#333728A5</color>
     <!--  Light purple color for background in friends list  -->
     <color name="light_purple_background">#805C56DE</color>
     <!--  Light grey colour for double tap notification  -->

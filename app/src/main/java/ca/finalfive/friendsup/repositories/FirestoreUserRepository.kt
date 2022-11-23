@@ -90,7 +90,7 @@ class FirestoreUserRepository {
         updatedUser: User
     ) {
         // updates the document with the user's id
-        collection.document(userId).set(
+        collection.document(userId).update(
             // maps the new info to the user's fields
             mapOf(
                 "username" to updatedUser.username,
@@ -155,13 +155,13 @@ class FirestoreUserRepository {
         val friendId = updateFriend.email.replace("@gmail.com", "")
 
         // updates the friend's database
-        collection.document(friendId).set(
+        collection.document(friendId).update(
             mapOf(
                 "friendList" to updateFriend.friendList
             )
         ).await()
         // updates the user's database
-        collection.document(currentUserId).set(
+        collection.document(currentUserId).update(
             mapOf(
                 "friendList" to updateUser.friendList
             )

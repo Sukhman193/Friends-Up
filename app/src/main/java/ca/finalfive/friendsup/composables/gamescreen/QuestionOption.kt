@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -66,7 +67,6 @@ fun QuestionOption(
     }
     // Get the game
     val game = gameViewModel.game!!
-
     // Every time the game progress changes (goes to the next question)
     // Set the is Clicked to false
     // Set the value of currentOption to option
@@ -109,7 +109,8 @@ fun QuestionOption(
     LaunchedEffect(key1 = option) {
         isClicked = option.selectedBy.isNotEmpty()
     }
-
+    // Current context of the application
+    val context = LocalContext.current
     // The entire button size (with the darker color as the background)
     Box(
         // Darker part of the button
@@ -129,10 +130,13 @@ fun QuestionOption(
                     },
                     onDoubleTap = {
                         // Handle the option being selected
-                        gameViewModel.handleAnswerGameOption(option)
+                        gameViewModel.handleAnswerGameOption(
+                            gameOption = option,
+                            context = context
+                        )
                         //user doesn't need the message to double tap
                         isTapped = false
-                    },
+                    }
                 )
             }
             .background(colorResource(R.color.dark_purple)),

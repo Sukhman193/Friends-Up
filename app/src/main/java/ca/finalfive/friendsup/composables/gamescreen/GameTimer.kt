@@ -7,6 +7,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,6 +44,8 @@ fun GameTimer(
     var currentTime by remember {
         mutableStateOf(totalTime)
     }
+    // Current context of the application
+    val context = LocalContext.current
 
     // Change the timer for the response
     LaunchedEffect(key1 = currentTime) {
@@ -71,7 +74,7 @@ fun GameTimer(
                 return@LaunchedEffect
             }
             // Go to the next question
-            gameViewModel.handleGameProgress()
+            gameViewModel.handleGameProgress(context = context)
         }
     }
 

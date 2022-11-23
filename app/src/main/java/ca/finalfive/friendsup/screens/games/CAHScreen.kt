@@ -72,7 +72,7 @@ fun CAHScreen(gameViewModel: GameViewModel) {
         gameType = R.string.game_cards_against_humanity_type,
         titleFontSize = 60.sp,
         gameViewModel = gameViewModel,
-        gameTimer = 15f
+        gameTimer = 45f
     ) {
         // Container of the game playing area
         Box(

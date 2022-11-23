@@ -34,7 +34,8 @@ fun WYRGameScreen(gameViewModel: GameViewModel) {
         gameTitle = R.string.game_would_you_rather_title,
         gameType = R.string.game_would_you_rather_type,
         titleFontSize = 40.sp,
-        gameViewModel = gameViewModel
+        gameViewModel = gameViewModel,
+        gameTimer = 45f
     ) {
         // Question for the user
         Text(
