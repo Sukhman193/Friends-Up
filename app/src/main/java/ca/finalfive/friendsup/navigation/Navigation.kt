@@ -70,12 +70,15 @@ sealed class Route(val route: String) {
  */
 sealed class BottomNavItem(var title: String, var icon: Int, var route: String) {
     // Navigation item for the home screen, with the icon id and the route
-    object Home : BottomNavItem("Games", R.drawable.message_icon, Route.GameRoomScreen.route)
+    //icon reference: Game Controller icon by Icons8 https://icons8.com/icon/set/user/material-outlined
+    object Home : BottomNavItem("Games", R.drawable.game_icon, Route.GameRoomScreen.route)
 
     // Navigation item for the Friends screen, with the icon id and route
+    //icon reference: User Account icon by Icons8 https://icons8.com/icon/set/user/material-outlined
     object Friends : BottomNavItem("Friends", R.drawable.friend_icon, Route.FriendsScreen.route)
 
     // Navigation item for the Profile screen, with the icon id and the route
+    //icon reference: User icon by Icons8 https://icons8.com/icon/set/user/material-outlined
     object Profile : BottomNavItem("Profile", R.drawable.profile_icon, Route.ProfileScreen.route)
 }
 

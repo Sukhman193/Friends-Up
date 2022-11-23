@@ -54,7 +54,7 @@ fun PlayButton(gameViewModel: GameViewModel, navController: NavController, gameM
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             //custom text icons with a shadow
-            DropShadowIcon(Icon = R.drawable.ic_play_arrow)
+            DropShadowIcon(Icon = R.drawable.play_arrow)
             //custom text box with a shadow
             DropShadowText(
                 text = "Play",

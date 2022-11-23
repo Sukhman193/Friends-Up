@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.colorResource
@@ -22,6 +23,7 @@ import ca.finalfive.friendsup.composables.drawings.GameAnswerBackground
 import ca.finalfive.friendsup.composables.utils.ProfileIcon
 import ca.finalfive.friendsup.models.GameQuestionOption
 import ca.finalfive.friendsup.viewmodels.GameViewModel
+import kotlinx.coroutines.delay
 
 /**
  * The buttons options for Trivia and Would you Rather
@@ -47,9 +49,19 @@ fun QuestionOption(
     var containerHeight by remember {
         mutableStateOf(70.dp)
     }
+    //Elevation of container
+    //we will increase the
+    var containerElevation by remember {
+        mutableStateOf(0.dp)
+    }
     // States whether an option has been clicked
     // this will allow the animation to start
     var isClicked by remember {
+        mutableStateOf(false)
+    }
+    // States whether the option has been tapped once
+    //this will let us display the message to double tap to confirm option
+    var isTapped by remember {
         mutableStateOf(false)
     }
     // Get the game
@@ -68,6 +80,27 @@ fun QuestionOption(
         }
     }
 
+    //a composable message that will appear at the bottom of the tapped option
+    //reference: https://stackoverflow.com/questions/73333287/how-to-show-a-composable-just-for-e-few-seconds
+    @Composable
+    fun timedTapMessage(){
+        LaunchedEffect(key1 = {isTapped = true}){
+            //delaying this action by 8 seconds allowing the message to show
+            delay(8000)
+            isTapped = false
+        }
+        //changing the elevation to give more of a shadow
+        containerElevation = 6.dp
+        //displaying the onTap message
+        Row(){
+            Text(
+                color = colorResource(id = R.color.grey_font),
+                fontSize = 6.sp,
+                text = "Double tap to confirm option selection!"
+            )
+        }
+    }
+
     // Every time the current option is changed
     // This will be affected by both users change
     // set is clicked to false if the button is not pressed
@@ -75,7 +108,6 @@ fun QuestionOption(
     // Set the value of currentOption to option
     LaunchedEffect(key1 = option) {
         isClicked = option.selectedBy.isNotEmpty()
-
     }
 
     // The entire button size (with the darker color as the background)
@@ -89,15 +121,22 @@ fun QuestionOption(
             .clickable {
                 gameViewModel.handleAnswerGameOption(option)
             }
+            .shadow(elevation = containerElevation)
             .pointerInput(option) {
                 detectTapGestures(
+                    onTap = {
+                        isTapped = true
+                    },
                     onDoubleTap = {
                         // Handle the option being selected
                         gameViewModel.handleAnswerGameOption(option)
-                    }
+                        //user doesn't need the message to double tap
+                        isTapped = false
+                    },
                 )
             }
-            .background(colorResource(R.color.dark_purple))
+            .background(colorResource(R.color.dark_purple)),
+
     ) {
         // Lighter color on the left of the button
         Box(
@@ -113,7 +152,7 @@ fun QuestionOption(
         }
 
         // If all the users have responded
-        // than display the correct answer
+        // then display the correct answer
         if (displayCorrectAnswer) {
             // Background for the game answer
             // It will fill the container with the
@@ -149,6 +188,10 @@ fun QuestionOption(
                     }
                 }
             )
+            //the on tap message composable which will display for 8 seconds
+            if (isTapped) {
+                timedTapMessage()
+            }
 
             // Display image of user who selected this option
             Row {
