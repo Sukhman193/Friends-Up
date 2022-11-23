@@ -65,9 +65,9 @@ fun TriviaGameScreen(gameViewModel: GameViewModel) {
         // First we get all the questions answered
         // if the total number of questions answered
         // equals to the number of total members than it's true
-        displayCorrectAnswer = gameQuestionContent.map {
-            it.selectedBy.isNotEmpty()
-        }.filter { it }.size == game.members.size
+        displayCorrectAnswer = gameQuestionContent.sumOf {
+            it.selectedBy.size
+        } == game.members.size
     }
 
     GameScreen(
@@ -75,7 +75,7 @@ fun TriviaGameScreen(gameViewModel: GameViewModel) {
         gameType = R.string.game_trivia_type,
         titleFontSize = 60.sp,
         gameViewModel = gameViewModel,
-        gameTimer = 10f
+        gameTimer = 45f
     ) {
         // Question for the user
         Text(

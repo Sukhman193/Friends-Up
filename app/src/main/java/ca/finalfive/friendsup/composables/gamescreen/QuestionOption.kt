@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,7 +55,6 @@ fun QuestionOption(
     }
     // Get the game
     val game = gameViewModel.game!!
-
     // Every time the game progress changes (goes to the next question)
     // Set the is Clicked to false
     // Set the value of currentOption to option
@@ -67,7 +67,6 @@ fun QuestionOption(
             containerHeight = 70.dp
         }
     }
-
     // Every time the current option is changed
     // This will be affected by both users change
     // set is clicked to false if the button is not pressed
@@ -75,9 +74,9 @@ fun QuestionOption(
     // Set the value of currentOption to option
     LaunchedEffect(key1 = option) {
         isClicked = option.selectedBy.isNotEmpty()
-
     }
-
+    // Current context of the application
+    val context = LocalContext.current
     // The entire button size (with the darker color as the background)
     Box(
         // Darker part of the button
@@ -86,14 +85,15 @@ fun QuestionOption(
             .padding(horizontal = 30.dp)
             .height(containerHeight)
             .clip(RoundedCornerShape(25.dp))
-            .clickable {
-                gameViewModel.handleAnswerGameOption(option)
-            }
+            .clickable {}
             .pointerInput(option) {
                 detectTapGestures(
                     onDoubleTap = {
                         // Handle the option being selected
-                        gameViewModel.handleAnswerGameOption(option)
+                        gameViewModel.handleAnswerGameOption(
+                            gameOption = option,
+                            context = context
+                        )
                     }
                 )
             }

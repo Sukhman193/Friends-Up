@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,6 +39,8 @@ fun WhiteCard(
     whiteCard: GameQuestionOption,
     game: Game
 ) {
+    // current context of the application
+    val context = LocalContext.current
     // Container for the white card
     Box(
         modifier = Modifier.fillMaxSize()
@@ -54,7 +57,8 @@ fun WhiteCard(
                     detectTapGestures(
                         onDoubleTap = {
                             gameViewModel.handleAnswerGameOption(
-                                whiteCard
+                                gameOption = whiteCard,
+                                context = context
                             )
                         }
                     )

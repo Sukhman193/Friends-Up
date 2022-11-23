@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.composables.gamescreen.GameScreen
@@ -26,19 +27,20 @@ fun PromptGameScreen(gameViewModel: GameViewModel) {
 
     // Timer for the game
     var gameTimer by remember {
-        mutableStateOf(20f)
+        mutableStateOf(45f)
     }
-
     // Game being played
     val game = gameViewModel.game!!
     // Index of the game being played
     val currentPromptIndex = game.gameProgress
     // Prompt of the current game being played
     val prompt = game.gameContent[currentPromptIndex].mainQuestion
-
+    // Reset the game timer
     LaunchedEffect(key1 = prompt) {
-        gameTimer = 20f
+        gameTimer = 45f
     }
+    // Current context of the application
+    val context = LocalContext.current
     // Game content which includes the topBar, gameTimer and the question
     // if there is one
     GameScreen(
@@ -76,7 +78,7 @@ fun PromptGameScreen(gameViewModel: GameViewModel) {
                         .background(Color(R.color.light_grey))
                         .align(Alignment.End)
                         .clickable {
-                            gameViewModel.handleGameProgress()
+                            gameViewModel.handleGameProgress(context = context)
                         }
                 ) {
                     // Text inside the button

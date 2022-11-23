@@ -14,9 +14,9 @@ class UserViewModelFactory(private val userRepository: FirestoreUserRepository) 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         // returns the userViewModel instance
         if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
-            return UserViewModel(userRepository) as T;
+            return UserViewModel(userRepository) as T
         }
 
-        throw IllegalStateException();
+        throw IllegalStateException()
     }
 }

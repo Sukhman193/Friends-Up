@@ -12,7 +12,9 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import ca.finalfive.friendsup.composables.utils.BackgroundImage
+import ca.finalfive.friendsup.factories.GameViewModelFactory
 import ca.finalfive.friendsup.navigation.Navigation
 import ca.finalfive.friendsup.ui.theme.StrangerCommonsTheme
 import ca.finalfive.friendsup.viewmodels.GameViewModel
@@ -29,10 +31,10 @@ class MainActivity : ComponentActivity() {
         // Disable the keyboard effects
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        // initialize game view model
-        gameViewModel = GameViewModel()
-
         setContent {
+            // initialize game view model
+            gameViewModel = viewModel(factory = GameViewModelFactory())
+            
             // Every time there is an error message, set the error message to be null
             LaunchedEffect(key1 = gameViewModel.errorMessage) {
                 // This is required because if the same error occurs

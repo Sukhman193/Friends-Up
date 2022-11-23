@@ -49,13 +49,10 @@ fun GameScreen(
     val requester = remember {
         FocusRequester()
     }
-
     // States of keyboard
     val (isKeyboardShown, setKeyboardShown) = remember { mutableStateOf(false) }
-
     // saves the state of the local focus
     val localFocusManager = LocalFocusManager.current
-
     // Get the current game
     val game = gameViewModel.game!!
     // Get all the chats in the game
@@ -70,6 +67,10 @@ fun GameScreen(
     } else {
         chats.subList(lastIndex - 3, lastIndex + 1)
     }
+    // State for whether the popup should be open or not
+    val (reportPopup, setReportPopup) = remember {
+        mutableStateOf(false)
+    }
 
     // Black background over the background to make the background dimmer
     Box(
@@ -77,7 +78,6 @@ fun GameScreen(
             .fillMaxSize()
             .background(Color.Black.copy(alpha = 0.5F))
     )
-
     // Column containing all the elements you currently see, this is used to
     // arrange the MessageBox to the bottom
     Box (
@@ -123,7 +123,8 @@ fun GameScreen(
                 titleFontSize = titleFontSize,
                 gameTimer = gameTimer,
                 gameType = gameType,
-                gameViewModel = gameViewModel
+                gameViewModel = gameViewModel,
+                setReportPopup = setReportPopup
             )
         },
         // Set the background to be transparent
@@ -153,43 +154,13 @@ fun GameScreen(
             }
         }
     }
-}
 
-/**
- * The top of the game screen, it will keep track of the time and everything
- * @param gameTitle is the title at the Top bar
- * @param gameType is the variable beside the numbers in the timer animation
- *      for example "<Question> 1 of 5". gameType being the word Question
- * @param titleFontSize font size for the title
- * @param gameTimer timer of the game
- */
-@Composable
-fun Counter(
-    gameTitle: Int,
-    titleFontSize: TextUnit,
-    gameTimer: Float,
-    gameType: Int,
-    gameViewModel: GameViewModel
-) {
-    Column {
-        // Container at the top which includes the title of the mini-game
-        TopGameBar(
-            gameTitle = gameTitle,
-            fontSize = titleFontSize
-        )
-
-        // Space between the 3 lines and the top bar
-        Spacer(
-            modifier = Modifier
-                .padding(bottom = 20.dp)
-        )
-        // Component containing the timer animation along with the lines above it,
-        // and the words to the left of the timer
-        GameTimer(
-            totalTime = gameTimer,
-            prompt = gameType,
+    // Display the popup if the user opens it
+    if(reportPopup) {
+        ReportPopup(
+            setReportPopup = setReportPopup,
             gameViewModel = gameViewModel
         )
     }
-}
 
+}
