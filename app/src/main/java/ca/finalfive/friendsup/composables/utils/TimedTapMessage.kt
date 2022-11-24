@@ -10,7 +10,7 @@ import ca.finalfive.friendsup.R
 //a composable message that will appear at the bottom of the tapped option
 //reference: https://stackoverflow.com/questions/73333287/how-to-show-a-composable-just-for-e-few-seconds
 @Composable
-fun TimedTapMessage_caseingFix(){
+fun TimedTapMessage(){
     //displaying the onTap message
     Row(){
         Text(

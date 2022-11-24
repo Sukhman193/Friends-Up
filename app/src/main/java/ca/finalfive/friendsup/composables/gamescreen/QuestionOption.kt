@@ -22,7 +22,7 @@ import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.animations.ButtonAnimation
 import ca.finalfive.friendsup.composables.drawings.GameAnswerBackground
 import ca.finalfive.friendsup.composables.utils.ProfileIcon
-import ca.finalfive.friendsup.composables.utils.TimedTapMessage_caseingFix
+import ca.finalfive.friendsup.composables.utils.TimedTapMessage
 import ca.finalfive.friendsup.models.GameQuestionOption
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 import kotlinx.coroutines.delay
@@ -183,7 +183,7 @@ fun QuestionOption(
             )
             //the on tap message composable which will display for 8 seconds
             if (isTapped) {
-                TimedTapMessage_caseingFix()
+                TimedTapMessage()
             } else {
                 // Display image of user who selected this option
                 Row {
