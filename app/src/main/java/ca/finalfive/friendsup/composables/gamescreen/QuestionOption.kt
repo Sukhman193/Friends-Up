@@ -22,6 +22,7 @@ import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.animations.ButtonAnimation
 import ca.finalfive.friendsup.composables.drawings.GameAnswerBackground
 import ca.finalfive.friendsup.composables.utils.ProfileIcon
+import ca.finalfive.friendsup.composables.utils.TimedTapMessage_caseingFix
 import ca.finalfive.friendsup.models.GameQuestionOption
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 import kotlinx.coroutines.delay
@@ -79,28 +80,15 @@ fun QuestionOption(
             containerHeight = 70.dp
         }
     }
-
-    //a composable message that will appear at the bottom of the tapped option
     //reference: https://stackoverflow.com/questions/73333287/how-to-show-a-composable-just-for-e-few-seconds
-    @Composable
-    fun timedTapMessage(){
-        //starts as soon as the option is tapped
-        LaunchedEffect(key1 = {isTapped = true}){
-            //delaying this action by 8 seconds allowing the message to show
-            delay(8000)
-            isTapped = false
-        }
-        //changing the elevation to give more of a shadow
+    //starts as soon as the option is tapped
+    LaunchedEffect(key1 = {isTapped = true}){
         containerElevation = 6.dp
-        //displaying the onTap message
-        Row(){
-            Text(
-                color = colorResource(id = R.color.grey_font),
-                fontSize = 12.sp,
-                text = "Double tap to confirm option selection!"
-            )
-        }
+        //delaying this action by 4 seconds allowing the message to show
+        delay(4000)
+        isTapped = false
     }
+
 
     // Every time the current option is changed
     // This will be affected by both users change
@@ -195,7 +183,7 @@ fun QuestionOption(
             )
             //the on tap message composable which will display for 8 seconds
             if (isTapped) {
-                timedTapMessage()
+                TimedTapMessage_caseingFix()
             } else {
                 // Display image of user who selected this option
                 Row {
