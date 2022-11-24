@@ -18,10 +18,11 @@ Technology used in this project
 - Kotlin
 - Jetpack Compose
 - Firebase
-- Grphql 
+- GrphQL
 - Apollo 
 - AWS 
 - Pipedream
+- Lottie
 
 Many icons used from: 
 - [Icons8](https://icons8.com/icons/)
