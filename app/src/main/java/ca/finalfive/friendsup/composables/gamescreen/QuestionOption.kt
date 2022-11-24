@@ -82,10 +82,12 @@ fun QuestionOption(
     }
     //reference: https://stackoverflow.com/questions/73333287/how-to-show-a-composable-just-for-e-few-seconds
     //starts as soon as the option is tapped
-    LaunchedEffect(key1 = {isTapped = true}){
-        containerElevation = 6.dp
-        //delaying this action by 4 seconds allowing the message to show
-        delay(4000)
+    LaunchedEffect(key1 = isTapped) {
+        containerElevation = 0.dp
+        if (!isTapped) return@LaunchedEffect
+        containerElevation = -(3).dp
+        //delaying this action by 3 seconds allowing the message to show
+        delay(3000)
         isTapped = false
     }
 
@@ -108,7 +110,7 @@ fun QuestionOption(
             .padding(horizontal = 30.dp)
             .height(containerHeight)
             .clip(RoundedCornerShape(25.dp))
-            .shadow(elevation = containerElevation)
+            .offset(y = containerElevation)
             .pointerInput(option) {
                 detectTapGestures(
                     onTap = {
@@ -180,7 +182,7 @@ fun QuestionOption(
             )
             //the on tap message composable which will display for 8 seconds
             if (isTapped) {
-                TimedTapMessage()
+                TimedTapMessage("Trivia")
             } else {
                 // Display image of user who selected this option
                 Row {

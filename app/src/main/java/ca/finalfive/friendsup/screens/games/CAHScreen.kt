@@ -46,6 +46,7 @@ fun CAHScreen(gameViewModel: GameViewModel) {
         mutableStateOf(game.gameContent[currentGameIndex].questionOptions)
     }
 
+
     // Every time the game progress changes update the data
     LaunchedEffect(key1 = gameViewModel.game?.gameProgress) {
         // update the game
@@ -65,6 +66,8 @@ fun CAHScreen(gameViewModel: GameViewModel) {
         game = gameViewModel.game!!
         whiteCards = game.gameContent[currentGameIndex].questionOptions
     }
+
+    //Everytime a card is tapped, we want to display a message to double tap
 
     // Container of the screen
     GameScreen(
@@ -86,7 +89,7 @@ fun CAHScreen(gameViewModel: GameViewModel) {
                 gameViewModel = gameViewModel,
                 align = Alignment.TopStart,
                 whiteCard = whiteCards[0],
-                game = game
+                game = game,
             )
             // Add the second white card
             WhiteCard(
