@@ -108,9 +108,6 @@ fun QuestionOption(
             .padding(horizontal = 30.dp)
             .height(containerHeight)
             .clip(RoundedCornerShape(25.dp))
-            .clickable {
-                gameViewModel.handleAnswerGameOption(option, context)
-            }
             .shadow(elevation = containerElevation)
             .pointerInput(option) {
                 detectTapGestures(
