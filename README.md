@@ -18,9 +18,10 @@ Technology used in this project
 - Kotlin
 - Jetpack Compose
 - Firebase
-- GrphQL
+- GraphQL
 - Apollo 
 - AWS 
+- TypeScript
 - Pipedream
 - Lottie
 
