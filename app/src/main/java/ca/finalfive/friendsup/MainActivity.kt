@@ -15,12 +15,15 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ca.finalfive.friendsup.composables.utils.BackgroundImage
 import ca.finalfive.friendsup.factories.GameViewModelFactory
+import ca.finalfive.friendsup.helpers.LockScreenOrientation
+import ca.finalfive.friendsup.helpers.makeApplicationFullScreen
 import ca.finalfive.friendsup.navigation.Navigation
 import ca.finalfive.friendsup.ui.theme.StrangerCommonsTheme
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 import kotlinx.coroutines.delay
 
 // https://blog.canopas.com/keyboard-handling-in-jetpack-compose-all-you-need-to-know-3e6fddd30d9a
+//https://medium.com/@bhuvanesh_shan/making-full-screen-ui-in-android-jetpack-compose-46a7a1362b02
 
 class MainActivity : ComponentActivity() {
     // Game view model for the application
@@ -30,11 +33,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         // Disable the keyboard effects
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        // Hide the top status bar
+        actionBar?.hide()
+        // Make the application full screen
+        makeApplicationFullScreen(window)
 
         setContent {
+            // Lock the screen orientation to portrait
+            LockScreenOrientation()
             // initialize game view model
             gameViewModel = viewModel(factory = GameViewModelFactory())
-            
+
             // Every time there is an error message, set the error message to be null
             LaunchedEffect(key1 = gameViewModel.errorMessage) {
                 // This is required because if the same error occurs
@@ -42,7 +51,6 @@ class MainActivity : ComponentActivity() {
                 delay(300)
                 gameViewModel.errorMessage = null
             }
-
             StrangerCommonsTheme(false) {
                 // A surface container using the 'background' color from the theme
                 Surface(
