@@ -3,6 +3,7 @@
 
 ## Features
 - Connect two players in a game room
+- Chat Room available while playing games
 - Four game types
 	- Trivia
 	- Would you Rather
