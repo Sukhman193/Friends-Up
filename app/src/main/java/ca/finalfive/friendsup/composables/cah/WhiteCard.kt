@@ -20,9 +20,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.utils.ProfileIcon
+import ca.finalfive.friendsup.composables.utils.TimedTapMessage
 import ca.finalfive.friendsup.models.Game
 import ca.finalfive.friendsup.models.GameQuestionOption
 import ca.finalfive.friendsup.viewmodels.GameViewModel
+import kotlinx.coroutines.delay
 
 
 /**
@@ -39,6 +41,19 @@ fun WhiteCard(
     whiteCard: GameQuestionOption,
     game: Game
 ) {
+
+    var isTapped by remember {
+        mutableStateOf(false)
+    }
+
+    //reference: https://stackoverflow.com/questions/73333287/how-to-show-a-composable-just-for-e-few-seconds
+    //starts as soon as the option is tapped
+    LaunchedEffect(key1 = isTapped) {
+        if (!isTapped) return@LaunchedEffect
+        //delaying this action by 3 seconds allowing the message to show
+        delay(3000)
+        isTapped = false
+    }
     // current context of the application
     val context = LocalContext.current
     // Container for the white card
@@ -51,15 +66,19 @@ fun WhiteCard(
                 .height(175.dp)
                 .width(135.dp)
                 .align(align)
-                .clickable { }
+                //.clickable {}
                 // On double click the card is selected
                 .pointerInput(whiteCard) {
                     detectTapGestures(
+                        onTap = {
+                            isTapped = true
+                        },
                         onDoubleTap = {
                             gameViewModel.handleAnswerGameOption(
                                 gameOption = whiteCard,
                                 context = context
                             )
+                            isTapped = false
                         }
                     )
                 },
@@ -72,19 +91,27 @@ fun WhiteCard(
             Scaffold(
                 modifier = Modifier.fillMaxSize(),
                 bottomBar = {
-                    Row {
-                        // iterate over the selected by list
-                        whiteCard.selectedBy.forEach { selectedBy ->
-                            // iterate over the game members list
-                            game.members.forEach {
-                                // display the profile icon of the user
-                                // who selected the game
-                                if (it.username == selectedBy) {
-                                    ProfileIcon(imageUrl = it.icon)
+                    if (isTapped){
+                        TimedTapMessage(location = "CAH")
+                    } else {
+                        Row(modifier = Modifier.padding(
+                            horizontal = 10.dp,
+                            vertical = 10.dp)
+                        ) {
+                            // iterate over the selected by list
+                            whiteCard.selectedBy.forEach { selectedBy ->
+                                // iterate over the game members list
+                                game.members.forEach {
+                                    // display the profile icon of the user
+                                    // who selected the game
+                                    if (it.username == selectedBy) {
+                                        ProfileIcon(imageUrl = it.icon)
+                                    }
                                 }
                             }
                         }
                     }
+
                 }
             ) { paddingValued ->
                 // Display image of user who selected this option

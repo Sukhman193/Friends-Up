@@ -193,7 +193,8 @@ fun ProfilePage(userViewModel: UserViewModel) {
                 value = usernameText,
                 setValue = setUsernameText,
                 label = stringResource(id = R.string.profile_username),
-                iconID = R.drawable.username_icon,
+                //icon reference: User icon by Icons8 https://icons8.com/icon/set/user/material-outlined
+                iconID = R.drawable.profile_icon,
                 modifier = Modifier
                     .focusRequester(requester)
                     .onFocusChanged { isKeyboardShown = it.hasFocus }
@@ -204,6 +205,7 @@ fun ProfilePage(userViewModel: UserViewModel) {
             CustomTextField(
                 value = snapchatText,
                 setValue = setSnapchatText,
+                //icon reference: Snapchat icon by Icons8 https://icons8.com/icon/set/snapchat/material-outlined
                 label = stringResource(id = R.string.profile_snapchat),
                 iconID = R.drawable.snapchat_icon,
                 modifier = Modifier
@@ -217,6 +219,7 @@ fun ProfilePage(userViewModel: UserViewModel) {
                 value = instagramText,
                 setValue = setInstagramText,
                 label = stringResource(id = R.string.profile_instagram),
+                //icon reference: Instagram icon by Icons8 https://icons8.com/icon/set/instagram/material-outlined
                 iconID = R.drawable.instagram_icon,
                 modifier = Modifier
                     .focusRequester(requester)
@@ -229,6 +232,7 @@ fun ProfilePage(userViewModel: UserViewModel) {
                 value = discordText,
                 setValue = setDiscordText,
                 label = stringResource(id = R.string.profile_discord),
+                //icon reference: Discord icon by Icons8 https://icons8.com/icon/set/discord/material-outlined
                 iconID = R.drawable.discord_icon,
                 modifier = Modifier
                     .focusRequester(requester)
@@ -241,6 +245,8 @@ fun ProfilePage(userViewModel: UserViewModel) {
                 value = phoneText,
                 setValue = setPhoneText,
                 label = stringResource(id = R.string.profile_phone_number),
+
+                //icon reference: Phone icon by Icons8 https://icons8.com/icons/set/phone
                 iconID = R.drawable.phone_icon,
                 modifier = Modifier
                     .focusRequester(requester)

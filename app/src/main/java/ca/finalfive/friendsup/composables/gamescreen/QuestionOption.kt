@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
@@ -21,8 +22,10 @@ import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.animations.ButtonAnimation
 import ca.finalfive.friendsup.composables.drawings.GameAnswerBackground
 import ca.finalfive.friendsup.composables.utils.ProfileIcon
+import ca.finalfive.friendsup.composables.utils.TimedTapMessage
 import ca.finalfive.friendsup.models.GameQuestionOption
 import ca.finalfive.friendsup.viewmodels.GameViewModel
+import kotlinx.coroutines.delay
 
 /**
  * The buttons options for Trivia and Would you Rather
@@ -48,9 +51,19 @@ fun QuestionOption(
     var containerHeight by remember {
         mutableStateOf(70.dp)
     }
+    //Elevation of container
+    //we will increase the
+    var containerElevation by remember {
+        mutableStateOf(0.dp)
+    }
     // States whether an option has been clicked
     // this will allow the animation to start
     var isClicked by remember {
+        mutableStateOf(false)
+    }
+    // States whether the option has been tapped once
+    //this will let us display the message to double tap to confirm option
+    var isTapped by remember {
         mutableStateOf(false)
     }
     // Get the game
@@ -67,6 +80,18 @@ fun QuestionOption(
             containerHeight = 70.dp
         }
     }
+    //reference: https://stackoverflow.com/questions/73333287/how-to-show-a-composable-just-for-e-few-seconds
+    //starts as soon as the option is tapped
+    LaunchedEffect(key1 = isTapped) {
+        containerElevation = 0.dp
+        if (!isTapped) return@LaunchedEffect
+        containerElevation = -(3).dp
+        //delaying this action by 3 seconds allowing the message to show
+        delay(3000)
+        isTapped = false
+    }
+
+
     // Every time the current option is changed
     // This will be affected by both users change
     // set is clicked to false if the button is not pressed
@@ -85,19 +110,25 @@ fun QuestionOption(
             .padding(horizontal = 30.dp)
             .height(containerHeight)
             .clip(RoundedCornerShape(25.dp))
-            .clickable {}
+            .offset(y = containerElevation)
             .pointerInput(option) {
                 detectTapGestures(
+                    onTap = {
+                        isTapped = true
+                    },
                     onDoubleTap = {
                         // Handle the option being selected
                         gameViewModel.handleAnswerGameOption(
                             gameOption = option,
                             context = context
                         )
+                        //user doesn't need the message to double tap
+                        isTapped = false
                     }
                 )
             }
-            .background(colorResource(R.color.dark_purple))
+            .background(colorResource(R.color.dark_purple)),
+
     ) {
         // Lighter color on the left of the button
         Box(
@@ -113,7 +144,7 @@ fun QuestionOption(
         }
 
         // If all the users have responded
-        // than display the correct answer
+        // then display the correct answer
         if (displayCorrectAnswer) {
             // Background for the game answer
             // It will fill the container with the
@@ -149,16 +180,20 @@ fun QuestionOption(
                     }
                 }
             )
-
-            // Display image of user who selected this option
-            Row {
-                // Iterate over all options of the current game
-                option.selectedBy.forEach { selectedBy ->
-                    // Iterate over all the members
-                    game.members.forEach {
-                        // display the icon of the member who matches
-                        if (it.username == selectedBy) {
-                            ProfileIcon(imageUrl = it.icon)
+            //the on tap message composable which will display for 8 seconds
+            if (isTapped) {
+                TimedTapMessage("Trivia")
+            } else {
+                // Display image of user who selected this option
+                Row {
+                    // Iterate over all options of the current game
+                    option.selectedBy.forEach { selectedBy ->
+                        // Iterate over all the members
+                        game.members.forEach {
+                            // display the icon of the member who matches
+                            if (it.username == selectedBy) {
+                                ProfileIcon(imageUrl = it.icon)
+                            }
                         }
                     }
                 }

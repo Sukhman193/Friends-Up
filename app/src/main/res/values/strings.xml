@@ -37,7 +37,7 @@
     <!--  Prompt game title  -->
     <string name="game_prompt_title">Prompt</string>
     <!--  Prompt game description  -->
-    <string name="game_prompt_description">Get a topic to talk about every minute and make sure you keep at eye at the time limit</string>
+    <string name="game_prompt_description">Get a topic to talk about every minute. Make sure you keep at eye on the time limit!</string>
     <!--  Prompt game counter description -->
     <string name="game_prompt_type">Prompt %1$d of %2$d</string>
     <!--  Would you rather game  -->
@@ -105,7 +105,7 @@
     <!--  Display text for when the user is not sharing any social media  -->
     <string name="friend_list_no_social_media">User is not sharing any social media</string>
     <!--  Display text for when the user has no friends  -->
-    <string name="friend_list_no_friends">You currently have no friends</string>
+    <string name="friend_list_no_friends">Friends added while playing games will be displayed here. Play some games to make more connections!</string>
 
     <!--  Info screen  -->
     <!--  Friend info title  -->

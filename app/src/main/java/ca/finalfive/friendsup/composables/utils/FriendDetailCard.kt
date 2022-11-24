@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.models.FriendCardDetail
@@ -40,6 +41,7 @@ fun FriendDetailCard(friendCardDetail: FriendCardDetail) {
     // back to the copy icon
     LaunchedEffect(key1 = trailingIcon) {
         delay(3000)
+        //icon reference: Copy icon by Icons8 https://icons8.com/icon/set/copy/material-outlined
         trailingIcon = R.drawable.copy_icon
     }
 
@@ -100,3 +102,4 @@ fun FriendDetailCard(friendCardDetail: FriendCardDetail) {
         )
     }
 }
+
