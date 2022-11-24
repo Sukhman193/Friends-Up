@@ -33,4 +33,6 @@
     <color name="grey_font">#99ECECEC</color>
     <!--  Dark grey colour for double tap notification in CAH  -->
     <color name="dark_grey_font">#99818181</color>
+   <!--  Color for the background of the splash screen  -->
+    <color name="splash_screen_background_color">#FF6338C1</color>
 </resources>
