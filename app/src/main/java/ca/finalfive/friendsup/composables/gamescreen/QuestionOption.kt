@@ -84,6 +84,7 @@ fun QuestionOption(
     //reference: https://stackoverflow.com/questions/73333287/how-to-show-a-composable-just-for-e-few-seconds
     @Composable
     fun timedTapMessage(){
+        //starts as soon as the option is tapped
         LaunchedEffect(key1 = {isTapped = true}){
             //delaying this action by 8 seconds allowing the message to show
             delay(8000)
@@ -95,7 +96,7 @@ fun QuestionOption(
         Row(){
             Text(
                 color = colorResource(id = R.color.grey_font),
-                fontSize = 6.sp,
+                fontSize = 12.sp,
                 text = "Double tap to confirm option selection!"
             )
         }
@@ -195,17 +196,17 @@ fun QuestionOption(
             //the on tap message composable which will display for 8 seconds
             if (isTapped) {
                 timedTapMessage()
-            }
-
-            // Display image of user who selected this option
-            Row {
-                // Iterate over all options of the current game
-                option.selectedBy.forEach { selectedBy ->
-                    // Iterate over all the members
-                    game.members.forEach {
-                        // display the icon of the member who matches
-                        if (it.username == selectedBy) {
-                            ProfileIcon(imageUrl = it.icon)
+            } else {
+                // Display image of user who selected this option
+                Row {
+                    // Iterate over all options of the current game
+                    option.selectedBy.forEach { selectedBy ->
+                        // Iterate over all the members
+                        game.members.forEach {
+                            // display the icon of the member who matches
+                            if (it.username == selectedBy) {
+                                ProfileIcon(imageUrl = it.icon)
+                            }
                         }
                     }
                 }
