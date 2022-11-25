@@ -19,6 +19,14 @@ import ca.finalfive.friendsup.R
 import ca.finalfive.friendsup.composables.utils.buttons.PlayButton
 import ca.finalfive.friendsup.viewmodels.GameViewModel
 
+/**
+ * GameSelectionCard - Container for the game card
+ * @param gameName - Name of the game
+ * @param gameDesc - Description of the game
+ * @param gameViewModel - Instance of the GameViewModel
+ * @param navController - Instance of the navController for Navigating
+ * @param gameMode - Mode of the game
+ */
 @Composable
 fun GameSelectionCard(
     gameName: String,
@@ -27,6 +35,7 @@ fun GameSelectionCard(
     navController: NavController,
     gameMode: String
 ) {
+    // Card with round corner shape
     Card(
         modifier = Modifier
             .width(470.dp)
@@ -36,7 +45,9 @@ fun GameSelectionCard(
         backgroundColor = GameCardBackgroundColor,
         elevation = 10.dp
     ) {
+        // Row containing a column
         Row(modifier = Modifier.padding(10.dp)) {
+            // a column containing DropShadowText
             Column(
                 modifier = Modifier
                     .background(color = Color.Transparent)
@@ -55,10 +66,12 @@ fun GameSelectionCard(
                     color = colorResource(id = R.color.gameCardDescFont)
                 )
             }
+            // column containing the playbutton
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
+                // Play Button
                 PlayButton(gameViewModel, navController, gameMode)
             }
         }

@@ -21,6 +21,16 @@ import androidx.compose.ui.unit.sp
 import ca.finalfive.friendsup.R
 
 //reference https://medium.com/tech-takeaways/jetpack-compose-drop-shadow-text-effect-b2f95d0dc2b5
+/**
+ * DropShadowText - It adds a shadow to text
+ * @param modifier - Modifier to modify
+ * @param text - Text
+ * @param fontSize - size of the text
+ * @param fontWeight - weight of the text
+ * @param color - Color of the text
+ * @param style - Text Style
+ * @param textAlign - Aligning the text
+ */
 @Composable
 fun DropShadowText(
     //we can override whatever we need to change to match the text, but we also set some defaults
@@ -58,7 +68,11 @@ fun DropShadowText(
     }
 }
 
-//this is the same thing, but for any icons we make!
+/**
+ * DropShadowIcon - It adds shadow to the icon
+ * @param modifier - to modify
+ * @param Icon - Icon Resource id
+ */
 @Composable
 fun DropShadowIcon(
     //we can override whatever we need to change to match the text
