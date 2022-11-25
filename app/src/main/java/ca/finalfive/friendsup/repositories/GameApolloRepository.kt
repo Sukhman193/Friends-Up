@@ -256,7 +256,7 @@ class GameApolloRepository(private val apolloClient: ApolloClient) {
             // If instance is null create a new gameApolloRepository
             if (INSTANCE == null) {
                 val apolloClient = ApolloClient.Builder()
-                    .serverUrl("https://t8gqkrufr2.execute-api.us-west-1.amazonaws.com/dev/graphql")
+                    .serverUrl("https://w0ej2ub0el.execute-api.us-west-1.amazonaws.com/production/graphql")
                     .build()
                 INSTANCE = GameApolloRepository(apolloClient)
             }
