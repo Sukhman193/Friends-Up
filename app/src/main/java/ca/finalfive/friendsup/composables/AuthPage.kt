@@ -77,11 +77,11 @@ fun AuthPage(
                     // Route to the Game Screen if the sign in is successful
                     navController.navigate(Route.GameRoomScreen.route)
                 }
+            } catch (error: FirebaseAuthInvalidUserException) {
+                Toast.makeText(context, error.message.toString(), Toast.LENGTH_SHORT).show()
             } catch (e: ApiException) {
                 // make a toast to notify the user that authentication was not successful
                 Toast.makeText(context, "Authentication Failed", Toast.LENGTH_SHORT).show()
-            } catch (error: FirebaseAuthInvalidUserException) {
-                Toast.makeText(context, error.message.toString(), Toast.LENGTH_SHORT).show()
             }
         }
 

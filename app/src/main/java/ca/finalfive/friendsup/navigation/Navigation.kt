@@ -36,7 +36,6 @@ class RouteArgs {
     }
 }
 
-
 /**
  * Screens for possible navigation
  * @param route Route of the screen
