@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <!--  Light purple color  -->
+    <color name="light_purple">#FF605BD4</color>
+    <!-- Color of Cancel Button -->
+    <color name="cancelRed">#B3FF6262</color>
+    <!-- Color of Save Button -->
+    <color name="saveGreen">#E6008000</color>
+    <!--  Light purple color  -->
+    <color name="light_purple_1">#FF5C56DE</color>
+    <!--  Dark purple color  -->
+    <color name="dark_purple">#FF47458F</color>
+    <!--  Light grey color -->
+    <color name="light_grey">#FFD9D9D9</color>
+    <!-- Light blue color -->
+    <color name="light_blue">#FF5275CF</color>
+    <!-- Light purple for sending the message -->
+    <color name="button_light_purple">#FF6B66DC</color>
+    <!-- Game card description font color -->
+    <color name="gameCardDescFont">#FFC0C0C0</color>
+    <!--  Color for the trivia wrong question  -->
+    <color name="orange_trivia_wrong_question">#B3FFA500</color>
+    <!--  Background color of the game title  -->
+    <color name="purple_game_container">#333728A5</color>
+    <!--  Light purple color for background in friends list  -->
+    <color name="light_purple_background">#805C56DE</color>
+    <!--  Light grey colour for double tap notification  -->
+    <color name="grey_font">#99ECECEC</color>
+    <!--  Dark grey colour for double tap notification in CAH  -->
+    <color name="dark_grey_font">#99818181</color>
+   <!--  Color for the background of the splash screen  -->
+    <color name="splash_screen_background_color">#FF6338C1</color>
+</resources>

@@ -1,0 +1,15 @@
+mutation RemoveUser(
+  $memberName: String!
+  $gameMode: String!
+  $access: String!
+  $gameId: String!
+) {
+  removeUser(
+    memberName: $memberName,
+    gameMode: $gameMode,
+    access: $access,
+    gameID: $gameId
+    ) {
+    success
+  }
+}

@@ -1,0 +1,12 @@
+mutation JoinGame(
+    $gameMode: String!,
+    $access: String!
+) {
+  joinGame(
+    gameMode: $gameMode,
+    access: $access
+  ) {
+    id
+    username
+  }
+}

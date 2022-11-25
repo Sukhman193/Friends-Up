@@ -1,0 +1,109 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
+    // Apollo plugin
+    id("com.apollographql.apollo3").version("3.7.0")
+}
+
+android {
+    namespace 'ca.finalfive.friendsup'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "ca.finalfive.friendsup"
+        minSdk 26
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_ui_version
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+dependencies {
+    // Firebase Implementation
+    implementation(platform("com.google.firebase:firebase-bom:31.0.2"))
+
+    // Firebase Authentication Implementation
+    implementation("com.google.firebase:firebase-auth")
+    // Dependency for Firebase Firestore
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+    // Google Service Implementation
+    implementation "com.google.android.gms:play-services-auth:20.3.0"
+
+    // Coroutines Implementation
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutine_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$kotlin_coroutine_version"
+
+    // Coil for working with images
+    implementation "io.coil-kt:coil-compose:$coil_version"
+
+    // Flow Row implementation
+    implementation "com.google.accompanist:accompanist-flowlayout:0.20.0"
+    implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    // Feature module Support
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+    // Testing Navigation
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+    // Jetpack Compose Integration
+    implementation "androidx.navigation:navigation-compose:$nav_version"
+    // LottieSDK Integration
+    implementation "com.airbnb.android:lottie-compose:$lottieVersion"
+
+    // Apollo graphql runtime dependency
+    implementation("com.apollographql.apollo3:apollo-runtime:3.7.0")
+
+    // Kotlin and jetpack compose base implementations
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
+    implementation 'androidx.activity:activity-compose:1.6.1'
+    implementation "androidx.compose.ui:ui:$compose_ui_version"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_ui_version"
+    implementation 'androidx.compose.material:material:1.3.1'
+
+    // Testing
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
+}
+// Set up apollo
+apollo {
+    packageName.set("ca.finalfive.friendsup")
+}
