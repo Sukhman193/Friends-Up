@@ -14,8 +14,8 @@ android {
         applicationId "ca.finalfive.friendsup"
         minSdk 26
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "1.0.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -58,7 +58,7 @@ dependencies {
     // Dependency for Firebase Firestore
     implementation 'com.google.firebase:firebase-firestore-ktx'
     // Google Service Implementation
-    implementation "com.google.android.gms:play-services-auth:20.3.0"
+    implementation "com.google.android.gms:play-services-auth:20.4.0"
 
     // Coroutines Implementation
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt"
